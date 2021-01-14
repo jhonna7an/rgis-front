@@ -1,0 +1,7 @@
+.loading-content {
+    flex-direction: column;
+}
+
+.loading-content span {
+    margin-top: 20px;
+}

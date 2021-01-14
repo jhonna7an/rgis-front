@@ -1,0 +1,203 @@
+<app-toolbar></app-toolbar>
+
+<div class="d-flex container">
+    <div class="sidebar">
+        <mat-card (click)="CountryDetail()">
+            <span class="country">Equipos Argentina</span>
+            <span class="indicator-custom"></span>
+        </mat-card>
+        <!-- <div class="title"> -->
+        <!-- <h3>Equipos {{country}}</h3> -->
+        <!-- </div> -->
+        <div class="sidebar-menu">
+            <div class="district">
+                <mat-accordion class="example-headers-align" multi>
+                    <mat-expansion-panel [expanded]="xpandStatus">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Distrito
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="menu-detail">
+                            <ul>
+                                <li *ngFor="let dist of districts">
+                                    <a href="javascript:void(0)" (click)="GetDetail(dist)">
+                                        {{dist.districtName}}
+                                    </a>
+                                </li>
+                                <li *ngIf="!districts">
+                                    Sin registros
+                                </li>
+                            </ul>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            <mat-card *ngIf="loading" class="loading">
+                <app-loading></app-loading>
+            </mat-card>
+
+            <div *ngIf="sidebarDetail" class="detail">
+                <h3>Detalle</h3>
+                <mat-accordion class="submenu-location">
+                    <mat-expansion-panel [expanded]="xpandStatus">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="location">
+                                Ubicación
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="submenu-container">
+                            <ul>
+                                <li *ngFor="let location of sidebarLocations">
+                                    <span>{{location.label}}</span>
+                                    <span>({{location.quantity}})</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <mat-accordion class="submenu-state">
+                    <mat-expansion-panel [expanded]="xpandStatus">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Estado
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="submenu-container">
+                            <ul>
+                                <li *ngFor="let state of sidebarStates">
+                                    <span>{{state.label}}</span>
+                                    <span>({{state.quantity}})</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+
+    <div class="body">
+        <div class="d-flex body-header">
+            <h3>Resumen de Equipos {{currentDistrict}}</h3>
+            <div>
+                <a style="cursor: pointer" (click)="exportexcel()">
+                    <mat-icon> cloud_download</mat-icon>
+                </a>
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item class="mat-menu-title">
+                        <span>Exportar</span>
+                        <hr>
+                    </button>
+                    <button mat-menu-item class="mat-menu-option">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" viewBox="0 0 50 50"
+                        style=" fill:#217346;"><path d="M 28.8125 0.03125 L 0.8125 5.34375 C 0.339844 5.433594 0 5.863281 0 6.34375 L 0 43.65625 C 0 44.136719 0.339844 44.566406 0.8125 44.65625 L 28.8125 49.96875 C 28.875 49.980469 28.9375 50 29 50 C 29.230469 50 29.445313 49.929688 29.625 49.78125 C 29.855469 49.589844 30 49.296875 30 49 L 30 1 C 30 0.703125 29.855469 0.410156 29.625 0.21875 C 29.394531 0.0273438 29.105469 -0.0234375 28.8125 0.03125 Z M 32 6 L 32 13 L 34 13 L 34 15 L 32 15 L 32 20 L 34 20 L 34 22 L 32 22 L 32 27 L 34 27 L 34 29 L 32 29 L 32 35 L 34 35 L 34 37 L 32 37 L 32 44 L 47 44 C 48.101563 44 49 43.101563 49 42 L 49 8 C 49 6.898438 48.101563 6 47 6 Z M 36 13 L 44 13 L 44 15 L 36 15 Z M 6.6875 15.6875 L 11.8125 15.6875 L 14.5 21.28125 C 14.710938 21.722656 14.898438 22.265625 15.0625 22.875 L 15.09375 22.875 C 15.199219 22.511719 15.402344 21.941406 15.6875 21.21875 L 18.65625 15.6875 L 23.34375 15.6875 L 17.75 24.9375 L 23.5 34.375 L 18.53125 34.375 L 15.28125 28.28125 C 15.160156 28.054688 15.035156 27.636719 14.90625 27.03125 L 14.875 27.03125 C 14.8125 27.316406 14.664063 27.761719 14.4375 28.34375 L 11.1875 34.375 L 6.1875 34.375 L 12.15625 25.03125 Z M 36 20 L 44 20 L 44 22 L 36 22 Z M 36 27 L 44 27 L 44 29 L 36 29 Z M 36 35 L 44 35 L 44 37 L 36 37 Z"></path></svg>
+                        <span>Resumen por Distrito</span>
+                    </button>
+                    <button mat-menu-item class="mat-menu-option">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" viewBox="0 0 50 50"
+                        style=" fill:#217346;"><path d="M 28.8125 0.03125 L 0.8125 5.34375 C 0.339844 5.433594 0 5.863281 0 6.34375 L 0 43.65625 C 0 44.136719 0.339844 44.566406 0.8125 44.65625 L 28.8125 49.96875 C 28.875 49.980469 28.9375 50 29 50 C 29.230469 50 29.445313 49.929688 29.625 49.78125 C 29.855469 49.589844 30 49.296875 30 49 L 30 1 C 30 0.703125 29.855469 0.410156 29.625 0.21875 C 29.394531 0.0273438 29.105469 -0.0234375 28.8125 0.03125 Z M 32 6 L 32 13 L 34 13 L 34 15 L 32 15 L 32 20 L 34 20 L 34 22 L 32 22 L 32 27 L 34 27 L 34 29 L 32 29 L 32 35 L 34 35 L 34 37 L 32 37 L 32 44 L 47 44 C 48.101563 44 49 43.101563 49 42 L 49 8 C 49 6.898438 48.101563 6 47 6 Z M 36 13 L 44 13 L 44 15 L 36 15 Z M 6.6875 15.6875 L 11.8125 15.6875 L 14.5 21.28125 C 14.710938 21.722656 14.898438 22.265625 15.0625 22.875 L 15.09375 22.875 C 15.199219 22.511719 15.402344 21.941406 15.6875 21.21875 L 18.65625 15.6875 L 23.34375 15.6875 L 17.75 24.9375 L 23.5 34.375 L 18.53125 34.375 L 15.28125 28.28125 C 15.160156 28.054688 15.035156 27.636719 14.90625 27.03125 L 14.875 27.03125 C 14.8125 27.316406 14.664063 27.761719 14.4375 28.34375 L 11.1875 34.375 L 6.1875 34.375 L 12.15625 25.03125 Z M 36 20 L 44 20 L 44 22 L 36 22 Z M 36 27 L 44 27 L 44 29 L 36 29 Z M 36 35 L 44 35 L 44 37 L 36 37 Z"></path></svg>
+                        <span>Resumen por País</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+        <div class="body-content">
+            <div *ngIf="!summaryData && !countryDetail" class="body-content-empty">
+                Seleccione un Distrito
+            </div>
+
+            <table id="excel-table">
+                <tr>
+                    <th>ContainerNo</th>
+                    <th>SelCondition</th>
+                    <th> ContainerCondition</th>
+                    <th>GateInDateTime</th>
+                </tr>
+                <tr>
+                    <td>Prueba</td>
+                    <td>Prueba</td>
+                    <td>Prueba</td>
+                    <td>Prueba</td>
+                    <td>Prueba</td>
+                    <td>Prueba</td>
+                </tr>
+            </table>
+
+            <mat-card *ngIf="loading" class="loading">
+                <app-loading></app-loading>
+            </mat-card>
+
+            <div *ngIf="countryDetail && !summaryData" class="detail-country">
+                <div>
+                    <table class="table" id="country-detail">
+                        <thead>
+                            <tr>
+                                <th scope="col" *ngFor="let title of countryDetail.equipments">{{title}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let content of countryDetail.data">
+                                <td scope="row">{{content.district}}</td>
+                                <td>{{content.audit}}</td>
+                                <td>{{content.laser}}</td>
+                                <td>{{content.portatil}}</td>
+                                <td>{{content.printer}}</td>
+                                <td>{{content.charguer}}</td>
+                                <td>{{content.ap}}</td>
+                                <td>{{content.tablet}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div *ngIf="summaryData && !countryDetail" class="detail-district">
+                <div>
+                    <mat-accordion class="example-headers-align" multi *ngFor="let data of summaryData">
+                        <div>
+                            <mat-expansion-panel [expanded]="xpandStatus" class="no-shadow">
+                                <mat-expansion-panel-header>
+                                    <!-- <div> -->
+                                    <mat-panel-title class="title">
+                                        {{data.title}}
+                                    </mat-panel-title>
+                                    <!-- </div> -->
+                                </mat-expansion-panel-header>
+                                <div class="expansion-body">
+                                    <table class="table summary-data">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Modelo</th>
+                                                <th scope="col">Equipos Activo</th>
+                                                <th scope="col">Equipos Avería</th>
+                                                <th scope="col">Equipos Hold</th>
+                                                <th scope="col">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let rowData of data.items">
+                                                <td scope="row">{{rowData.model}}</td>
+                                                <td>{{rowData.activo}}</td>
+                                                <td>{{rowData.averia}}</td>
+                                                <td>{{rowData.hold}}</td>
+                                                <td>{{rowData.totalItem}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                    </mat-accordion>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<app-footer></app-footer>

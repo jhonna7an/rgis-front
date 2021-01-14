@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-container">
+    <a class="navbar-brand" href="#" routerLink="/home">
+        <img src="../../../../../assets/logos/rgis-logo-white.png" height="30" alt="" loading="lazy">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto toolbar-container">
+            <li class="nav-item dropdown nav-item-custom">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Gestión de Equipos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="javascript:void(0)" routerLink="/equipment/equipmentSummary">Informe de Estado de Equipos</a>
+                    <a class="dropdown-item" href="javascript:void(0)">Resumen de Equipos</a>
+                    <a class="dropdown-item" href="javascript:void(0)">Nuevo Equipo</a>
+                    <a class="dropdown-item" href="javascript:void(0)">Listado de Bajas</a>
+                    <a class="dropdown-item" href="javascript:void(0)">Rotura de Equipos</a>
+                </div>
+            </li>
+            <li class="nav-item-custom">
+                <div type="button" class="notification-container dropdown" id="dropnotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="badge badge-danger badge-notification">{{notificationCount}}</span>
+                    <img src="../../../../../assets//icons/notifications-white.svg" alt="Alternate Text" height="25" class="bell-icon-bar" />
+                    <ul class="dropdown-menu" aria-labelledby="dropnotification">
+                        <li>Mi perfil</li>
+                    </ul>
+                </div>
+                <div class="nav-item dropdown">
+                    <div class="nav-link dropdown-toggle" href="#" id="dropmenuuser" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="../../../../../assets/icons/account-circle.svg" alt="Alternate Text" height="35" class="user-icon-bar pr-1" />
+                        <span>{{badgeId}}</span>
+                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="dropmenuuser">
+                        <li>Mi perfil</li>
+                        <li>
+                            <div class="dropdown-divider"></div>
+                        </li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
