@@ -1,0 +1,73 @@
+<app-loading *ngIf="loading"></app-loading>
+
+<div *ngIf="!loading">
+    <div>
+        <h2>Editar</h2>
+    </div>
+    <div>
+        <form class="d-flex serial-form" [formGroup]="editForm" autocomplete="off" novalidate (ngSubmit)="editEquipment(editForm.value)">
+            <div class="input-container">
+                <mat-form-field appearance="outline">
+                    <mat-label>Distrito</mat-label>
+                    <mat-select formControlName="district" (selectionChange)="onChangeDistrict($event.value)">
+                        <mat-option *ngFor="let district of districts" [value]="district.id">
+                            {{district.districtName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" *ngIf="showBranchOffice">
+                    <mat-label>Oficina</mat-label>
+                    <mat-select formControlName="branchOffice">
+                        <mat-option *ngFor="let branch of branchOffices" [value]="branch.id">
+                            {{branch.branchOfficeName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Ubicación</mat-label>
+                    <mat-select formControlName="location">
+                        <mat-option *ngFor="let location of locations" [value]="location.id">
+                            {{location.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Estado</mat-label>
+                    <mat-select formControlName="state">
+                        <mat-option *ngFor="let state of states" [value]="state.id">
+                            {{state.state}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Valoración</mat-label>
+                    <mat-select formControlName="valoration">
+                        <mat-option *ngFor="let valoration of valorations" [value]="valoration.id">
+                            {{valoration.valoration}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" *ngIf="showInputsInMultiEdit">
+                    <mat-label>InServices</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="inservices">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" *ngIf="showInputsInMultiEdit">
+                    <mat-label>Fecha de ingreso</mat-label>
+                    <input matInput [matDatepicker]="ingreso" formControlName="datein">
+                    <mat-datepicker-toggle matSuffix [for]="ingreso"></mat-datepicker-toggle>
+                    <mat-datepicker #ingreso></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Comentarios</mat-label>
+                    <textarea matInput placeholder="Ingrese un comentario"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="btn-container">
+                <button mat-stroked-button [disabled]="!editForm.valid">Guardar</button>
+                <button mat-stroked-button (click)="close($event)">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>

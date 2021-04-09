@@ -1,7 +1,7 @@
 import { BaseModel } from '../base-model';
 
-export class EquipmentName extends BaseModel {
-    public name: string;
-    public area: string;
-    public chartId: number;
+export interface EquipmentName extends BaseModel {
+    name: string;
+    area: string;
+    chartId: number;
 }

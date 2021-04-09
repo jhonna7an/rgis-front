@@ -1,0 +1,8 @@
+table {
+    width: 100%;
+    box-shadow: none !important;
+}
+
+td mat-icon {
+    cursor: pointer;
+}

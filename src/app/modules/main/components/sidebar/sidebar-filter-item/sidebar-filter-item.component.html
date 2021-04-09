@@ -1,0 +1,19 @@
+<div>
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="isTitleExpanded">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{_filter?.title}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="menu-detail w-100">
+                <ul>
+                    <li *ngFor="let detailItem of _filter?.items">
+                        <button [disabled]="_filter?.disabled" class="filter-label" (click)="SetFilter(_filter.title, detailItem.name)">{{detailItem.name}}</button>
+                        <span>({{detailItem.count}})</span>
+                    </li>
+                </ul>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

@@ -1,0 +1,29 @@
+.mat-expansion-panel {
+    border-radius: 0px !important;
+}
+
+.menu-detail {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.menu-detail ul {
+    list-style: none;
+    padding-inline-start: 0px;
+}
+
+.menu-detail ul li {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.filter-label {
+    background-color: transparent;
+    border: none;
+}
+
+.filter-label+span,
+.filter-label:disabled {
+    color: #8c8c8c;
+}

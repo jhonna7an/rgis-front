@@ -1,0 +1,367 @@
+.container {
+    padding: 0px 0px 20px 0px;
+    margin: 0px;
+    width: 100%;
+    max-width: 100%;
+    background-color: #FAFAFA;
+    min-height: 414px;
+}
+
+
+/* COMMON */
+
+.no-shadow {
+    box-shadow: none;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 22%;
+    z-index: 100;
+    background-color: #FAFAFA;
+    max-width: 22%;
+}
+
+.sidebar mat-card {
+    color: #212529;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px 24px;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+.sidebar mat-card:hover {
+    cursor: pointer;
+}
+
+.sidebar mat-card .country {
+    flex: 1;
+}
+
+.indicator-custom::after {
+    border-style: solid;
+    border-width: 2px 2px 0 0;
+    content: "";
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    vertical-align: middle;
+    color: #757575;
+}
+
+.sidebar-menu div.district,
+.sidebar-menu div.detail mat-accordion mat-expansion-panel {
+    border-radius: 4px;
+}
+
+.sidebar-menu div.district {
+    margin-bottom: 30px;
+}
+
+.sidebar-menu div.detail mat-accordion mat-expansion-panel {
+    border-radius: 4px 4px 0px 0px !important;
+}
+
+.sidebar-menu div.detail mat-accordion:last-child mat-expansion-panel {
+    border-radius: 0px 0px 4px 4px !important;
+}
+
+.sidebar-menu div.detail mat-accordion mat-expansion-panel mat-expansion-panel-header,
+.sidebar-menu div.district mat-accordion mat-expansion-panel mat-expansion-panel-header {
+    border-bottom: 1px solid #edeff2;
+}
+
+.sidebar .title h3 {
+    margin-bottom: 0px;
+}
+
+.sidebar mat-expansion-panel ul {
+    list-style: none;
+    margin-bottom: 0px;
+    padding: 5px 0px;
+}
+
+.sidebar mat-expansion-panel ul li {
+    padding: 5px 30px;
+}
+
+.sidebar mat-expansion-panel ul li a,
+.submenu-container ul li {
+    color: #6d7278;
+    display: flex;
+}
+
+.sidebar mat-expansion-panel ul li a:hover {
+    text-decoration: none;
+}
+
+.sidebar mat-expansion-panel ul li:hover {
+    background-color: rgba(0, 0, 0, .04);
+    cursor: pointer;
+}
+
+div.detail mat-accordion mat-expansion-panel .submenu-container ul li {
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-detail,
+.submenu-container {
+    box-shadow: inset 4px 0 0 0 #cd3840;
+    width: 100%;
+}
+
+.submenu .submenu-title {
+    padding: 10px 20px;
+}
+
+.submenu .submenu-title h4 {
+    margin: 0px;
+}
+
+.sidebar-title {
+    width: 100%;
+    padding: 16px;
+}
+
+.sidebar-title h3 {
+    margin-bottom: 0px;
+}
+
+.example-action-buttons {
+    padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+    /* color: #6d7678;   */
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-headers-align .mat-form-field .mat-form-field {
+    margin-left: 8px;
+}
+
+.detail h3 {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    margin-bottom: 0px;
+}
+
+.district mat-accordion mat-expansion-panel mat-expansion-panel-header {
+    background: url(/assets/icons/home-grey.svg) 5% 50% no-repeat !important;
+    padding-left: 36px;
+}
+
+.submenu-location mat-expansion-panel mat-expansion-panel-header {
+    background: url(/assets/icons/location-grey.svg) 5% 50% no-repeat !important;
+    padding-left: 36px;
+}
+
+.submenu-state mat-expansion-panel mat-expansion-panel-header {
+    background: url(/assets/icons/state-grey.svg) 5% 50% no-repeat !important;
+    padding-left: 36px;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+
+/* BODY HEADER*/
+
+.body {
+    background-color: #FAFAFA;
+    padding: 20px;
+    width: 78%;
+}
+
+table {
+    width: 100%;
+    background-color: #217346;
+}
+
+.body-header {
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 20px;
+    margin-bottom: 20px;
+    min-height: 50px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.body-header h3 {
+    margin-bottom: 0;
+}
+
+
+/* HEADER - MENU DESPLEGABLE */
+
+.mat-menu-option span {
+    padding-left: 10px;
+}
+
+.body-header div mat-menu button:hover {
+    fill: #217346;
+}
+
+.body-content-empty {
+    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iMjQiIGhlaWdodD0iMjQiCnZpZXdCb3g9IjAgMCAzMCAzMCIKc3R5bGU9IiBmaWxsOiMwMDAwMDA7Ij48cGF0aCBkPSJNIDEzIDMgQyA3LjQ4ODk5NzEgMyAzIDcuNDg4OTk3MSAzIDEzIEMgMyAxOC41MTEwMDMgNy40ODg5OTcxIDIzIDEzIDIzIEMgMTUuMzk2NTA4IDIzIDE3LjU5NzM4NSAyMi4xNDg5ODYgMTkuMzIyMjY2IDIwLjczNjMyOCBMIDI1LjI5Mjk2OSAyNi43MDcwMzEgQSAxLjAwMDEgMS4wMDAxIDAgMSAwIDI2LjcwNzAzMSAyNS4yOTI5NjkgTCAyMC43MzYzMjggMTkuMzIyMjY2IEMgMjIuMTQ4OTg2IDE3LjU5NzM4NSAyMyAxNS4zOTY1MDggMjMgMTMgQyAyMyA3LjQ4ODk5NzEgMTguNTExMDAzIDMgMTMgMyB6IE0gMTMgNSBDIDE3LjQzMDEyMyA1IDIxIDguNTY5ODc3NCAyMSAxMyBDIDIxIDE3LjQzMDEyMyAxNy40MzAxMjMgMjEgMTMgMjEgQyA4LjU2OTg3NzQgMjEgNSAxNy40MzAxMjMgNSAxMyBDIDUgOC41Njk4Nzc0IDguNTY5ODc3NCA1IDEzIDUgeiI+PC9wYXRoPjwvc3ZnPg==') 0% 50% no-repeat;
+    background-size: 25px;
+    display: flex;
+    padding-left: 30px;
+    margin-top: 30px;
+}
+
+
+/* BODY DETAIL DISTRICT */
+
+.detail-district {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    display: flex;
+}
+
+.detail-district div mat-accordion div mat-expansion-panel mat-expansion-panel-header span div {
+    padding: 0px;
+}
+
+.detail-district div mat-accordion div mat-expansion-panel .mat-expansion-panel-header {
+    border-radius: initial;
+}
+
+.mat-expansion-panel-body {
+    display: flex;
+}
+
+.detail-district div {
+    width: 100%;
+}
+
+.detail-district div mat-accordion div {
+    padding: 0px 20px;
+}
+
+.body-content mat-expansion-panel-header {
+    padding: 20px 30px 20px 20px;
+    border-bottom: 1px solid #edeff2;
+}
+
+.expansion-body {
+    border-radius: 4px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.08) !important;
+    border: solid 1px #edeff2;
+    padding: 0px 0px 0px 4px !important;
+    margin: 20px;
+}
+
+.body-content mat-expansion-panel {
+    margin-bottom: 20px;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: none;
+    padding: 0px 20px !important;
+}
+
+.table td,
+.table th {
+    padding: .75rem;
+    border-top: none;
+    padding: 10px 20px !important;
+}
+
+table thead tr th {
+    color: #cd3840;
+    text-align: center;
+    font-weight: 500;
+}
+
+table tbody tr td {
+    color: #6d7278;
+    text-align: center;
+}
+
+.title {
+    color: #6D7278;
+    font-size: 16px;
+}
+
+table {
+    margin-bottom: 0px !important;
+}
+
+
+/* BODY DETAIL COUNTRY */
+
+.detail-country,
+.detail-district {
+    background-color: #fff;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    border-radius: 4px;
+}
+
+.detail-country div,
+.expansion-body {
+    padding: 20px;
+    box-shadow: inset 4px 0 0 0 #cd3840 !important;
+    border-radius: 4px;
+}
+
+.detail-country table thead tr,
+.summary-data thead tr {
+    border-bottom: 1px solid #edeff2;
+}
+
+.detail-country table thead tr th,
+.summary-data thead tr th {
+    padding: 10px 20px !important;
+}
+
+.detail-country table thead tr th:first-child,
+.detail-country table tbody tr td:first-child,
+.summary-data thead tr th:first-child,
+.summary-data tbody tr td:first-child {
+    border-right: 1px solid #edeff2;
+    font-weight: 500;
+}
+
+.summary-data thead tr th:last-child,
+.summary-data tbody tr td:last-child {
+    border-left: 1px solid #edeff2;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.detail-country table tbody tr:last-child,
+.summary-data tbody tr:last-child {
+    border-top: 1px solid #edeff2;
+}
+
+.detail-country table tbody tr:last-child td,
+.summary-data tbody tr:last-child td {
+    font-weight: 500;
+    color: #cd3840;
+}

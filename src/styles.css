@@ -40,3 +40,71 @@ body {
 button:focus {
     outline: none;
 }
+
+.mat-tab-label {
+    width: 50% !important;
+}
+
+.mat-form-field-wrapper {
+    height: 50px;
+    margin: 0px !important;
+}
+
+.mat-form-field-wrapper .mat-form-field-flex {
+    height: 50px;
+}
+
+.mat-form-field-wrapper .mat-form-field-subscript-wrapper {
+    margin-top: 20px;
+}
+
+
+/* TABS */
+
+.mat-tab-label {
+    /* background: green;
+    color: white; */
+    font-size: 16px;
+}
+
+
+/* focus style */
+
+.mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
+.mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus,
+.mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
+.mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus {
+    color: #E5004D;
+}
+
+
+/* ink bar style */
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background: #E5004D;
+    height: 3px;
+}
+
+
+/* .cdk-overlay-pane {
+    margin-top: 3% !important;
+} */
+
+.snackBar-success {
+    background-color: #3DB671 !important;
+    background: url(../src/assets/icons/ckeck-white.png) 5% 45% no-repeat;
+    background-size: 8%;
+    padding-left: 13% !important;
+}
+
+.snackBar-error {
+    background-color: #E05B5B !important;
+    background: url(../src/assets/icons/ckeck-white.png) 5% 45% no-repeat;
+    background-size: 8%;
+    padding-left: 13% !important;
+}
+
+.mat-drawer {
+    min-width: 280px;
+}

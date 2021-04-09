@@ -13,7 +13,7 @@ export class ToolbarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.badgeId = "66900038";
+    this.badgeId = '66900038';
     this.notificationCount = 3;
   }
 

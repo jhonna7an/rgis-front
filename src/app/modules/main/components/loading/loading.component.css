@@ -1,7 +1,13 @@
-.loading-content {
+.flex-dir-col {
     flex-direction: column;
 }
 
-.loading-content span {
+.flex-jus-center {
+    justify-content: center;
+    min-height: 400px;
+    align-items: center;
+}
+
+.flex-dir-col span {
     margin-top: 20px;
 }

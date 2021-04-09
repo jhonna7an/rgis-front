@@ -6,9 +6,7 @@
             <span class="country">Equipos Argentina</span>
             <span class="indicator-custom"></span>
         </mat-card>
-        <!-- <div class="title"> -->
-        <!-- <h3>Equipos {{country}}</h3> -->
-        <!-- </div> -->
+
         <div class="sidebar-menu">
             <div class="district">
                 <mat-accordion class="example-headers-align" multi>
@@ -21,7 +19,7 @@
                         <div class="menu-detail">
                             <ul>
                                 <li *ngFor="let dist of districts">
-                                    <a href="javascript:void(0)" (click)="GetDetail(dist)">
+                                    <a href="javascript:void(0)" (click)="GetDetailByDistrict(dist)">
                                         {{dist.districtName}}
                                     </a>
                                 </li>
@@ -34,11 +32,11 @@
                 </mat-accordion>
             </div>
 
-            <mat-card *ngIf="loading" class="loading">
+            <mat-card *ngIf="sidebarloading" class="loading">
                 <app-loading></app-loading>
             </mat-card>
 
-            <div *ngIf="sidebarDetail" class="detail">
+            <div *ngIf="sidebarIsShow" class="detail">
                 <h3>Detalle</h3>
                 <mat-accordion class="submenu-location">
                     <mat-expansion-panel [expanded]="xpandStatus">
@@ -82,9 +80,6 @@
         <div class="d-flex body-header">
             <h3>Resumen de Equipos {{currentDistrict}}</h3>
             <div>
-                <a style="cursor: pointer" (click)="exportexcel()">
-                    <mat-icon> cloud_download</mat-icon>
-                </a>
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
@@ -107,31 +102,15 @@
             </div>
         </div>
         <div class="body-content">
-            <div *ngIf="!summaryData && !countryDetail" class="body-content-empty">
+            <div *ngIf="homeIsShow" class="body-content-empty">
                 Seleccione un Distrito
             </div>
 
-            <table id="excel-table">
-                <tr>
-                    <th>ContainerNo</th>
-                    <th>SelCondition</th>
-                    <th> ContainerCondition</th>
-                    <th>GateInDateTime</th>
-                </tr>
-                <tr>
-                    <td>Prueba</td>
-                    <td>Prueba</td>
-                    <td>Prueba</td>
-                    <td>Prueba</td>
-                    <td>Prueba</td>
-                    <td>Prueba</td>
-                </tr>
-            </table>
-
-            <mat-card *ngIf="loading" class="loading">
+            <mat-card *ngIf="bodyloading" class="loading">
                 <app-loading></app-loading>
             </mat-card>
 
+            <!-- Country Detail -->
             <div *ngIf="countryDetail && !summaryData" class="detail-country">
                 <div>
                     <table class="table" id="country-detail">
@@ -156,6 +135,7 @@
                 </div>
             </div>
 
+            <!-- Summary by District -->
             <div *ngIf="summaryData && !countryDetail" class="detail-district">
                 <div>
                     <mat-accordion class="example-headers-align" multi *ngFor="let data of summaryData">
@@ -198,6 +178,5 @@
         </div>
     </div>
 </div>
-
 
 <app-footer></app-footer>
