@@ -64,15 +64,15 @@ export class DialogEditComponent implements OnInit {
   public editEquipment(value: any): void {
     console.log(value);
     const equipment = this.createEquipmentAbmList(value);
-    const editedSubs = this.equipmentService.editEquipment(equipment)
-      .subscribe((response: boolean) => {
-        this.equipmentService.edited$.emit(response);
-        this.dialogRef.close();
-        editedSubs.unsubscribe();
-      }, error => {
-        console.error(error);
-        this.equipmentService.edited$.emit(false);
-      });
+    // const editedSubs = this.equipmentService.editEquipment(equipment)
+    //   .subscribe((response: boolean) => {
+    //     this.equipmentService.edited$.emit(response);
+    //     this.dialogRef.close();
+    //     editedSubs.unsubscribe();
+    //   }, error => {
+    //     console.error(error);
+    //     this.equipmentService.edited$.emit(false);
+    //   });
   }
 
   public validateControl(control: string): boolean {

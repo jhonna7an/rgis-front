@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="section">
+    <form class="d-flex serial-form" [formGroup]="createForm" autocomplete="off" novalidate (ngSubmit)="saveEquipment(createForm.value)">
+      <div>
+          <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Serial</mat-label>
+              <input type="text" formControlName="serial" matInput placeholder="Ingrese Serial">
+              <!-- <mat-error *ngIf="validateControl('serial') && hasError('serial', 'maxlength')">
+                  El valor debe ser de 10 dígitos
+              </mat-error>
+              <mat-error *ngIf="validateControl('serial') && hasError('serial', 'minlength')">
+                  El valor debe ser de 10 dígitos
+              </mat-error> -->
+          </mat-form-field>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Serial</mat-label>
+            <input type="text" formControlName="serial" matInput placeholder="Ingrese Serial">
+        </mat-form-field>
+      </div>
+      <div class="btn-container mr-btn">
+          <button mat-stroked-button [disabled]="!createForm.valid">Buscar</button>
+      </div>
+  </form>
+  </div>
+  <div></div>
+</div>

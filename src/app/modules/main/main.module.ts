@@ -32,6 +32,7 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { UserService } from './services/user.service';
 import { DialogHistoricComponent } from './components/dialogs/historics/dialog-historic/dialog-historic.component';
 import { DataService } from './services/data.service';
+import { CreateEquipmentComponent } from './pages/create-equipment/create-equipment.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { DataService } from './services/data.service';
     AccentPipe,
     DatatableComponent,
     DateAgoPipe,
-    DialogHistoricComponent
+    DialogHistoricComponent,
+    CreateEquipmentComponent
   ],
   imports: [
     BrowserModule,
