@@ -33,6 +33,8 @@ import { UserService } from './services/user.service';
 import { DialogHistoricComponent } from './components/dialogs/historics/dialog-historic/dialog-historic.component';
 import { DataService } from './services/data.service';
 import { CreateEquipmentComponent } from './pages/create-equipment/create-equipment.component';
+import { BrandService } from './services/brand.service';
+import { ModelService } from './services/model.service';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,9 @@ import { CreateEquipmentComponent } from './pages/create-equipment/create-equipm
     BranchOfficeService,
     EquipmentHistoricService,
     UserService,
-    DataService
+    DataService,
+    BrandService,
+    ModelService
   ],
   bootstrap: []
 })

@@ -1,4 +1,8 @@
-<div class="container">
+<app-toolbar></app-toolbar>
+
+<div class="d-flex container">
+  <h3>Crear equipo</h3>
+
   <div class="section">
     <form class="d-flex serial-form" [formGroup]="createForm" autocomplete="off" novalidate (ngSubmit)="saveEquipment(createForm.value)">
       <div>
@@ -12,10 +16,54 @@
                   El valor debe ser de 10 dígitos
               </mat-error> -->
           </mat-form-field>
+
           <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Serial</mat-label>
-            <input type="text" formControlName="serial" matInput placeholder="Ingrese Serial">
-        </mat-form-field>
+            <mat-label>Serial Factory</mat-label>
+            <input type="text" formControlName="serialFactory" matInput placeholder="Ingrese Serial">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Marca</mat-label>
+            <mat-select formControlName="marca" (selectionChange)="onChangeBrand($event.value)">
+                <mat-option *ngFor="let brand of brands" [value]="brand.id">
+                    {{brand.brand}}
+                </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Modelo</mat-label>
+            <mat-select formControlName="model">
+                <mat-option *ngFor="let model of models" [value]="model.id">
+                    {{model.model}}
+                </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>InService</mat-label>
+            <input matInput [matDatepicker]="InService" formControlName="InService">
+            <mat-datepicker-toggle matSuffix [for]="InService"></mat-datepicker-toggle>
+            <mat-datepicker #InService></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Distrito</mat-label>
+            <mat-select formControlName="district" (selectionChange)="onChangeDistrict($event.value)">
+                <mat-option *ngFor="let district of districts" [value]="district.id">
+                    {{district.districtName}}
+                </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Oficina</mat-label>
+            <mat-select formControlName="branchOffice">
+                <mat-option *ngFor="let branchOffice of branchOffices" [value]="branchOffice.id">
+                    {{branchOffice.branchOfficeName}}
+                </mat-option>
+            </mat-select>
+          </mat-form-field>
       </div>
       <div class="btn-container mr-btn">
           <button mat-stroked-button [disabled]="!createForm.valid">Buscar</button>
