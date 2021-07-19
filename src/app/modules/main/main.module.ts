@@ -1,3 +1,4 @@
+import { EquipmentNameService } from './services/equipment-name.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -75,7 +76,8 @@ import { ModelService } from './services/model.service';
     UserService,
     DataService,
     BrandService,
-    ModelService
+    ModelService,
+    EquipmentNameService
   ],
   bootstrap: []
 })

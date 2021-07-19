@@ -12,3 +12,22 @@ h3 {
 .section {
   padding: 20px;
 }
+
+.serial-form {
+  /* flex-direction: column; */
+}
+
+form div mat-form-field {
+  /* margin-right: 20px;
+  margin-top: 20px;
+  width: 23%; */
+}
+
+.btn-container {
+  margin-top: 20px;
+}
+
+.error-message {
+  margin-top: 12px;
+  font-size: 12px;
+}

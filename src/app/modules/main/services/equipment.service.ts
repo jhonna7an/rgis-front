@@ -30,8 +30,13 @@ export class EquipmentService {
     return this.http.get<Equipment[]>(this.partialUrl);
   }
 
-  public editEquipment = (equipment: EquipmentAbm): Observable<boolean> => {
+  public edit(equipment: EquipmentAbm): Observable<boolean> {
     this.partialUrl = `${this.url}/api/v1/Equipment`;
     return this.http.put<boolean>(this.partialUrl, equipment);
+  }
+
+  public create(equipment: EquipmentAbm): Observable<boolean> {
+    this.partialUrl = `${this.url}/api/v1/Equipment`;
+    return this.http.post<boolean>(this.partialUrl, equipment);
   }
 }

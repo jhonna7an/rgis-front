@@ -16,8 +16,8 @@ export class BrandService {
     this.url = `${environment.baseURL}`;
   }
 
-  public Get(): Observable<EquipmentBrand[]>{
-    this.partialUrl = `${this.url}/api/Brand`;
+  public get(nameId: number): Observable<EquipmentBrand[]>{
+    this.partialUrl = `${this.url}/api/Brand?nameId=${nameId}`;
     return this.http.get<EquipmentBrand[]>(this.partialUrl);
   }
 }

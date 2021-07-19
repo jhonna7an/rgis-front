@@ -1,3 +1,4 @@
+import { EEquipmentValoration } from './../EEquipmentValoration.enum';
 import { BaseModel } from '../base-model';
 import { BranchOffice } from '../manager/branch-office';
 import { EquipmentModel } from './equipment-model';
@@ -37,33 +38,47 @@ export class EquipmentAbm extends BaseModel {
     public hasNewComment: boolean;
     public comments: EquipmentComment[];
 
-    constructor(equipment: Equipment, isMultiEdit: boolean, formData: any) {
+    constructor(equipment?: Equipment, isMultiEdit?: boolean, formData?: any) {
         super();
-        this.id = equipment.id;
-        this.modelId = equipment.model.id;
-        this.modificationDate = new Date();
-        this.modificationUserId = 1; //Falta implementacion de loguin
-        this.serial = equipment.serial;
-        this.SerialFactory = equipment.serialFactory;
-        this.creationDate = equipment.creationDate;
-        this.creationUserId = equipment.creationUserId;
-        this.comments = new Array<EquipmentComment>();
+        // this.id = equipment.id;
+        // this.modelId = equipment.model.id;
+        // this.modificationDate = new Date();
+        // this.modificationUserId = 1; //Falta implementacion de login
+        // this.serial = equipment.serial;
+        // this.SerialFactory = equipment.serialFactory;
+        // this.creationDate = equipment.creationDate;
+        // this.creationUserId = equipment.creationUserId;
+        // this.comments = new Array<EquipmentComment>();
 
-        if (!isMultiEdit) {
-            this.valorationId = formData.valoration;
-            this.stateId = formData.state;
-            this.locationId = formData.location;
-            this.isHold = formData.state === EEquipmentState.Hold ? true : false;
-            this.branchOfficeId = formData.branchOffice;
-            this.inServices = formData.inservices;
-        } else {
-            this.valorationId = formData.valoration ? formData.valoration : equipment.valoration.id;
-            this.stateId = formData.state ? formData.state : equipment.state.id;
-            this.locationId = formData.location ? formData.location : equipment.location.id;
-            this.isHold = formData.state === EEquipmentState.Hold ? true : false;
-            this.branchOfficeId = formData.branchOffice ? formData.branchOffice : equipment.branchOffice.id;
-            this.inServices = formData.inservices;
-        }
+        // if (!isMultiEdit) {
+        //     this.valorationId = formData.valoration;
+        //     this.stateId = formData.state;
+        //     this.locationId = formData.location;
+        //     this.isHold = formData.state === EEquipmentState.Hold ? true : false;
+        //     this.branchOfficeId = formData.branchOffice;
+        //     this.inServices = formData.inservices;
+        // } else {
+        //     this.valorationId = formData.valoration ? formData.valoration : equipment.valoration.id;
+        //     this.stateId = formData.state ? formData.state : equipment.state.id;
+        //     this.locationId = formData.location ? formData.location : equipment.location.id;
+        //     this.isHold = formData.state === EEquipmentState.Hold ? true : false;
+        //     this.branchOfficeId = formData.branchOffice ? formData.branchOffice : equipment.branchOffice.id;
+        //     this.inServices = formData.inservices;
+        // }
+    }
+
+    public setCreateInfo(serial: string, serialFactory: string, modelId: number, inService: Date, branchOfficeId: number){
+        this.serial = serial;
+        this.SerialFactory = serialFactory;
+        this.modelId = modelId;
+        this.stateId = EEquipmentState.Operative;
+        this.valorationId = EEquipmentValoration.Alta;
+        this.inServices = inService;
+        this.branchOfficeId = branchOfficeId;
+        this.modificationDate = new Date();
+        this.modificationUserId = 1; //Falta implementacion de login
+        this.creationDate = new Date();
+        this.creationUserId = 1;
     }
 
 }

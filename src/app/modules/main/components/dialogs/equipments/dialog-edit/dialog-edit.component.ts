@@ -2,7 +2,6 @@ import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { District } from 'src/app/modules/main/models/equipments/district';
-import { Equipment } from 'src/app/modules/main/models/equipments/equipment';
 import { DistrictService } from '../../../../services/district.service';
 import { LocationService } from '../../../../services/location.service';
 import { EquipmentValorationService } from '../../../../services/equipment-valoration.service';
@@ -64,7 +63,7 @@ export class DialogEditComponent implements OnInit {
   public editEquipment(value: any): void {
     console.log(value);
     const equipment = this.createEquipmentAbmList(value);
-    // const editedSubs = this.equipmentService.editEquipment(equipment)
+    // const editedSubs = this.equipmentService.edit(equipment)
     //   .subscribe((response: boolean) => {
     //     this.equipmentService.edited$.emit(response);
     //     this.dialogRef.close();
