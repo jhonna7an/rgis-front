@@ -39,4 +39,9 @@ export class EquipmentService {
     this.partialUrl = `${this.url}/api/v1/Equipment`;
     return this.http.post<boolean>(this.partialUrl, equipment);
   }
+
+  public createList(equipments: Array<EquipmentAbm>): Observable<boolean> {
+    this.partialUrl = `${this.url}/api/v1/Equipment/createList`;
+    return this.http.post<boolean>(this.partialUrl, equipments);
+  }
 }

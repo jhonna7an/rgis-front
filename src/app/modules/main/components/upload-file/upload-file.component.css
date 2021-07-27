@@ -1,0 +1,167 @@
+.container-upload {
+  width: 80%;
+  padding: 25px;
+  border: solid 1px #ddd;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.dropzone {
+  width: 100%;
+  height: 250px;
+  padding: 2rem;
+  text-align: center;
+  border: dashed 1.5px #aaa;
+  position: relative;
+  margin: 0 auto;
+  cursor: pointer !important;
+  border-radius: 5px;
+}
+
+.dropzone input {
+  opacity: 0;
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  cursor: pointer !important;
+}
+
+.dropzone label {
+  color: white;
+  width: 50%;
+  height: 20%;
+  border-radius: 21.5px;
+  background-color: #db202f;
+  padding: 8px 16px;
+  cursor: pointer !important;
+}
+
+.dropzone h3 {
+  font-size: 20px;
+  color: #aaa;
+  margin-bottom: 5px;
+}
+
+.dropzone.hovering {
+  border: 1.5px solid #c2c2c2;
+  color: #dadada !important;
+  background-color: #EEE;
+}
+
+svg{
+  margin-bottom: 20px;
+}
+
+.upload-icon {
+  fill: #aaa;
+}
+
+.fileover {
+  animation: shake 1s;
+  animation-iteration-count: infinite;
+}
+
+/* FILES LISTED ITEMS */
+.files-list {
+  width: 80%;
+  margin-top: 1.5rem;
+  padding: 0px !important;
+}
+
+.files-list .single-file {
+  display: flex;
+  padding: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  border: dashed 1.5px #ddd;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-grow: 1;
+}
+
+.files-list .single-file .delete {
+  display: flex;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.files-list .single-file .name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #353f4a;
+  margin: 0;
+}
+
+.files-list .single-file .size {
+  font-size: 12px;
+  font-weight: 500;
+  color: #a4a4a4;
+  margin: 0;
+  margin-bottom: 0.25rem;
+}
+
+.files-list .single-file .info {
+  width: 100%
+}
+
+/* Shake animation */
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
+
+/* BUTTONS */
+.container-btns {
+  width: 80%;
+  margin-top: 1.5rem;
+  padding: 0px !important;
+}
+
+.preview-btn {
+  margin-left: 10px;
+}

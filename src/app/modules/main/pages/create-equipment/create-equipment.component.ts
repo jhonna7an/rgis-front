@@ -7,12 +7,12 @@ import { EquipmentAbm } from '../../models/equipments/equipment';
 import { EquipmentBrand } from '../../models/equipments/equipment-brand';
 import { EquipmentModel } from '../../models/equipments/equipment-model';
 import { BranchOffice } from '../../models/manager/branch-office';
-import { BranchOfficeService } from '../../services/branch-office.service';
 import { BrandService } from '../../services/brand.service';
 import { DistrictService } from '../../services/district.service';
 import { EquipmentService } from '../../services/equipment.service';
 import { ModelService } from '../../services/model.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-create-equipment',
@@ -22,26 +22,27 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CreateEquipmentComponent implements OnInit {
 
   public createForm: FormGroup;
-
   public types: EquipmentName[];
   public brands: EquipmentBrand[];
   public models: EquipmentModel[];
   public districts: District[];
-  public branchOffices: BranchOffice[];
 
   public loading: boolean;
   public isBrandDisabled: boolean;
   public isModelDisabled: boolean;
   public isBranchOfficeDisabled: boolean;
 
+  public excelData: [][];
+
   constructor(private formBuilder: FormBuilder,
-              private brandService: BrandService,
-              private modelService: ModelService,
-              private districtService: DistrictService,
-              private branchOfficeService: BranchOfficeService,
-              private equipmentService: EquipmentService,
-              private nameService: EquipmentNameService,
-              private snackBar: MatSnackBar,) { }
+    private brandService: BrandService,
+    private modelService: ModelService,
+    private districtService: DistrictService,
+    private equipmentService: EquipmentService,
+    private nameService: EquipmentNameService,
+    private snackBar: MatSnackBar) {
+
+  }
 
   ngOnInit(): void {
     this.loading = false;
@@ -57,6 +58,7 @@ export class CreateEquipmentComponent implements OnInit {
     return this.createForm.controls;
   }
 
+  //#region CREATE FORM
   private initCreateForm(){
     this.createForm = this.formBuilder.group(
       {
@@ -70,22 +72,24 @@ export class CreateEquipmentComponent implements OnInit {
         serialFactory: [''],
         marca: ['', Validators.required],
         model: ['', Validators.required],
-        inService: [this.currentDate, Validators.required],
-        district: ['', Validators.required],
-        branchOffice: ['', Validators.required]
+        inService: [new Date(), Validators.required],
+        district: ['', Validators.required]
       }
     );
   }
 
-  public saveEquipment(value: any){
+  public saveCreate(value: any){
     const equipment = new EquipmentAbm();
-    equipment.setCreateInfo(value.serial, value.serialFactory, value.model, value.InService, value.branchOffice);
-    console.log(equipment);
+    equipment.completeCreate(value);
     this.equipmentService.create(equipment)
       .subscribe((response: boolean) => {
+        this.createForm.reset();
+        console.log(this.createForm.valid);
+
         this.openSnackBar(response);
-        console.log(response);
       }, error => {
+        this.createForm.reset();
+        this.openSnackBar(false);
         console.error(error);
       });
   }
@@ -122,20 +126,6 @@ export class CreateEquipmentComponent implements OnInit {
       });
   }
 
-  public onChangeDistrict(value: any): void{
-    this.loading = true;
-    this.branchOfficeService.Get(value)
-      .subscribe((response: BranchOffice[]) => {
-        this.isBranchOfficeDisabled = true;
-        this.branchOffices = response;
-        this.fm['branchOffice'].reset();
-        this.fm['branchOffice'].markAsUntouched();
-        this.loading = false;
-      }, error => {
-        console.error(error);
-      });
-  }
-
   private getTypes(): void {
     this.loading = true;
     this.nameService.get()
@@ -157,10 +147,12 @@ export class CreateEquipmentComponent implements OnInit {
         console.error(error);
       });
   }
+  //#endregion
 
+  //SNACKBAR
   private openSnackBar = (flag: boolean) => {
     const class_style = flag ? 'snackBar-success' : 'snackBar-error';
-    const message = flag ? 'Se completo la solicitud correctamente' : 'Se produjo un error al intentar procesar la solicitud';
+    const message = flag ? 'Se completó la solicitud correctamente' : 'Se produjo un error al intentar procesar la solicitud';
     this.snackBar.open(message, '', {
       duration: 5000,
       horizontalPosition: 'right',
@@ -169,7 +161,15 @@ export class CreateEquipmentComponent implements OnInit {
     });
   }
 
-  get currentDate(): Date {
-    return new Date();
+  public showMessage = (messageEvent: any) => {
+    console.log(messageEvent);
+
+    const class_style = messageEvent.flag ? 'snackBar-success' : 'snackBar-error';
+    this.snackBar.open(messageEvent.message, '', {
+      duration: 5000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: [class_style]
+    });
   }
 }

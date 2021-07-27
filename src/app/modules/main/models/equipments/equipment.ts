@@ -1,3 +1,4 @@
+import { District } from 'src/app/modules/main/models/equipments/district';
 import { EEquipmentValoration } from './../EEquipmentValoration.enum';
 import { BaseModel } from '../base-model';
 import { BranchOffice } from '../manager/branch-office';
@@ -33,10 +34,19 @@ export class EquipmentAbm extends BaseModel {
     public stateId: number;
     public isHold: boolean;
     public valorationId: number;
-    public SerialFactory: string;
+    public serialFactory: string;
     public inServices: Date;
     public hasNewComment: boolean;
     public comments: EquipmentComment[];
+
+    //CREATE
+    public districtId: number;
+
+    //CREATE LIST
+    public type: string;
+    public brand: string;
+    public model: string;
+    public district: string;
 
     constructor(equipment?: Equipment, isMultiEdit?: boolean, formData?: any) {
         super();
@@ -67,18 +77,27 @@ export class EquipmentAbm extends BaseModel {
         // }
     }
 
-    public setCreateInfo(serial: string, serialFactory: string, modelId: number, inService: Date, branchOfficeId: number){
-        this.serial = serial;
-        this.SerialFactory = serialFactory;
-        this.modelId = modelId;
-        this.stateId = EEquipmentState.Operative;
-        this.valorationId = EEquipmentValoration.Alta;
-        this.inServices = inService;
-        this.branchOfficeId = branchOfficeId;
-        this.modificationDate = new Date();
-        this.modificationUserId = 1; //Falta implementacion de login
-        this.creationDate = new Date();
-        this.creationUserId = 1;
+    public completeCreate(value: any){
+      this.serial = value.serial;
+      this.serialFactory = value.serialFactory;
+      this.modelId = value.model;
+      this.stateId = EEquipmentState.Operative;
+      this.valorationId = EEquipmentValoration.Alta;
+      this.districtId = value.district;
+      this.inServices = value.inService;
+      this.modificationDate = new Date();
+      this.modificationUserId = 1; //Falta implementacion de login
+      this.creationDate = new Date();
+      this.creationUserId = 1;
     }
 
+    public completeData(){
+      this.comments = new Array<EquipmentComment>();
+      this.stateId = EEquipmentState.Operative;
+      this.valorationId = EEquipmentValoration.Alta;
+      this.modificationUserId = 1; //Falta implementacion de login
+      this.modificationDate = new Date();
+      this.creationDate = new Date();
+      this.creationUserId = 1;
+    }
 }

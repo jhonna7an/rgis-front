@@ -1,3 +1,4 @@
+import { SpinnerService } from './services/spinner.service';
 import { EquipmentNameService } from './services/equipment-name.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -36,6 +37,11 @@ import { DataService } from './services/data.service';
 import { CreateEquipmentComponent } from './pages/create-equipment/create-equipment.component';
 import { BrandService } from './services/brand.service';
 import { ModelService } from './services/model.service';
+import { UploadFileComponent } from './components/upload-file/upload-file.component';
+import { ProgressComponent } from './components/upload-file/progress/progress.component';
+import { PreviewComponent } from './components/upload-file/preview/preview.component';
+
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 @NgModule({
   declarations: [
@@ -54,7 +60,11 @@ import { ModelService } from './services/model.service';
     DatatableComponent,
     DateAgoPipe,
     DialogHistoricComponent,
-    CreateEquipmentComponent
+    CreateEquipmentComponent,
+    UploadFileComponent,
+    ProgressComponent,
+    DragAndDropDirective,
+    PreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +87,8 @@ import { ModelService } from './services/model.service';
     DataService,
     BrandService,
     ModelService,
-    EquipmentNameService
+    EquipmentNameService,
+    SpinnerService
   ],
   bootstrap: []
 })

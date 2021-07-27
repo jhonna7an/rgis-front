@@ -1,0 +1,31 @@
+<h1 class="mat-dialog-title">Vista Previa Equipos</h1>
+
+<div class="mat-dialog-content">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Equipo</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Serial</th>
+        <th>Distrito</th>
+        <th>InServices</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of data">
+        <td>{{row.equipo}}</td>
+        <td>{{row.marca}}</td>
+        <td>{{row.modelo}}</td>
+        <td>{{row.serial}}</td>
+        <td>{{row.distrito}}</td>
+        <td>{{row.inService}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="mat-dialog-actions" align="end">
+  <button mat-dialog-close
+          mat-flat-button
+          type="button">Cerrar</button>
+</div>
