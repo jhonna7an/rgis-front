@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ManagerService } from './manager.service';
+import { ManagerService } from '../../shared/services/manager.service';
 import { EquipmentState } from '../models/equipments/equipment-state';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';

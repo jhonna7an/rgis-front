@@ -1,4 +1,4 @@
-import { SpinnerService } from './../../main/services/spinner.service';
+import { SpinnerService } from '../services/spinner.service';
 import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';

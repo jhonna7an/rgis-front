@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { EquipmentBrand } from '../models/equipments/equipment-brand';
-import { ManagerService } from './manager.service';
+import { ManagerService } from '../../shared/services/manager.service';
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ManagerService } from './manager.service';
+import { ManagerService } from '../../shared/services/manager.service';
 import { EquipmentName } from '../models/equipments/equipment-name';
 
 @Injectable({

@@ -1,4 +1,4 @@
-import { SpinnerService } from './../../../main/services/spinner.service';
+import { SpinnerService } from '../../services/spinner.service';
 import { Component } from '@angular/core';
 
 @Component({

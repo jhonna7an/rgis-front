@@ -1,3 +1,4 @@
+import { ToastService } from './../../../shared/services/toast.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -5,6 +6,8 @@ import * as XLSX from 'xlsx';
 import { EquipmentAbm } from '../../models/equipments/equipment';
 import { EquipmentService } from '../../services/equipment.service';
 import { PreviewComponent } from './preview/preview.component';
+import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload-file',
@@ -19,7 +22,7 @@ import { PreviewComponent } from './preview/preview.component';
     ]),
   ]
 })
-export class UploadFileComponent implements OnInit {
+export class UploadFileComponent extends BaseComponent implements OnInit {
 
   public files: any[] = [];
   public excelData: any[] = [];
@@ -28,10 +31,14 @@ export class UploadFileComponent implements OnInit {
 
   @ViewChild('fileDropRef') filesUploaded: ElementRef;
   @Input() isMultiFile: boolean;
-  @Output() sendMessage = new EventEmitter<any>();
 
-  constructor(private equipmentService: EquipmentService,
-    private dialog:MatDialog) { }
+  constructor(
+    private equipmentService: EquipmentService,
+    private toastService: ToastService,
+    private dialog:MatDialog
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.isDisabled = true;
@@ -41,14 +48,12 @@ export class UploadFileComponent implements OnInit {
     let message: string = '';
     const extension = files[0].name.split('.')[1];
     if (extension.toUpperCase() !== 'XLSX') {
-      message = "Solo se pueden procesar archivos con extension '.xlsx'.";
-      this.sendMessage.emit({flag: false, message: message})
+      this.toastService.showError("Solo se pueden procesar archivos con extension '.xlsx'.");
       throw new Error(message);
     }
 
     if (files.length !== 1) {
-      message = 'Solo se puede procesar un archivo.';
-      this.sendMessage.emit({flag: false, message: message})
+      this.toastService.showError("Solo se puede procesar un archivo.");
       throw new Error(message);
     }
 
@@ -89,11 +94,13 @@ export class UploadFileComponent implements OnInit {
 
   private saveCreateList(equipments: Array<EquipmentAbm>) {
     this.equipmentService.createList(equipments)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: boolean) => {
         this.deleteFile(0);
-        this.sendMessage.emit({flag: true, message: "Se procesaron los registros correctamente."})
+        this.toastService.showSuccess('Se procesaron los registros correctamente.');
       }, error => {
         console.error(error);
+        this.toastService.showError('Ocurrió un error al intentar procesar la solicitud.');
         this.deleteFile(0);
       });
   }

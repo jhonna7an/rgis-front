@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EquipmentSummaryComponent } from './modules/main/pages/equipment-summary/equipment-summary.component';
+import { EquipmentSummaryComponent } from './modules/main/pages/summary/equipment-summary.component';
 import { HomeComponent } from './modules/main/pages/home/home.component';
-import { EquipmentDetailComponent } from './modules/main/pages/equipment-detail/equipment-detail.component';
-import { CreateEquipmentComponent } from './modules/main/pages/create-equipment/create-equipment.component';
+import { EquipmentDetailComponent } from './modules/main/pages/detail/equipment-detail.component';
+import { CreateEquipmentComponent } from './modules/main/pages/create/create-equipment.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},

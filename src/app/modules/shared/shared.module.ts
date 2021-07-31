@@ -1,3 +1,4 @@
+import { ToastService } from './services/toast.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,6 +11,8 @@ import { MaterialModule } from './material.module';
 import { ToastComponent } from './components/toast/toast.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { AnimationComponent } from './components/animation/animation.component';
+import { ManagerService } from './services/manager.service';
+import { SpinnerService } from './services/spinner.service';
 
 
 
@@ -30,6 +33,11 @@ import { AnimationComponent } from './components/animation/animation.component';
   ],
   exports: [
     SpinnerComponent
+  ],
+  providers: [
+    ManagerService,
+    ToastService,
+    SpinnerService
   ]
 })
 export class SharedModule { }

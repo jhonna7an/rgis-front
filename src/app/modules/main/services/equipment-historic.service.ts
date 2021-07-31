@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ManagerService } from './manager.service';
+import { ManagerService } from '../../shared/services/manager.service';
 import { HistoricEquipment } from '../models/equipments/historicEquipment';
 import { Equipment } from '../models/equipments/equipment';
 import { DatePipe } from '@angular/common';

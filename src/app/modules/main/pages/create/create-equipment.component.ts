@@ -1,25 +1,25 @@
-import { EquipmentName } from './../../models/equipments/equipment-name';
-import { EquipmentNameService } from './../../services/equipment-name.service';
+import { ToastService } from '../../../shared/services/toast.service';
+import { EquipmentName } from '../../models/equipments/equipment-name';
+import { EquipmentNameService } from '../../services/equipment-name.service';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { District } from '../../models/equipments/district';
 import { EquipmentAbm } from '../../models/equipments/equipment';
 import { EquipmentBrand } from '../../models/equipments/equipment-brand';
 import { EquipmentModel } from '../../models/equipments/equipment-model';
-import { BranchOffice } from '../../models/manager/branch-office';
 import { BrandService } from '../../services/brand.service';
 import { DistrictService } from '../../services/district.service';
 import { EquipmentService } from '../../services/equipment.service';
 import { ModelService } from '../../services/model.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import * as XLSX from 'xlsx';
+import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-equipment',
   templateUrl: './create-equipment.component.html',
   styleUrls: ['./create-equipment.component.css']
 })
-export class CreateEquipmentComponent implements OnInit {
+export class CreateEquipmentComponent extends BaseComponent implements OnInit {
 
   public createForm: FormGroup;
   public types: EquipmentName[];
@@ -34,14 +34,16 @@ export class CreateEquipmentComponent implements OnInit {
 
   public excelData: [][];
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private brandService: BrandService,
     private modelService: ModelService,
     private districtService: DistrictService,
     private equipmentService: EquipmentService,
     private nameService: EquipmentNameService,
-    private snackBar: MatSnackBar) {
-
+    private toastService: ToastService
+  ) {
+    super();
   }
 
   ngOnInit(): void {
@@ -59,7 +61,7 @@ export class CreateEquipmentComponent implements OnInit {
   }
 
   //#region CREATE FORM
-  private initCreateForm(){
+  private initCreateForm(): void {
     this.createForm = this.formBuilder.group(
       {
         type: ['', Validators.required],
@@ -78,18 +80,18 @@ export class CreateEquipmentComponent implements OnInit {
     );
   }
 
-  public saveCreate(value: any){
+  public saveCreate(value: any): void {
     const equipment = new EquipmentAbm();
     equipment.completeCreate(value);
     this.equipmentService.create(equipment)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: boolean) => {
         this.createForm.reset();
-        console.log(this.createForm.valid);
-
-        this.openSnackBar(response);
+        this.resetHandle();
+        this.toastService.showSuccess('Se completó la solicitud correctamente.');
       }, error => {
         this.createForm.reset();
-        this.openSnackBar(false);
+        this.toastService.showError('Ocurrió un error al intentar procesar la solicitud.');
         console.error(error);
       });
   }
@@ -99,6 +101,7 @@ export class CreateEquipmentComponent implements OnInit {
     this.isBrandDisabled = false;
     this.isModelDisabled = false;
     this.brandService.get(value)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: EquipmentBrand[]) => {
         this.isBrandDisabled = true;
         this.brands = response;
@@ -115,6 +118,7 @@ export class CreateEquipmentComponent implements OnInit {
     this.isModelDisabled = false;
     const typeId = this.createForm.controls['type'].value;
     this.modelService.Get(value, typeId)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: EquipmentModel[]) => {
         this.isModelDisabled = true;
         this.models = response;
@@ -129,6 +133,7 @@ export class CreateEquipmentComponent implements OnInit {
   private getTypes(): void {
     this.loading = true;
     this.nameService.get()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: EquipmentName[]) => {
         if (response) {
           this.types = response;
@@ -140,6 +145,7 @@ export class CreateEquipmentComponent implements OnInit {
   private getDistricts(): void{
     this.loading = true;
     this.districtService.Get()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: District[]) => {
         this.districts = response;
         this.loading = false;
@@ -147,29 +153,15 @@ export class CreateEquipmentComponent implements OnInit {
         console.error(error);
       });
   }
+
+  private resetHandle(){
+    this.fm['type'].reset();
+    this.fm['type'].markAsUntouched();
+    this.fm['serial'].markAsUntouched();
+    this.fm['marca'].markAsUntouched();
+    this.fm['model'].markAsUntouched();
+    this.fm['inService'].markAsUntouched();
+    this.fm['district'].markAsUntouched();
+  }
   //#endregion
-
-  //SNACKBAR
-  private openSnackBar = (flag: boolean) => {
-    const class_style = flag ? 'snackBar-success' : 'snackBar-error';
-    const message = flag ? 'Se completó la solicitud correctamente' : 'Se produjo un error al intentar procesar la solicitud';
-    this.snackBar.open(message, '', {
-      duration: 5000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
-      panelClass: [class_style]
-    });
-  }
-
-  public showMessage = (messageEvent: any) => {
-    console.log(messageEvent);
-
-    const class_style = messageEvent.flag ? 'snackBar-success' : 'snackBar-error';
-    this.snackBar.open(messageEvent.message, '', {
-      duration: 5000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
-      panelClass: [class_style]
-    });
-  }
 }

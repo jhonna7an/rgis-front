@@ -1,0 +1,133 @@
+<app-toolbar></app-toolbar>
+
+<div class="d-flex section">
+  <div class="container md-col-12">
+    <div class="container-header">
+      <h2>Crear equipo</h2>
+    </div>
+
+    <div class="row container-body">
+      <div class="col-md-6">
+        <form [formGroup]="createForm" autocomplete="off" novalidate (ngSubmit)="saveCreate(createForm.value)">
+          <div class="container-input">
+            <mat-form-field appearance="outline">
+              <mat-label>Equipo</mat-label>
+              <mat-select formControlName="type"
+                          (selectionChange)="onChangeType($event.value)">
+                  <mat-option *ngFor="let type of types" [value]="type.id">
+                      {{type.name}}
+                  </mat-option>
+              </mat-select>
+              <ng-container *ngIf="fm.type.errors && (fm.type.dirty || fm.type.touched)">
+                <mat-error class="error-message" *ngIf="fm.type.errors.required">El equipo es requerido</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+          <div class="container-input">
+            <mat-form-field appearance="outline">
+              <mat-label>Marca</mat-label>
+              <mat-select formControlName="marca"
+                          (selectionChange)="onChangeBrand($event.value)"
+                          [disabled]="!isBrandDisabled">
+                  <mat-option *ngFor="let brand of brands"
+                              [value]="brand.id">
+                      {{brand.brand}}
+                  </mat-option>
+              </mat-select>
+              <ng-container *ngIf="fm.marca.errors && (fm.marca.dirty || fm.marca.touched)">
+                <mat-error class="error-message" *ngIf="fm.marca.errors.required">La Marca es requerida</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+          <div class="container-input">
+            <mat-form-field appearance="outline">
+              <mat-label>Modelo</mat-label>
+              <mat-select formControlName="model"
+                          [disabled]="!isModelDisabled">
+                  <mat-option *ngFor="let model of models"
+                              [value]="model.id">
+                      {{model.model}}
+                  </mat-option>
+              </mat-select>
+              <ng-container *ngIf="fm.model.errors && (fm.model.dirty || fm.model.touched)">
+                <mat-error class="error-message" *ngIf="fm.model.errors.required">El Modelo es requerido</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+          <div class="container-input">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Serial</mat-label>
+              <input type="text"
+                      formControlName="serial"
+                      matInput
+                      placeholder="Ingrese Serial">
+              <ng-container *ngIf="fm.serial.errors && (fm.serial.dirty || fm.serial.touched)">
+                <mat-error class="error-message" *ngIf="fm.serial.errors.required">El Serial es requerido</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+          <div class="container-input">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Serial Factory</mat-label>
+              <input type="text"
+                      formControlName="serialFactory"
+                      matInput
+                      placeholder="Ingrese Serial">
+              <ng-container *ngIf="fm.serialFactory.errors && (fm.serialFactory.dirty || fm.serialFactory.touched)">
+                <mat-error class="error-message" *ngIf="fm.serialFactory.errors.required">Email is required</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+          <div class="container-input">
+            <mat-form-field appearance="outline">
+              <mat-label>InService</mat-label>
+              <input matInput
+                      [matDatepicker]="inService"
+                      formControlName="inService">
+              <mat-datepicker-toggle matSuffix [for]="inService"></mat-datepicker-toggle>
+              <mat-datepicker #inService></mat-datepicker>
+              <ng-container *ngIf="fm.inService.errors && (fm.inService.dirty || fm.inService.touched)">
+                <mat-error class="error-message" *ngIf="fm.inService.errors.required">Campo requerido</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+          <div class="container-input">
+            <mat-form-field appearance="outline">
+              <mat-label>Distrito</mat-label>
+              <mat-select formControlName="district">
+                  <mat-option *ngFor="let district of districts"
+                              [value]="district.id">
+                      {{district.districtName}}
+                  </mat-option>
+              </mat-select>
+              <ng-container *ngIf="fm.district.errors && (fm.district.dirty || fm.district.touched)">
+                <mat-error class="error-message" *ngIf="fm.district.errors.required">El Distrito es requerido</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+          <div class="container-input">
+              <button mat-flat-button
+                      type="submit"
+                      color="primary"
+                      [disabled]="!createForm.valid || loading">
+                      Guardar
+              </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <app-upload-file [isMultiFile]="false"></app-upload-file>
+      </div>
+
+    </div>
+
+  </div>
+</div>

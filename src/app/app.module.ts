@@ -2,6 +2,7 @@ import { SpinnerInterceptor } from './modules/shared/interceptors/spinner.interc
 import { SpinnerComponent } from './modules/shared/components/spinner/spinner.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CoreModule } from './modules/core/core.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { SharedModule } from './modules/shared/shared.module';
     HttpClientModule,
     MainModule,
     SharedModule,
+    CoreModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }

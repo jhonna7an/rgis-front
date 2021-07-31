@@ -90,6 +90,11 @@ button:focus {
 /* .cdk-overlay-pane {
     margin-top: 3% !important;
 } */
+.mat-snack-bar-container {
+  padding: 0px !important;
+  border-radius: 5px;
+  width: 400px;
+}
 
 .snackBar-success {
     background-color: #3DB671 !important;
