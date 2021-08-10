@@ -73,7 +73,7 @@ export class EquipmentSummaryComponent implements OnInit {
   }
 
   public GetEquipments(): void {
-    const equipment$ = this.service.Get()
+    const equipment$ = this.service.get()
     .subscribe((response: Equipment[]) => {
       this.equipmentsByCountry = response;
       this.districts = response.map(x => x.branchOffice.district).filter((value, i, arr) =>
@@ -87,7 +87,7 @@ export class EquipmentSummaryComponent implements OnInit {
     this.summaryData = null;
     this.countryDetail = null;
     this.bodyloading = true;
-    this.service.Get(district.id)
+    this.service.get(district.id)
       .subscribe((response: Equipment[]) => {
         this.equipments = response;
         this.currentDistrict = district.districtName;

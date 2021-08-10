@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MainModule } from '../app/modules/main/main.module';
+import { EquipmentModule } from './modules/main/equipment.module';
 import { SharedModule } from './modules/shared/shared.module';
 
 @NgModule({
@@ -20,7 +20,7 @@ import { SharedModule } from './modules/shared/shared.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MainModule,
+    EquipmentModule,
     SharedModule,
     CoreModule
   ],

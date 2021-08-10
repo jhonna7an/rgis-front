@@ -1,4 +1,9 @@
-import { SpinnerService } from '../shared/services/spinner.service';
+import { SidebarDetailItemComponent } from './components/sidebar/sidebar-detail/sidebar-detail-item/sidebar-detail-item.component';
+import { SidebarDetailComponent } from './components/sidebar/sidebar-detail/sidebar-detail.component';
+import { DatatableComponent } from './components/body/detail/datatable/datatable.component'
+import { CurrentDetailComponent } from './components/body/detail/current-detail/current-detail.component';
+import { HistoricDetailComponent } from './components/body/detail/historic-detail/historic-detail.component';
+import { DetailComponent } from './components/body/detail/detail.component';
 import { EquipmentNameService } from './services/equipment-name.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -14,11 +19,8 @@ import { EquipmentSummaryComponent } from './pages/summary/equipment-summary.com
 import { HomeComponent } from './pages/home/home.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { EquipmentDetailComponent } from './pages/detail/equipment-detail.component';
-import { SidebarFilterItemComponent } from './components/sidebar/sidebar-filter-item/sidebar-filter-item.component';
 import { SidebarComponent } from './components/sidebar/sidebar/sidebar.component';
-import { ContentComponent } from './components/body/equipment/content/content.component';
 import { DialogDetailComponent } from './components/dialogs/equipments/dialog-detail/dialog-detail.component';
-import { DatatableComponent } from './components/datatable/datatable.component';
 import { DialogHistoricComponent } from './components/dialogs/historics/dialog-historic/dialog-historic.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { DialogEditComponent } from './components/dialogs/equipments/dialog-edit/dialog-edit.component';
@@ -28,12 +30,11 @@ import { PreviewComponent } from './components/upload-file/preview/preview.compo
 import { CreateEquipmentComponent } from './pages/create/create-equipment.component';
 
 import { EquipmentService } from './services/equipment.service';
-import { ManagerService } from '../shared/services/manager.service';
 import { LocationService } from './services/location.service';
 import { EquipmentStateService } from './services/equipment-state.service';
 import { EquipmentValorationService } from './services/equipment-valoration.service';
 import { BranchOfficeService } from './services/branch-office.service';
-import { EquipmentHistoricService } from './services/equipment-historic.service';
+import { HistoricService } from './services/historic.service';
 import { UserService } from './services/user.service';
 import { DataService } from './services/data.service';
 import { BrandService } from './services/brand.service';
@@ -52,9 +53,10 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     ToolbarComponent,
     LoadingComponent,
     EquipmentDetailComponent,
-    SidebarFilterItemComponent,
+    SidebarDetailItemComponent,
     SidebarComponent,
-    ContentComponent,
+    SidebarDetailComponent,
+    DetailComponent,
     DialogDetailComponent,
     DialogEditComponent,
     AccentPipe,
@@ -65,7 +67,9 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     UploadFileComponent,
     ProgressComponent,
     DragAndDropDirective,
-    PreviewComponent
+    PreviewComponent,
+    CurrentDetailComponent,
+    HistoricDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +87,7 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     EquipmentStateService,
     EquipmentValorationService,
     BranchOfficeService,
-    EquipmentHistoricService,
+    HistoricService,
     UserService,
     DataService,
     BrandService,
@@ -92,4 +96,4 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
   ],
   bootstrap: []
 })
-export class MainModule { }
+export class EquipmentModule { }

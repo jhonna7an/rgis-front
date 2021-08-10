@@ -61,7 +61,7 @@
                         </div>
                         <div>
                             <p>Ubicación:</p>
-                            <span>{{data.equipment.location.name}}</span>
+                            <span>{{data.equipment.location?.name}}</span>
                         </div>
                     </div>
                 </div>
@@ -227,11 +227,9 @@
         </ng-container>
         <ng-container *ngIf="isHistoricTab">
             <button mat-raised-button color="primary" (click)="drawer.toggle()">Registros históricos</button>
-            <!-- <button mat-raised-button color="primary" (click)="drawer.toggle()">Mostrar registros históricos</button> -->
         </ng-container>
 
         <button mat-stroked-button (click)="close()">Cancelar</button>
-        <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
     </div>
 
 

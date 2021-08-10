@@ -1,0 +1,10 @@
+<div class="body-content">
+    <mat-tab-group #tabRef (selectedTabChange)="changeTab($event)">
+        <mat-tab label="Detalle">
+            <app-current-detail [tabHandler]="tabHandler"></app-current-detail>
+        </mat-tab>
+        <mat-tab label="Histórico">
+            <app-historic-detail [tabHandler]="tabHandler"></app-historic-detail>
+        </mat-tab>
+    </mat-tab-group>
+</div>

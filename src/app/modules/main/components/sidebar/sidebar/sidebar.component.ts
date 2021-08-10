@@ -107,7 +107,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.filterList = new Array<string>();
     if (!this._isHistoricTab) {
-      this.equipmentService.Get()
+      this.equipmentService.get()
         .subscribe((response: Equipment[]) => {
           this.equipments = response;
           this.dataService.equipment$.emit(this.equipments);

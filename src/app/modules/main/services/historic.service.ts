@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
-export class EquipmentHistoricService {
+export class HistoricService {
 
   private url: string;
   private partialUrl: string;
@@ -30,7 +30,7 @@ export class EquipmentHistoricService {
     return this.http.get<HistoricEquipment[]>(this.partialUrl);
   }
 
-  public getEquipmentByDate = (countryId: number, search?:string, from?:string, to?:string): Observable<Equipment[]> => {
+  public getByDate = (countryId: number, search?:string, from?:string, to?:string): Observable<Equipment[]> => {
     this.partialUrl = `${this.url}/api/v1/Historic/GetEquipmentsByDate?countryId=${countryId}`;
 
     if (search) {

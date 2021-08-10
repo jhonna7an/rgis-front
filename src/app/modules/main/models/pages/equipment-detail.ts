@@ -60,13 +60,11 @@ export class HistoricDataSend {
 }
 
 export class MultiEditData {
+    public isEnableMultiEdit: boolean;
     public isMultiEditEvent: boolean;
-    public getMultiEditData: boolean;
-    public multiEditEquipments: Equipment[];
 
-    constructor(isMultiEditEvent: boolean, getMultiEditData: boolean, multiEditEquipments: Equipment[]){
+    constructor(isEnableMultiEdit: boolean, isMultiEditEvent: boolean){
+        this.isEnableMultiEdit = isEnableMultiEdit;
         this.isMultiEditEvent = isMultiEditEvent;
-        this.getMultiEditData = getMultiEditData;
-        this.multiEditEquipments = multiEditEquipments;
     }
 }

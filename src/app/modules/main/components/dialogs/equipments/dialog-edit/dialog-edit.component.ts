@@ -13,13 +13,14 @@ import { EquipmentService } from '../../../../services/equipment.service';
 import { BranchOffice } from '../../../../models/manager/branch-office';
 import { BranchOfficeService } from 'src/app/modules/main/services/branch-office.service';
 import { EquipmentAbm } from '../../../../models/equipments/equipment';
+import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
 
 @Component({
   selector: 'app-dialog-edit',
   templateUrl: './dialog-edit.component.html',
   styleUrls: ['./dialog-edit.component.css']
 })
-export class DialogEditComponent implements OnInit {
+export class DialogEditComponent extends BaseComponent implements OnInit {
 
   public loading: boolean;
   public editForm: FormGroup;
@@ -33,24 +34,25 @@ export class DialogEditComponent implements OnInit {
   public showBranchOffice: boolean;
   public showInputsInMultiEdit: boolean;
 
-  constructor(public dialogRef: MatDialogRef<DialogEditComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              private equipmentService: EquipmentService,
-              private districtService: DistrictService,
-              private branchOfficeService: BranchOfficeService,
-              private locationService: LocationService,
-              private valorationService: EquipmentValorationService,
-              private stateService: EquipmentStateService,
-              private formBuilder: FormBuilder) {
+  constructor(
+    private dialogRef: MatDialogRef<DialogEditComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private equipmentService: EquipmentService,
+    private districtService: DistrictService,
+    private branchOfficeService: BranchOfficeService,
+    private locationService: LocationService,
+    private valorationService: EquipmentValorationService,
+    private stateService: EquipmentStateService,
+    private formBuilder: FormBuilder
+  ) {
+    super();
+    console.log(data);
     this.loading = true;
     this.showBranchOffice = data.isMultiEdit ? false : true;
     this.showInputsInMultiEdit = data.isMultiEdit ? false : true;
   }
 
   ngOnInit(): void {
-    this.dialogRef.beforeClosed()
-      .subscribe(() => this.dialogRef.close('closed'));
-
     this.initEditForm();
     this.GetDropDownData();
   }

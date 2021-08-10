@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FilterData, FilterDetail } from '../../../models/pages/equipment-detail';
+import { FilterData, FilterDetail } from '../../../../models/pages/equipment-detail';
 
 @Component({
-  selector: 'app-sidebar-filter-item',
-  templateUrl: './sidebar-filter-item.component.html',
-  styleUrls: ['./sidebar-filter-item.component.css']
+  selector: 'app-sidebar-detail-item',
+  templateUrl: './sidebar-detail-item.component.html',
+  styleUrls: ['./sidebar-detail-item.component.css']
 })
-export class SidebarFilterItemComponent implements OnInit {
+export class SidebarDetailItemComponent implements OnInit {
 
   public isTitleExpanded: boolean;
   public _filter: FilterDetail;

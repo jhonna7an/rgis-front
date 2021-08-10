@@ -1,0 +1,29 @@
+.tab-container {
+  padding: 0px;
+}
+
+.body-header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 0px;
+}
+
+.input,
+.icon {
+  margin-right: 10px;
+}
+
+.actions {
+  margin-right: 50px;
+}
+
+.actions button,
+.btn-container button {
+  height: 94%;
+}
+
+.multi-edit-actions button:first-child {
+  margin-right: 10px;
+}
+

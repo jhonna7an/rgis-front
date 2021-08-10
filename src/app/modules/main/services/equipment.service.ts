@@ -1,8 +1,9 @@
+import { MultiEditData } from 'src/app/modules/main/models/pages/equipment-detail';
 import { EventEmitter, Injectable } from '@angular/core';
 
 import { ManagerService } from '../../shared/services/manager.service';
 import { environment } from '../../../../environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { Equipment, EquipmentAbm } from '../models/equipments/equipment';
 import { FilterData } from '../models/pages/equipment-detail';
@@ -15,15 +16,18 @@ export class EquipmentService {
   private url: string;
   private partialUrl: string;
 
+  private equipments$ = new Subject<Equipment[]>();
+  private multiEditData$ = new Subject<MultiEditData>();
+  private isLoading$ = new BehaviorSubject<boolean>(false);
   public edited$ = new EventEmitter<boolean>();
 
   constructor(private http: ManagerService) {
     this.url = `${environment.baseURL}`;
   }
 
-  public Get(districtId?: number): Observable<Equipment[]>{
+  public get(districtId?: number): Observable<Equipment[]>{
     this.partialUrl = `${this.url}/api/v1/Equipment`;
-    if (districtId != undefined || districtId != null) {
+    if (districtId) {
       this.partialUrl += `?districtId=${districtId}`;
     }
 
@@ -43,5 +47,29 @@ export class EquipmentService {
   public createList(equipments: Array<EquipmentAbm>): Observable<boolean> {
     this.partialUrl = `${this.url}/api/v1/Equipment/createList`;
     return this.http.post<boolean>(this.partialUrl, equipments);
+  }
+
+  public setEquipments(equipments: Equipment[]): void {
+    this.equipments$.next(equipments);
+  }
+
+  public getEquipmentsSubject(): Observable<Equipment[]> {
+    return this.equipments$.asObservable();
+  }
+
+  public setLoading(value: boolean): void {
+    this.isLoading$.next(value);
+  }
+
+  public isLoading(): Observable<boolean> {
+    return this.isLoading$.asObservable();
+  }
+
+  public setMultiEditData(value: MultiEditData): void {
+    this.multiEditData$.next(value);
+  }
+
+  public getMultiEditData(): Observable<MultiEditData> {
+    return this.multiEditData$.asObservable();
   }
 }

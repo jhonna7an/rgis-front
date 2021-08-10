@@ -5,7 +5,11 @@
         <h2>Editar</h2>
     </div>
     <div>
-        <form class="d-flex serial-form" [formGroup]="editForm" autocomplete="off" novalidate (ngSubmit)="editEquipment(editForm.value)">
+        <form class="d-flex serial-form" 
+              [formGroup]="editForm" 
+              autocomplete="off" 
+              novalidate 
+              (ngSubmit)="editEquipment(editForm.value)">
             <div class="input-container">
                 <mat-form-field appearance="outline">
                     <mat-label>Distrito</mat-label>

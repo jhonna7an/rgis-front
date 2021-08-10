@@ -43,12 +43,12 @@
         </mat-card>
 
         <div *ngIf="!isSidebarHide && !loading" class="container-item-filter">
-            <app-sidebar-filter-item [filter]="type" (sendFilter)="searchByFilter($event)"></app-sidebar-filter-item>
-            <app-sidebar-filter-item [filter]="model" (sendFilter)="searchByFilter($event)" *ngIf="hasTypeFilter"></app-sidebar-filter-item>
-            <app-sidebar-filter-item [filter]="brand" (sendFilter)="searchByFilter($event)" *ngIf="hasTypeFilter"></app-sidebar-filter-item>
-            <app-sidebar-filter-item [filter]="district" (sendFilter)="searchByFilter($event)"></app-sidebar-filter-item>
-            <app-sidebar-filter-item [filter]="location" (sendFilter)="searchByFilter($event)"></app-sidebar-filter-item>
-            <app-sidebar-filter-item [filter]="state" (sendFilter)="searchByFilter($event)"></app-sidebar-filter-item>
+            <app-sidebar-detail-item [filter]="type" (sendFilter)="searchByFilter($event)"></app-sidebar-detail-item>
+            <app-sidebar-detail-item [filter]="model" (sendFilter)="searchByFilter($event)" *ngIf="hasTypeFilter"></app-sidebar-detail-item>
+            <app-sidebar-detail-item [filter]="brand" (sendFilter)="searchByFilter($event)" *ngIf="hasTypeFilter"></app-sidebar-detail-item>
+            <app-sidebar-detail-item [filter]="district" (sendFilter)="searchByFilter($event)"></app-sidebar-detail-item>
+            <app-sidebar-detail-item [filter]="location" (sendFilter)="searchByFilter($event)"></app-sidebar-detail-item>
+            <app-sidebar-detail-item [filter]="state" (sendFilter)="searchByFilter($event)"></app-sidebar-detail-item>
         </div>
 
     </div>

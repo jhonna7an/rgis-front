@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { EquipmentHistoricService } from '../../../../services/equipment-historic.service';
+import { HistoricService } from '../../../../services/historic.service';
 import { HistoricEquipment, HistoricDisplay } from '../../../../models/equipments/historicEquipment';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -31,7 +31,7 @@ export class DialogHistoricComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogHistoricComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private historicService: EquipmentHistoricService) {}
+              private historicService: HistoricService) {}
 
   ngOnInit(): void {
     this.loading = true;

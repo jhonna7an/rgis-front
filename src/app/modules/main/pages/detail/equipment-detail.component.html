@@ -2,10 +2,10 @@
 
 <div class="d-flex container">
 
-    <!-- <app-sidebar [equipments]="equipments" (restartEmit)="restartFilter($event)" [hasFilter]="hasFilter" (sendFilterParent)="setFilter($event)" [hasTypeFilter]="hasTypeFilter" [serialFilter]="serialFilter" [isHistoricTab]="isHistoricTab" class="sidebar"></app-sidebar> -->
-    <!-- <app-content [equipments]="equipments" (enviarSerial)="getSerial($event)" (sendIsHistoricTab)="getIsHistoricTab($event)" class="body"></app-content> -->
     <app-sidebar [isHistoricTab]="isHistoricTab" class="sidebar"></app-sidebar>
-    <app-content (enviarSerial)="getSerial($event)" (sendIsHistoricTab)="getIsHistoricTab($event)" class="body"></app-content>
+    <app-detail class="body"
+                (enviarSerial)="getSerial($event)" 
+                (sendIsHistoricTab)="getIsHistoricTab($event)"></app-detail>
 
 </div>
 

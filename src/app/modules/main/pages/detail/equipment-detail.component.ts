@@ -1,16 +1,17 @@
-import { Component, OnDestroy, OnInit, Predicate } from '@angular/core';
+import { ToastService } from './../../../shared/services/toast.service';
+import { Component, OnInit } from '@angular/core';
 import { Equipment } from '../../models/equipments/equipment';
 import { EquipmentService } from '../../services/equipment.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
 import { DataService } from '../../services/data.service';
+import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-equipment-detail',
   templateUrl: './equipment-detail.component.html',
   styleUrls: ['./equipment-detail.component.css']
 })
-export class EquipmentDetailComponent implements OnInit, OnDestroy {
+export class EquipmentDetailComponent extends BaseComponent implements OnInit {
 
   public hasFilter: boolean;
   public hasTypeFilter: boolean;
@@ -19,12 +20,13 @@ export class EquipmentDetailComponent implements OnInit, OnDestroy {
   public loading: boolean;
 
   public isHistoricTab: boolean;
-  private editedSuscription: Subscription;
-  private equipmentSubscription: Subscription;
 
-  constructor(private equipmentService: EquipmentService,
-              private snackBar: MatSnackBar,
-              private dataService: DataService) {
+  constructor(
+    private equipmentService: EquipmentService,
+    private toastService: ToastService,
+    private dataService: DataService
+  ) {
+    super();
     this.loading = false;
     this.hasFilter = false;
     this.hasTypeFilter = false;
@@ -35,10 +37,11 @@ export class EquipmentDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.GetEquipments();
 
-    this.editedSuscription = this.equipmentService.edited$
+    this.equipmentService.edited$
+      .pipe(takeUntil(this.destroy$))
       .subscribe((flag: boolean) => {
         this.GetEquipments();
-        this.openSnackBar(flag);
+        this.toastService.showSuccess('Se completó la solicitud correctamente');
       });
 
     this.dataService.restart$
@@ -49,16 +52,15 @@ export class EquipmentDetailComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
-    this.editedSuscription.unsubscribe();
-    this.equipmentSubscription.unsubscribe();
-  }
-
   public GetEquipments(): void {
-    const equipment$ = this.equipmentService.Get()
+    this.equipmentService.get()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: Equipment[]) => {
+        console.log(response);
+
         this.equipments = response;
-        this.dataService.equipment$.emit(response);
+        this.equipmentService.setEquipments(response);
+        // this.dataService.equipment$.emit(response);
       });
   }
 
@@ -75,14 +77,14 @@ export class EquipmentDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  private openSnackBar = (flag: boolean) => {
-    const class_style = flag ? 'snackBar-success' : 'snackBar-error';
-    const message = flag ? 'Se completo la solicitud correctamente' : 'Se produjo un error al intentar procesar la solicitud';
-    this.snackBar.open(message, '', {
-      duration: 5000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
-      panelClass: [class_style]
-    });
-  }
+  // private openSnackBar = (flag: boolean) => {
+  //   const class_style = flag ? 'snackBar-success' : 'snackBar-error';
+  //   const message = flag ? 'Se completo la solicitud correctamente' : 'Se produjo un error al intentar procesar la solicitud';
+  //   this.snackBar.open(message, '', {
+  //     duration: 5000,
+  //     horizontalPosition: 'right',
+  //     verticalPosition: 'top',
+  //     panelClass: [class_style]
+  //   });s
+  // }
 }
