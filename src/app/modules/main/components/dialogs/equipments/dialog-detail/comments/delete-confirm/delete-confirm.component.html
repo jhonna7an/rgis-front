@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Eliminar</h1>
+<div mat-dialog-content class="content">¿Está seguro que desea eliminar este comentario?</div>
+<div mat-dialog-actions class="actions">
+    <button mat-raised-button 
+            color="primary"
+            [mat-dialog-close]="true">
+        Confirmar
+    </button>
+    <button mat-button 
+            mat-dialog-close
+            [mat-dialog-close]="false">
+        Cancelar
+    </button>
+</div>

@@ -1,0 +1,172 @@
+<div>
+    <div class="title">
+        <h3>Comentarios</h3>
+        <div>
+          <button mat-mini-fab
+                  color="primary"
+                  class="btn-add"
+                  (click)="add()">
+              <span class="material-icons-outlined">
+                  add
+              </span>
+          </button>
+        </div>
+    </div>
+
+    <div class="comment-container">
+        <form class="d-flex serial-form mr-20"
+                      [formGroup]="commentsForm"
+                      autocomplete="off"
+                      novalidate>
+            <div class="comment-list">
+                <div #input formArrayName="comments" *ngFor="let comment of comments.controls; let i = index">
+                    <div [formGroupName]="i" class="container-item">
+
+                        <ng-container *ngIf="comment.value.input">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>Comentario {{i}}</mat-label>
+                                <input type="text" formControlName="comment" matInput placeholder="Ingrese Comentario">
+                                <!-- <mat-error *ngIf="validateControl('serial') && hasError('serial', 'maxlength')">
+                                    El valor debe ser de 10 dígitos
+                                </mat-error>
+                                <mat-error *ngIf="validateControl('serial') && hasError('serial', 'minlength')">
+                                    El valor debe ser de 10 dígitos
+                                </mat-error> -->
+                            </mat-form-field>
+                        </ng-container>
+                        
+                        <ng-container *ngIf="!comment.value.input">
+                            <div class="item-label">
+                                <span>{{comment.value.comment}}</span>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="comment.value.edit">
+                            <button mat-mini-fab
+                                    color="primary"
+                                    (click)="enableEdit(comment)">
+                                <span class="material-icons-outlined">
+                                    edit
+                                </span>
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="comment.value.save">
+                            <button mat-mini-fab
+                                    color="primary"
+                                    [disabled]="!comments.controls[i].valid"
+                                    (click)="submit(comment.value)">
+                                <span class="material-icons-outlined">
+                                    save
+                                </span>
+                            </button>
+                        </ng-container>
+
+                        <button mat-mini-fab
+                                color="primary"
+                                (click)="remove(i, comment.value.isNewComment)">
+                            <span class="material-icons-outlined">
+                                delete
+                            </span>
+                        </button>
+
+
+                        <!-- <div class="form-group row">
+                            <label class="col-md-1" [attr.for]="'comment' + i">Comentario</label>
+                            <div class="col-md-3">
+                                <input type="text" [attr.id]="'comment' + 1" class="form-control" formControlName="comment">
+                            </div>
+                        </div> -->
+                    </div>
+
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- <mat-accordion>
+        <mat-expansion-panel (opened)="true"
+                            (closed)="false"
+                            #state_info
+                            [expanded]="true"
+                            class="expansion">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h3 class="item-title">Comentarios</h3>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <button mat-mini-fab
+                            color="primary"
+                            class="btn-add"
+                            (click)="add()">
+                        <span class="material-icons-outlined">
+                            add
+                        </span>
+                    </button>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="comment-container">
+                <form class="d-flex serial-form mr-20"
+                              [formGroup]="commentsForm"
+                              autocomplete="off"
+                              novalidate>
+                    <div class="comment-list">
+                        <div #input formArrayName="comments" *ngFor="let comment of comments.controls; let i = index">
+                            <div [formGroupName]="i" class="container-item">
+
+                                <ng-container *ngIf="comment.value.input">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>Comentario {{i}}</mat-label>
+                                        <input type="text" formControlName="comment" matInput placeholder="Ingrese Comentario">
+                                        
+                                    </mat-form-field>
+                                </ng-container>
+                                
+                                <ng-container *ngIf="!comment.value.input">
+                                    <div class="item-label">
+                                        <span>{{comment.value.comment}}</span>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="comment.value.edit">
+                                    <button mat-mini-fab
+                                            color="primary"
+                                            (click)="enableEdit(comment)">
+                                        <span class="material-icons-outlined">
+                                            edit
+                                        </span>
+                                    </button>
+                                </ng-container>
+
+                                <ng-container *ngIf="comment.value.save">
+                                    <button mat-mini-fab
+                                            color="primary"
+                                            [disabled]="!comments.controls[i].valid"
+                                            (click)="submit(comment.value)">
+                                        <span class="material-icons-outlined">
+                                            save
+                                        </span>
+                                    </button>
+                                </ng-container>
+
+                                <button mat-mini-fab
+                                        color="primary"
+                                        (click)="delete(i)">
+                                    <span class="material-icons-outlined">
+                                        delete
+                                    </span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion> -->
+</div>
+
+

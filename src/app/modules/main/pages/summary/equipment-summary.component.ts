@@ -74,12 +74,12 @@ export class EquipmentSummaryComponent implements OnInit {
 
   public GetEquipments(): void {
     const equipment$ = this.service.get()
-    .subscribe((response: Equipment[]) => {
-      this.equipmentsByCountry = response;
-      this.districts = response.map(x => x.branchOffice.district).filter((value, i, arr) =>
-        arr.findIndex(x => x.id === value.id) === i
-      );
-    });
+    // .subscribe((response: Equipment[]) => {
+    //   this.equipmentsByCountry = response;
+    //   this.districts = response.map(x => x.branchOffice.district).filter((value, i, arr) =>
+    //     arr.findIndex(x => x.id === value.id) === i
+    //   );
+    // });
   }
 
   public GetDetailByDistrict(district: District): void{
@@ -88,14 +88,14 @@ export class EquipmentSummaryComponent implements OnInit {
     this.countryDetail = null;
     this.bodyloading = true;
     this.service.get(district.id)
-      .subscribe((response: Equipment[]) => {
-        this.equipments = response;
-        this.currentDistrict = district.districtName;
-        this.sidebarIsShow = true;
-        this.SetSideBarDetail();
-        this.SetBodyDetail();
-        this.bodyloading = false;
-    });
+    //   .subscribe((response: Equipment[]) => {
+    //     this.equipments = response;
+    //     this.currentDistrict = district.districtName;
+    //     this.sidebarIsShow = true;
+    //     this.SetSideBarDetail();
+    //     this.SetBodyDetail();
+    //     this.bodyloading = false;
+    // });
   }
 
   private SetSideBarDetail(): void{

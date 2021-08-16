@@ -49,15 +49,15 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
     this.historicMessage = 'Elija un registro histórico';
     this.loading = false;
 
-    if (this.data.historicInfo.isHistoricTab) {
-      this.userService.Get(this.data.equipment.modificationUserId)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((response: UserView) => {
-          this.user = response;
-        }, error => {
-          console.error(error);
-        });
-    }
+    // if (this.data.historicInfo.isHistoricTab) {
+    //   this.userService.Get(this.data.equipment.modificationUserId)
+    //     .pipe(takeUntil(this.destroy$))
+    //     .subscribe((response: UserView) => {
+    //       this.user = response;
+    //     }, error => {
+    //       console.error(error);
+    //     });
+    // }
   }
 
   public getHistoric = (event: any): void => {

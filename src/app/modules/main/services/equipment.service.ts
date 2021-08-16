@@ -5,7 +5,7 @@ import { ManagerService } from '../../shared/services/manager.service';
 import { environment } from '../../../../environments/environment';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { Equipment, EquipmentAbm } from '../models/equipments/equipment';
+import { Equipment, EquipmentAbm, EquipmentRead } from '../models/equipments/equipment';
 import { FilterData } from '../models/pages/equipment-detail';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class EquipmentService {
   private url: string;
   private partialUrl: string;
 
-  private equipments$ = new Subject<Equipment[]>();
+  private equipments$ = new Subject<EquipmentRead[]>();
   private multiEditData$ = new Subject<MultiEditData>();
   private isLoading$ = new BehaviorSubject<boolean>(false);
   public edited$ = new EventEmitter<boolean>();
@@ -25,13 +25,13 @@ export class EquipmentService {
     this.url = `${environment.baseURL}`;
   }
 
-  public get(districtId?: number): Observable<Equipment[]>{
+  public get(districtId?: number): Observable<EquipmentRead[]>{
     this.partialUrl = `${this.url}/api/v1/Equipment`;
     if (districtId) {
       this.partialUrl += `?districtId=${districtId}`;
     }
 
-    return this.http.get<Equipment[]>(this.partialUrl);
+    return this.http.get<EquipmentRead[]>(this.partialUrl);
   }
 
   public edit(equipment: EquipmentAbm): Observable<boolean> {
@@ -49,11 +49,11 @@ export class EquipmentService {
     return this.http.post<boolean>(this.partialUrl, equipments);
   }
 
-  public setEquipments(equipments: Equipment[]): void {
+  public setEquipments(equipments: EquipmentRead[]): void {
     this.equipments$.next(equipments);
   }
 
-  public getEquipmentsSubject(): Observable<Equipment[]> {
+  public getEquipmentsSubject(): Observable<EquipmentRead[]> {
     return this.equipments$.asObservable();
   }
 

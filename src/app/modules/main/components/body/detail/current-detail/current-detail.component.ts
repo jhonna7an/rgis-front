@@ -1,13 +1,12 @@
+import { EquipmentRead } from './../../../../models/equipments/equipment';
 import { TabHandler } from './../TabHandler';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
-import { Equipment } from 'src/app/modules/main/models/equipments/equipment';
 import { FilterSend, MultiEditData } from 'src/app/modules/main/models/pages/equipment-detail';
 import { EquipmentService } from 'src/app/modules/main/services/equipment.service';
-import { DialogEditComponent } from '../../../dialogs/equipments/dialog-edit/dialog-edit.component';
 
 @Component({
   selector: 'app-current-detail',
@@ -17,7 +16,7 @@ import { DialogEditComponent } from '../../../dialogs/equipments/dialog-edit/dia
 export class CurrentDetailComponent extends BaseComponent implements OnInit {
 
   public serialForm: FormGroup;
-  public equipments: Equipment[];
+  public equipments: EquipmentRead[];
 
   public isEnableMultiEdit: boolean;
   public isDisableMultiEditBtn: boolean;
@@ -52,7 +51,8 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
     //Get Equipments from Server
     this.equipmentService.get()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: Equipment[]) => {
+      .subscribe((response: EquipmentRead[]) => {
+        console.log(response);
         this.equipments = response;
         this.isDisableMultiEditBtn = false;
       });
@@ -60,7 +60,7 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
     //Get Equipments from Subject
     this.equipmentService.getEquipmentsSubject()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: Equipment[]) => {
+      .subscribe((response: EquipmentRead[]) => {
         this.equipments = response;
       })
 

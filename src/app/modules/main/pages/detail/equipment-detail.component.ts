@@ -55,13 +55,13 @@ export class EquipmentDetailComponent extends BaseComponent implements OnInit {
   public GetEquipments(): void {
     this.equipmentService.get()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: Equipment[]) => {
-        console.log(response);
+      // .subscribe((response: Equipment[]) => {
+      //   console.log(response);
 
-        this.equipments = response;
-        this.equipmentService.setEquipments(response);
-        // this.dataService.equipment$.emit(response);
-      });
+      //   this.equipments = response;
+      //   this.equipmentService.setEquipments(response);
+      //   // this.dataService.equipment$.emit(response);
+      // });
   }
 
   public getSerial(serial: string): void{

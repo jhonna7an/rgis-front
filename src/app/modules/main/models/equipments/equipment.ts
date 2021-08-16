@@ -1,4 +1,3 @@
-import { District } from 'src/app/modules/main/models/equipments/district';
 import { EEquipmentValoration } from './../EEquipmentValoration.enum';
 import { BaseModel } from '../base-model';
 import { BranchOffice } from '../manager/branch-office';
@@ -24,6 +23,23 @@ export class Equipment extends BaseModel{
     public state: EquipmentState;
     public valoration: EquipmentValoration;
     public comments: EquipmentComment[];
+}
+
+export interface EquipmentRead extends BaseModel {
+  serial: string;
+  isHold: boolean;
+  serialFactory: string;
+  inServices: Date;
+  type: string;
+  model: string;
+  brand: string;
+  branchOffice: string;
+  district: string;
+  location: string;
+  state: string;
+  stateId: number;
+  valoration: string;
+  historicCount: number;
 }
 
 export class EquipmentAbm extends BaseModel {

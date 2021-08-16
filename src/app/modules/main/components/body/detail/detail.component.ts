@@ -16,7 +16,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
   ]
 })
-export class DetailComponent extends BaseComponent implements OnInit, OnDestroy {
+export class DetailComponent extends BaseComponent implements OnInit {
 
   public tabHandler: TabHandler;
 

@@ -1,3 +1,5 @@
+import { CommentService } from './services/comment.service';
+import { DetailCurrentComponent } from './components/dialogs/equipments/dialog-detail/detail-current/detail-current.component';
 import { SidebarDetailItemComponent } from './components/sidebar/sidebar-detail/sidebar-detail-item/sidebar-detail-item.component';
 import { SidebarDetailComponent } from './components/sidebar/sidebar-detail/sidebar-detail.component';
 import { DatatableComponent } from './components/body/detail/datatable/datatable.component'
@@ -44,6 +46,9 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { AccentPipe } from './pipes/accent.pipe';
 
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { CommentComponent } from './components/dialogs/equipments/dialog-detail/comments/comments.component';
+import { DetailHistoricComponent } from './components/dialogs/equipments/dialog-detail/detail-historic/detail-historic.component';
+import { DeleteConfirmComponent } from './components/dialogs/equipments/dialog-detail/comments/delete-confirm/delete-confirm.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +74,11 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     DragAndDropDirective,
     PreviewComponent,
     CurrentDetailComponent,
-    HistoricDetailComponent
+    HistoricDetailComponent,
+    DetailCurrentComponent,
+    CommentComponent,
+    DetailHistoricComponent,
+    DeleteConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +101,8 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     DataService,
     BrandService,
     ModelService,
-    EquipmentNameService
+    EquipmentNameService,
+    CommentService
   ],
   bootstrap: []
 })

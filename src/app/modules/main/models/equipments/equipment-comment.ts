@@ -6,4 +6,8 @@ export class EquipmentComment extends BaseModel {
     public newComment: boolean;
     public wasEdited: boolean;
     public wasDeleted: boolean;
+
+    constructor(){
+      super();
+    }
 }

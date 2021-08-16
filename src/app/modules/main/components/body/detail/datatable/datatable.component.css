@@ -1,8 +1,35 @@
 table {
-    width: 100%;
-    box-shadow: none !important;
+  width: 100%;
+  table-layout: fixed;
+  box-shadow: none !important;
 }
 
 td mat-icon {
     cursor: pointer;
+}
+
+th, td {
+  overflow: hidden;
+  /* width: 200px; */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.e-operative {
+  color: #28a745;
+  border: 1px solid #28a745;
+  border-radius: 5px;
+  padding: 3px;
+}
+.e-fault {
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  border-radius: 5px;
+  padding: 3px;
+}
+.e-hold {
+  color: #17a2b8;
+  border: 1px solid #17a2b8;
+  border-radius: 5px;
+  padding: 3px;
 }

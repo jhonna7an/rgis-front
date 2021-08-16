@@ -1,0 +1,135 @@
+<div class="tab-container">
+    <mat-accordion>
+        <mat-expansion-panel (opened)="true"
+                             (closed)="false"
+                             #basic_info
+                             [expanded]="true"
+                             class="expansion">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h3 class="item-title">Datos Técnicos</h3>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <!-- <span class="material-icons-outlined" [ngClass]="!basic_info.expanded ? 'rotate-up' : 'rotate-down'">
+                        expand_circle_down
+                    </span> -->
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="item-body">
+                <div class="body-item">
+                    <p>Equipo:</p>
+                    <span>{{equipment.type}}</span>
+                </div>
+                <div class="body-item">
+                    <p>N° Serie:</p>
+                    <span>{{equipment.serial}}</span>
+                </div>
+                <div class="body-item">
+                    <p>Modelo:</p>
+                    <span>{{equipment.model}}</span>
+                </div>
+                <div class="body-item">
+                    <p>Marca:</p>
+                    <span>{{equipment.brand}}</span>
+                </div>
+                <div class="body-item">
+                    <p>InServices:</p>
+                    <span>{{equipment.inServices | date:'shortDate'}}</span>
+                </div>
+                <div class="body-item">
+                    <p>Fecha de Ingreso:</p>
+                    <span>{{equipment.creationDate | date:'shortDate'}}</span>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-accordion>
+        <mat-expansion-panel (opened)="true"
+                             (closed)="false"
+                             #state_info
+                             [expanded]="true"
+                             class="expansion">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h3 class="item-title">Estado</h3>
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="item-body">
+              <div class="body-item">
+                  <p>Estado:</p>
+                  <span class="{{equipment.state | lowercase | accent}}">
+                      {{equipment.state}}
+                  </span>
+              </div>
+              <div class="body-item">
+                  <p>Valoración:</p>
+                  <span>{{equipment.valoration}}</span>
+              </div>
+              <div class="body-item">
+                  <p>Última modificación:</p>
+                  <span>{{equipment.modificationDate | dateAgo}}</span>
+              </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-accordion>
+      <mat-expansion-panel (opened)="true"
+                           (closed)="false"
+                           #location_info
+                           [expanded]="true"
+                           class="expansion">
+          <mat-expansion-panel-header>
+              <mat-panel-title>
+                <h3 class="item-title">Distribución</h3>
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div class="item-body">
+              <div class="body-item">
+                  <p>Distrito:</p>
+                  <span>{{equipment.district}}</span>
+              </div>
+              <div class="body-item">
+                  <p>Oficina:</p>
+                  <span>{{equipment.branchOffice}}</span>
+              </div>
+              <div class="body-item">
+                  <p>Ubicación:</p>
+                  <span>{{equipment.location}}</span>
+              </div>
+        </div>
+      </mat-expansion-panel>
+  </mat-accordion>
+
+  <!-- <div class="row ml-0 mr-0" *ngIf="data.historicInfo.isHistoricTab">
+      <h3>Modificación</h3>
+      <div>
+          <div>
+              <p>Fecha:</p>
+              <span>{{data.equipment.modificationDate | date:'shortDate'}}</span>
+          </div>
+          <div>
+              <p>Hora:</p>
+              <span>{{data.equipment.modificationDate | date:'shortTime'}}</span>
+          </div>
+          <div>
+              <p>BadgeId:</p>
+              <span>{{user?.badgeId}}</span>
+          </div>
+          <div>
+              <p>Nombre:</p>
+              <span>{{user?.name}} {{user?.lastName}}</span>
+          </div>
+      </div>
+  </div> -->
+
+    <app-comments [equipmentId]="equipment.id"></app-comments>
+</div>
