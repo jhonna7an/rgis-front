@@ -2,11 +2,12 @@ import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.componen
 import { ToastService } from './../../../../../../shared/services/toast.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommentService } from './../../../../../services/comment.service';
-import { Component, ElementRef, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, QueryList, Renderer2, ValueProvider, ViewChildren } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
 import { EquipmentComment } from 'src/app/modules/main/models/equipments/equipment-comment';
 import { MatDialog } from '@angular/material/dialog';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-comments',
@@ -18,6 +19,11 @@ export class CommentComponent extends BaseComponent implements OnInit {
   private _equipmentId: number;
   public commentsForm: FormGroup;
   public equipmentComments: EquipmentComment[];
+
+  public enteredButton = false;
+  public isMatMenuOpen = false;
+  public isMatMenu2Open = false;
+  public prevButtonTrigger: any;
 
   @ViewChildren('input') rows: ElementRef;
 
@@ -42,7 +48,8 @@ export class CommentComponent extends BaseComponent implements OnInit {
     private commentService: CommentService,
     private toastService: ToastService,
     private formBuilder: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private render: Renderer2
   ) {
     super();
   }
@@ -61,20 +68,22 @@ export class CommentComponent extends BaseComponent implements OnInit {
     this.equipmentComments.forEach(x => {
       this.comments.push(this.formBuilder.group({
         comment: [x.comment, Validators.required],
+        modificationDate: [x.modificationDate],
+        modificationUser: [x.modificationUser],
         isNewComment: [false],
         edit: [true],
         save: [false],
         input: [false]
       }))
     });
-    console.log(this.comments);
-
   }
 
   public add() {
     const comment = this.formBuilder.group({
       comment: ['', Validators.required],
       isNewComment: [true],
+      modificationDate: [''],
+      modificationUser: [''],
       edit: [false],
       save: [true],
       input: [true]
@@ -114,10 +123,24 @@ export class CommentComponent extends BaseComponent implements OnInit {
     }
   }
 
-  public enableEdit(formGroup: FormGroup){
+  public enableEdit(index: number, formGroup: FormGroup): void {
     formGroup.controls['edit'].setValue(false);
     formGroup.controls['save'].setValue(true);
     formGroup.controls['input'].setValue(true);
+
+    this.comments.controls.forEach((control, i) => {
+      if (i !== index) {
+        (<FormGroup>control).controls['input'].setValue(false);
+        (<FormGroup>control).controls['save'].setValue(false);
+        (<FormGroup>control).controls['edit'].setValue(true);
+      }
+    });
+  }
+
+  public cancel(formGroup: FormGroup): void{
+    formGroup.controls['edit'].setValue(true);
+    formGroup.controls['save'].setValue(false);
+    formGroup.controls['input'].setValue(false);
   }
 
   private create(comment): void {

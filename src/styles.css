@@ -49,7 +49,7 @@ button:focus {
     width: 50% !important;
 }
 
-.mat-form-field-wrapper {
+/* .mat-form-field-wrapper {
     height: 50px;
     margin: 0px !important;
 }
@@ -60,7 +60,7 @@ button:focus {
 
 .mat-form-field-wrapper .mat-form-field-subscript-wrapper {
     margin-top: 20px;
-}
+} */
 
 
 /* TABS */
@@ -74,21 +74,21 @@ button:focus {
 
 /* focus style */
 
-.mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
+/* .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
 .mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus,
 .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
 .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus {
     color: #E5004D;
-}
+} */
 
 
 /* ink bar style */
 
-.mat-tab-group.mat-primary .mat-ink-bar,
+/* .mat-tab-group.mat-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {
     background: #E5004D;
     height: 3px;
-}
+} */
 
 
 /* .cdk-overlay-pane {
@@ -131,4 +131,8 @@ button:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.cdk-overlay-pane {
+  margin-top: 5px;
 }
