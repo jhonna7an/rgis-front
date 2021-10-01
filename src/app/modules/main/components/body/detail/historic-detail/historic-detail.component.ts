@@ -1,14 +1,14 @@
-import { TabHandler } from './../TabHandler';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HistoricService } from './../../../../services/historic.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
 import { DatePipe } from '@angular/common';
-import { Equipment } from 'src/app/modules/main/models/equipments/equipment';
-import { HistoricDataSend } from 'src/app/modules/main/models/pages/equipment-detail';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogHistoricComponent } from '../../../dialogs/historics/dialog-historic/dialog-historic.component';
 import { takeUntil } from 'rxjs/operators';
+import { DetailData, HistoricData, EquipmentData } from 'src/app/modules/main/models/detailData.model';
+import { Historic } from 'src/app/modules/main/models/equipments/historicEquipment';
+import { DetailService } from 'src/app/modules/main/services/workflow/detail.service';
 
 @Component({
   selector: 'app-historic-detail',
@@ -17,19 +17,18 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class HistoricDetailComponent extends BaseComponent implements OnInit {
 
-  public historics: Equipment[];
   public historicForm: FormGroup;
-  public historicSearch: string;
-  public historicFrom: string;
-  public historicTo: string;
+  public detailData: DetailData;
+
+  public historics: Historic[];
+
   public isEmptyHistoric: boolean;
   public isLoading: boolean;
 
-  @Input() tabHandler: TabHandler;
-
   constructor(
-    private formBuilder: FormBuilder,
+    private detailService: DetailService,
     private historicService: HistoricService,
+    private formBuilder: FormBuilder,
     private dialog: MatDialog
   ) {
     super();
@@ -38,34 +37,51 @@ export class HistoricDetailComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.isEmptyHistoric = true;
     this.createHistoricForm();
+
+    // Subscribe to Tab Main Changes
+    this.detailService.getDetailData()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: DetailData) => {
+        this.detailData = response;
+      });
   }
 
-  public searchHistorics = (value: any): void => {
-    // this.loading = true;
-    this.historicSearch = new DatePipe('en-US').transform(value.dateSearch, 'MM/dd/yyyy');
-    this.historicFrom = new DatePipe('en-US').transform(value.dateFrom, 'MM/dd/yyyy');
-    this.historicTo = new DatePipe('en-US').transform(value.dateTo, 'MM/dd/yyyy');
+  public searchHistorics(value: any): void {
+    this.isLoading = true;
+    const search = new DatePipe('en-US').transform(value.dateSearch, 'MM/dd/yyyy');
+    const from = new DatePipe('en-US').transform(value.dateFrom, 'MM/dd/yyyy');
+    const to = new DatePipe('en-US').transform(value.dateTo, 'MM/dd/yyyy');
 
-    this.historicService.getByDate(1, this.historicSearch, this.historicFrom, this.historicTo)
+    this.historicService.getByDate(1, search, from, to)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: Equipment[]) => {
+      .subscribe((response: Historic[]) => {
         if (response) {
-          // this.loading = false;
-          // this.isEmptyHistoric = false;
-          const historicData = new HistoricDataSend(response, true);
-          // this.dataService.hitorics$.emit(historicData);
+          this.isLoading = false;
+          this.isEmptyHistoric = false;
+          this.historics = response;
+
+          if (search) {
+            this.detailData.setHistoricSearch(search);
+          } else if (from && to) {
+            this.detailData.setHistoricRange(from, to);
+          }
+
+          this.historicForm.reset();
+          const equipmentData = new EquipmentData();
+          equipmentData.setEventFromBody(response);
+          this.detailService.setEquipments(equipmentData);
         }
       }, error => {
         console.error(error);
       });
   }
 
-  private createHistoricForm(): void{
+  private createHistoricForm(): void {
     this.historicForm = this.formBuilder.group({
       dateFrom: [''],
       dateTo: [''],
       dateSearch: ['']
-    }, {validator: this.validateDatesEmpty('dateFrom', 'dateTo', 'dateSearch')});
+    }, { validator: this.validateDatesEmpty('dateFrom', 'dateTo', 'dateSearch') });
   }
 
   public validateDatesEmpty(from: string, to: string, search: string): {} {
@@ -85,10 +101,9 @@ export class HistoricDetailComponent extends BaseComponent implements OnInit {
 
   public openDialogHistoricMatched(): void {
     this.dialog.open(DialogHistoricComponent,
-      { width: '80%', maxHeight: '560px', data: {
-        search: this.historicSearch,
-        from: this.historicFrom,
-        to: this.historicTo
-      }});
+      { width: '80%',
+        maxHeight: '560px',
+        data: this.detailData.historicData
+      });
   }
 }

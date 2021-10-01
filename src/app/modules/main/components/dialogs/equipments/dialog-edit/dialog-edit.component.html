@@ -1,14 +1,14 @@
-<app-loading *ngIf="loading"></app-loading>
+<ng-container *ngIf="loading; else edit">
+    <app-loading [isLoading]="loading"></app-loading>
+</ng-container>
 
-<div *ngIf="!loading">
-    <div>
-        <h2>Editar</h2>
-    </div>
-    <div>
-        <form class="d-flex serial-form" 
-              [formGroup]="editForm" 
-              autocomplete="off" 
-              novalidate 
+<ng-template #edit>
+    <h1 mat-dialog-title>Editar</h1>
+    <div mat-dialog-content>
+        <form class="d-flex serial-form"
+              [formGroup]="editForm"
+              autocomplete="off"
+              novalidate
               (ngSubmit)="editEquipment(editForm.value)">
             <div class="input-container">
                 <mat-form-field appearance="outline">
@@ -74,4 +74,10 @@
             </div>
         </form>
     </div>
-</div>
+
+    <div mat-dialog-actions>
+        <button mat-raised-button color="primary" [disabled]="!editForm.valid">Guardar</button>
+        <button mat-button mat-dialog-close (click)="close($event)">Cancelar</button>
+    </div>
+</ng-template>
+

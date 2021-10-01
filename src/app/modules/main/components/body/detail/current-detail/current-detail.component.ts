@@ -1,12 +1,11 @@
-import { EquipmentRead } from './../../../../models/equipments/equipment';
-import { TabHandler } from './../TabHandler';
-import { Component, Input, OnInit } from '@angular/core';
+import { DetailData, EquipmentData, FilterSend, MultiEditData } from 'src/app/modules/main/models/detailData.model';
+import { Equipment } from './../../../../models/equipments/equipment';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
-import { FilterSend, MultiEditData } from 'src/app/modules/main/models/pages/equipment-detail';
 import { EquipmentService } from 'src/app/modules/main/services/equipment.service';
+import { DetailService } from 'src/app/modules/main/services/workflow/detail.service';
 
 @Component({
   selector: 'app-current-detail',
@@ -16,54 +15,53 @@ import { EquipmentService } from 'src/app/modules/main/services/equipment.servic
 export class CurrentDetailComponent extends BaseComponent implements OnInit {
 
   public serialForm: FormGroup;
-  public equipments: EquipmentRead[];
+  public equipments: Equipment[];
 
   public isEnableMultiEdit: boolean;
   public isDisableMultiEditBtn: boolean;
 
-  public _tabHandler: TabHandler;
-
-  @Input()
-  set tabHandler(value: TabHandler) {
-    if (value && value.isDetailTab) {
-      this.serialForm.reset()
-      this._tabHandler = value;
-    }
-  }
-
-  get tabHandler(): TabHandler {
-    return this._tabHandler;
-  }
+  public detailData: DetailData;
+  public equipmentData: EquipmentData;
 
   constructor(
-    private formBuilder: FormBuilder,
     private equipmentService: EquipmentService,
-    public dialog: MatDialog
+    private detailService: DetailService,
+    private formBuilder: FormBuilder,
   ) {
     super();
     this.isEnableMultiEdit = false;
     this.isDisableMultiEditBtn = true;
+    this.equipmentData = new EquipmentData();
    }
 
   ngOnInit(): void {
     this.createSerialForm();
+    this.getEquipments();
 
-    //Get Equipments from Server
-    this.equipmentService.get()
+    // Subscribe DetailData for dialogs
+    this.detailService.getDetailData()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: EquipmentRead[]) => {
-        console.log(response);
-        this.equipments = response;
-        this.isDisableMultiEditBtn = false;
+      .subscribe((response: DetailData) => {
+        this.detailData = response;
       });
 
-    //Get Equipments from Subject
-    this.equipmentService.getEquipmentsSubject()
+    // Restart Equipments after Edit
+    this.equipmentService.restartEquipmentsEvent()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: EquipmentRead[]) => {
-        this.equipments = response;
-      })
+      .subscribe(() => {
+        this.getEquipments();
+      });
 
+    // Get Equipments from Subject
+    this.detailService.getEquipments()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: EquipmentData) => {
+        if (response && response.isSidebarEvent) {
+          this.equipments = response.equipments;
+        }
+      });
+
+    // Manage Multi Edit
     this.equipmentService.getMultiEditData()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: MultiEditData) => {
@@ -92,14 +90,14 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
     }
   }
 
-  //Multi edit Event
+  // Multi edit Event
   public triggerMultiEdit(isEditEvent: boolean): void {
     this.isEnableMultiEdit = !this.isEnableMultiEdit;
     const multiEditData = new MultiEditData(this.isEnableMultiEdit, isEditEvent);
     this.equipmentService.setMultiEditData(multiEditData);
   }
 
-  //Form Validation
+  // Form Validation
   public validateControl = (control: string) => {
     if (this.serialForm.controls[control].invalid && this.serialForm.controls[control].touched){
       return true;
@@ -114,5 +112,18 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
     }
 
     return false;
+  }
+
+  // Get Equipments from Server
+  private getEquipments(): void{
+    this.equipmentService.get()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: Equipment[]) => {
+        this.equipments = response;
+        this.isDisableMultiEditBtn = false;
+
+        this.equipmentData.setEventFromBody(response);
+        this.detailService.setEquipments(this.equipmentData);
+      });
   }
 }

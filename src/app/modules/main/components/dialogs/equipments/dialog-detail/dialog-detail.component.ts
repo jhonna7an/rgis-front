@@ -1,13 +1,14 @@
+import { ToastService } from './../../../../../shared/services/toast.service';
+import { EquipmentAbm } from './../../../../models/equipments/equipment';
+import { CommentService } from './../../../../services/comment.service';
+import { EquipmentService } from 'src/app/modules/main/services/equipment.service';
+import { SidenavService } from './../../../../../shared/services/sidenav.service';
+import { DetailData } from './../../../../models/detailData.model';
 import { ETabDetail } from './../../../body/detail/ETabDetail';
+import { Equipment } from 'src/app/modules/main/models/equipments/equipment';
+
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { Equipment } from 'src/app/modules/main/models/equipments/equipment';
-import { DialogEditComponent } from '../dialog-edit/dialog-edit.component';
-import { HistoricService } from '../../../../services/historic.service';
-import { HistoricEquipment } from '../../../../models/equipments/historicEquipment';
-import { MatTableDataSource } from '@angular/material/table';
-import { UserService } from '../../../../services/user.service';
-import { UserView } from 'src/app/modules/main/models/manager/userView';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
 import { takeUntil } from 'rxjs/operators';
 
@@ -18,100 +19,109 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class DialogDetailComponent extends BaseComponent implements OnInit {
 
-  public displayedColumns: string[] = ['date', 'user'];
-  public dataSource: MatTableDataSource<HistoricEquipment>;
+  public detailData: DetailData;
+  public equipmentCurrent: Equipment;
 
-  public loading: boolean;
-  public showHistoricDetail: boolean;
-  public historicMessage: string;
-
+  public isLoading: boolean;
   public isDetailTab: boolean;
   public isHistoricTab: boolean;
+  public isEditModule: boolean;
 
-  public historics: HistoricEquipment[];
-  public historic: HistoricEquipment;
-  public user: UserView;
+  public sidenavMessage: string;
+  public isEditBtnDisabled: boolean;
 
   constructor(
+    private equipmentService: EquipmentService,
+    private commentService: CommentService,
+    private sidenavService: SidenavService,
+    private toastService: ToastService,
     public dialogRef: MatDialogRef<DialogDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialog: MatDialog, private historicService: HistoricService,
-    private userService: UserService
+    @Inject(MAT_DIALOG_DATA) public data: DetailData,
+    public dialog: MatDialog
   ) {
     super();
-    console.log(data);
+    this.equipmentCurrent = data.equipment;
+    this.detailData = data;
   }
 
   ngOnInit(): void {
-    this.showHistoricDetail = false;
+    this.isLoading = false;
     this.isDetailTab = true;
-    this.isHistoricTab = false,
-    this.historicMessage = 'Elija un registro histórico';
-    this.loading = false;
+    this.isHistoricTab = false;
+    this.isEditModule = false;
+    this.sidenavMessage = 'Cerrar lista de históricos';
+    this.isEditBtnDisabled = true;
 
-    // if (this.data.historicInfo.isHistoricTab) {
-    //   this.userService.Get(this.data.equipment.modificationUserId)
-    //     .pipe(takeUntil(this.destroy$))
-    //     .subscribe((response: UserView) => {
-    //       this.user = response;
-    //     }, error => {
-    //       console.error(error);
-    //     });
-    // }
+    // Get Equipments from Edit Module to Save
+    this.equipmentService.getEquipmentToEdit()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: EquipmentAbm) => {
+        if (response) {
+          this.isLoading = true;
+          this.equipmentService.edit(response)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((data: boolean) => {
+              this.isLoading = false;
+              this.close();
+              if (data) {
+                this.equipmentService.triggerRestartEquipments();
+                this.toastService.showSuccess('Se guardaron los cambios correctamente');
+              } else {
+                this.toastService.showError('Se produjo un error al intentar guardar los cambios');
+              }
+            }, error => {
+              this.toastService.showError('Se produjo un error al intentar guardar los cambios');
+              console.error(error);
+            });
+        }
+      });
+
+    // Manage button Edit disabled
+    this.commentService.commentsLoadedEvent()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.isEditBtnDisabled = false;
+      });
   }
 
   public getHistoric = (event: any): void => {
     if (event.index === ETabDetail.DETAIL){
       this.isDetailTab = true;
       this.isHistoricTab = false;
-      this.showHistoricDetail = false;
+      this.detailData.changeDialogTab(this.equipmentCurrent, false);
     }
 
     if (event.index === ETabDetail.HISTORIC) {
       this.isDetailTab = false;
       this.isHistoricTab = true;
-      this.loading = true;
-      if (this.data.historicInfo.isHistoricTab) {
-        this.historicService.getHistoricsByDate(this.data.equipment.id, this.data.historicInfo.search, this.data.historicInfo.from, this.data.historicInfo.to)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((response: HistoricEquipment[]) => {
-            this.handleHistoricEquipments(response);
-          }, error => {
-            console.log(error);
-          });
-      } else {
-        this.historicService.GetByEquipmentId(this.data.equipment.id)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((response: HistoricEquipment[]) => {
-            this.handleHistoricEquipments(response);
-          }, error => {
-            console.log(error);
-          });
-      }
+      this.detailData.changeDialogTab(this.equipmentCurrent, true);
     }
   }
 
-  private handleHistoricEquipments(historics: HistoricEquipment[]){
-    this.historics = historics;
-    this.dataSource = new MatTableDataSource(historics);
-    if (historics.length == 0) this.historicMessage = 'No existen datos históricos.';
-    this.loading = false;
-  }
-
-  public getHistoricById = (historic: HistoricEquipment): void => {
-    this.historic = historic;
-    this.showHistoricDetail = true;
-  }
-
-  public close = (): void => {
+  public close(): void {
     this.dialogRef.close();
   }
 
-  public editDialog = (equipment: Equipment): void => {
-    this.close();
-    const equipments = new Array<Equipment>();
-    equipments.push(equipment);
-    this.dialog.open(DialogEditComponent,
-      { width: '35%', data: { equipments, isMultiEdit: false }});
+  public editDialog(): void {
+    this.isEditModule = true;
+    const comments = this.commentService
+      .getComments()
+      .map(x => x.comment);
+    this.detailData.setIsEditModule(true);
+    this.detailData.setCommentsToEdit(comments);
+  }
+
+  public toggleSidenav(): void{
+    this.sidenavService.toggle();
+    this.sidenavMessage = this.sidenavService.isOpened() ? 'Cerrar lista de históricos' : 'Abrir lista de históricos';
+  }
+
+  public saveEdit(): void {
+    this.equipmentService.saveEdit();
+  }
+
+  public cancelEdit(): void {
+    this.isEditModule = false;
+    this.detailData.setIsEditModule(false);
   }
 }

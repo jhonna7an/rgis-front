@@ -1,12 +1,9 @@
 <app-toolbar></app-toolbar>
 
 <div class="d-flex container">
+    <app-sidebar-detail class="sidebar"></app-sidebar-detail>
 
-    <app-sidebar [isHistoricTab]="isHistoricTab" class="sidebar"></app-sidebar>
-    <app-detail class="body"
-                (enviarSerial)="getSerial($event)" 
-                (sendIsHistoricTab)="getIsHistoricTab($event)"></app-detail>
-
+    <app-detail class="body"></app-detail>
 </div>
 
 <app-footer></app-footer>

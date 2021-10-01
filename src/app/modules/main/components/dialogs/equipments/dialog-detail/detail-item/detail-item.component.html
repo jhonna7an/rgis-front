@@ -1,0 +1,238 @@
+<form class="d-flex serial-form"
+      [formGroup]="editForm"
+      autocomplete="off"
+      novalidate>
+    <div class="detail-container animated fadeInUp">
+        <mat-accordion>
+            <mat-expansion-panel (opened)="true"
+                                 (closed)="false"
+                                 #basic_info
+                                 [expanded]="true"
+                                 class="expansion">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h3 class="item-title">Datos Técnicos</h3>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <!-- <span class="material-icons-outlined" [ngClass]="!basic_info.expanded ? 'rotate-up' : 'rotate-down'">
+                            expand_circle_down
+                        </span> -->
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div class="item-body">
+                    <div class="body-item">
+                        <p>Equipo:</p>
+                        <span>{{detailData?.equipment?.type}}</span>
+                    </div>
+                    <div class="body-item">
+                        <p>N° Serie:</p>
+                        <span>{{detailData?.equipment?.serial}}</span>
+                    </div>
+                    <div class="body-item">
+                        <p>Modelo:</p>
+                        <span>{{detailData?.equipment?.model}}</span>
+                    </div>
+                    <div class="body-item">
+                        <p>Marca:</p>
+                        <span>{{detailData?.equipment?.brand}}</span>
+                    </div>
+                    <div class="body-item">
+                        <p>InServices:</p>
+                        <span>{{detailData?.equipment?.inServices | date:'dd/MM/yyyy'}}</span>
+                    </div>
+                    <div class="body-item">
+                        <p>Fecha de Ingreso:</p>
+                        <span>{{detailData?.equipment?.creationDate | date:'dd/MM/yyyy'}}</span>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+            <mat-expansion-panel (opened)="true"
+                                  (closed)="false"
+                                  #state_info
+                                  [expanded]="true"
+                                  class="expansion">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h3 class="item-title">Estado</h3>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="item-body">
+                    <div class="body-item {{detailData.isEditModule ? 'input-margin' : ''}}">
+                        <p>Estado:</p>
+                        <ng-container *ngIf="!detailData.isEditModule!; else state_edit">
+                            <span class="{{detailData?.equipment?.state | lowercase | accent}}">
+                                {{detailData?.equipment?.state}}
+                            </span>
+                        </ng-container>
+
+                        <ng-template #state_edit>
+                            <mat-form-field appearance="outline" class="input-item">
+                                <mat-label>Estado</mat-label>
+                                <mat-select formControlName="state">
+                                    <mat-option *ngFor="let state of states" [value]="state.id">
+                                        {{state.state}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-template>
+                    </div>
+                    <div class="body-item {{detailData.isEditModule ? 'input-margin' : ''}}">
+                        <p>Valoración:</p>
+                        <ng-container *ngIf="!detailData.isEditModule!; else valoration_edit">
+                            <span>{{detailData?.equipment?.valoration}}</span>
+                        </ng-container>
+
+                        <ng-template #valoration_edit>
+                            <mat-form-field appearance="outline" class="input-item">
+                                <mat-label>Valoración</mat-label>
+                                <mat-select formControlName="valoration">
+                                    <mat-option *ngFor="let valoration of valorations" [value]="valoration.id">
+                                        {{valoration.valoration}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-template>
+                    </div>
+                    <div class="body-item">
+                        <p>Última modificación:</p>
+                        <span>{{detailData?.equipment?.modificationDate | dateAgo}}</span>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+            <mat-expansion-panel (opened)="true"
+                                  (closed)="false"
+                                  #location_info
+                                  [expanded]="true"
+                                  class="expansion">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h3 class="item-title">Distribución</h3>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="item-body">
+                    <div class="body-item {{detailData.isEditModule ? 'input-margin' : ''}}">
+                        <p>Distrito:</p>
+                        <ng-container *ngIf="!detailData.isEditModule!; else district_edit">
+                            <span>{{detailData?.equipment?.district}}</span>
+                        </ng-container>
+
+                        <ng-template #district_edit>
+                            <mat-form-field appearance="outline" class="input-item">
+                                <mat-label>Distrito</mat-label>
+                                <mat-select formControlName="district" (selectionChange)="onChangeDistrict($event.value)">
+                                    <mat-option *ngFor="let district of districts" [value]="district.id">
+                                        {{district.districtName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-template>
+                    </div>
+
+                    <div class="body-item {{detailData.isEditModule ? 'input-margin' : ''}}">
+                        <p>Oficina:</p>
+                        <ng-container *ngIf="!detailData.isEditModule!; else branchOffice_edit">
+                            <span>{{detailData?.equipment?.branchOffice}}</span>
+                        </ng-container>
+
+                        <ng-template #branchOffice_edit>
+                            <mat-form-field appearance="outline" class="input-item">
+                                <mat-label>Oficina</mat-label>
+                                <mat-select formControlName="branchOffice">
+                                    <mat-option *ngFor="let branchOffice of branchOffices" [value]="branchOffice.id">
+                                        {{branchOffice.branchOfficeName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-template>
+                    </div>
+
+                    <div class="body-item {{detailData.isEditModule ? 'input-margin' : ''}}">
+                        <p>Ubicación:</p>
+                        <ng-container *ngIf="!detailData.isEditModule!; else location_edit">
+                            <span>{{detailData?.equipment?.location}}</span>
+                        </ng-container>
+
+                        <ng-template #location_edit>
+                            <mat-form-field appearance="outline" class="input-item">
+                                <mat-label>Ubicación</mat-label>
+                                <mat-select formControlName="location">
+                                    <mat-option *ngFor="let location of locations" [value]="location.id">
+                                        {{location.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-template>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <ng-container *ngIf="!detailData.isMainHistoricTab && detailData.isDialogHistoricTab ||
+                             detailData.isMainHistoricTab">
+            <mat-accordion>
+                <mat-expansion-panel (opened)="true"
+                                      (closed)="false"
+                                      #modification_info
+                                      [expanded]="true"
+                                      class="expansion">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h3 class="item-title">Modificación</h3>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="item-body">
+                        <div class="body-item">
+                            <p>Fecha:</p>
+                            <span>{{detailData?.equipment?.creationDate | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+                        <div class="body-item">
+                            <p>Hora:</p>
+                            <span>{{detailData?.equipment?.creationDate | date: 'hh:mm'}} hs</span>
+                        </div>
+                        <div class="body-item">
+                            <p>BadgeId:</p>
+                            <span>{{historic?.badgeId}}</span>
+                        </div>
+                        <div class="body-item">
+                            <p>Usuario:</p>
+                            <span>{{historic?.creationUser}}</span>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <mat-accordion>
+                <mat-expansion-panel (opened)="true"
+                                      (closed)="false"
+                                      #comment_info
+                                      [expanded]="true"
+                                      class="expansion">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h3 class="item-title">Comentarios</h3>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="item-body">
+                        <div class="comment-historic" *ngFor="let comment of historic?.comments">
+                            <span class="comment-item">
+                                {{comment}}
+                            </span>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </ng-container>
+    </div>
+</form>
+

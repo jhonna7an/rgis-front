@@ -1,5 +1,5 @@
+import { DetailData } from './../../../../../models/detailData.model';
 import { Component, Input, OnInit } from '@angular/core';
-import { EquipmentRead } from '../../../../../models/equipments/equipment';
 
 @Component({
   selector: 'app-detail-current',
@@ -8,18 +8,17 @@ import { EquipmentRead } from '../../../../../models/equipments/equipment';
 })
 export class DetailCurrentComponent implements OnInit {
 
-  public _equipment: EquipmentRead;
+  private _detailData: DetailData;
 
   @Input()
-  set equipment(value: EquipmentRead){
+  set detailData(value: DetailData) {
     if (value) {
-      console.log(value);
-      this._equipment = value;
+      this._detailData = value;
     }
   }
 
-  get equipment(): EquipmentRead {
-    return this._equipment;
+  get detailData(): DetailData {
+    return this._detailData;
   }
 
   constructor() { }

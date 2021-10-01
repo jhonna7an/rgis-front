@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ManagerService } from '../../shared/services/manager.service';
-import { HistoricEquipment } from '../models/equipments/historicEquipment';
+import { HistoricEquipment, Historic } from '../models/equipments/historicEquipment';
 import { Equipment } from '../models/equipments/equipment';
 import { DatePipe } from '@angular/common';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,23 @@ export class HistoricService {
     return this.http.get<HistoricEquipment[]>(this.partialUrl);
   }
 
-  public getByDate = (countryId: number, search?:string, from?:string, to?:string): Observable<Equipment[]> => {
+  //nueva version
+  public GetByEquipmentId2(equipmentId?: number, search?: string, from?: string, to?: string): Observable<Historic[]>{
+    this.partialUrl = `${this.url}/api/v1/Historic/GetByEquipmentId?equipmentId=${equipmentId}`;
+
+    if (search) {
+      this.partialUrl += `&search=${search}`;
+    }
+
+    if (from && to) {
+      this.partialUrl += `&from=${from}&to=${to}`;
+    }
+
+    return this.http.get<Historic[]>(this.partialUrl);
+  }
+
+
+  public getByDate = (countryId: number, search?:string, from?:string, to?:string): Observable<Historic[]> => {
     this.partialUrl = `${this.url}/api/v1/Historic/GetEquipmentsByDate?countryId=${countryId}`;
 
     if (search) {
@@ -46,10 +63,13 @@ export class HistoricService {
       this.partialUrl += `&search=${search}`;
     }
 
-    return this.http.get<Equipment[]>(this.partialUrl);
+    return this.http.get<Historic[]>(this.partialUrl)
+              .pipe(map((response: Historic[]) => {
+                return response;
+              }));
   }
 
-  public getHistoricsByDate = (equipmentId: number, search?:string, from?:string, to?:string): Observable<HistoricEquipment[]> => {
+  public getHistoricsByDate = (equipmentId: number, search?: string, from?: string, to?: string): Observable<HistoricEquipment[]> => {
     this.partialUrl = `${this.url}/api/v1/Historic/GetHistoricsByDate?equipmentId=${equipmentId}`;
 
     if (from && to) {
@@ -63,7 +83,7 @@ export class HistoricService {
     return this.http.get<HistoricEquipment[]>(this.partialUrl);
   }
 
-  public getHistoricsMatched = (countryId: number, search?:string, from?:string, to?:string): Observable<HistoricEquipment[]> => {
+  public getHistoricsMatched = (countryId: number, search?: string, from?: string, to?: string): Observable<Historic[]> => {
     this.partialUrl = `${this.url}/api/v1/Historic/HistoricsMatch?countryId=${countryId}`;
 
     if (from && to) {
@@ -73,7 +93,8 @@ export class HistoricService {
     if (search) {
       this.partialUrl += `&search=${search}`;
     }
-    return this.http.get<HistoricEquipment[]>(this.partialUrl);
+
+    return this.http.get<Historic[]>(this.partialUrl);
   }
 }
 

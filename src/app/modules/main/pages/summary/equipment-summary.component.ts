@@ -3,7 +3,7 @@ import { MatAccordion } from '@angular/material/expansion';
 import { District } from '../../models/equipments/district';
 import { EquipmentLocation } from '../../models/equipments/location';
 import { EquipmentState } from '../../models/equipments/equipment-state';
-import { Equipment } from '../../models/equipments/equipment';
+import { EquipmentOther } from '../../models/equipments/equipment';
 import { SidebarDetail } from './sidebar-detail';
 import { EEquipmentState, SummaryTable, SummaryTableItem } from './summarytable';
 
@@ -34,10 +34,10 @@ export class EquipmentSummaryComponent implements OnInit {
   fileName = 'ExcelSheet.xlsx';
   @ViewChild(MatAccordion)
   accordion: MatAccordion;
-  public equipmentsByCountry: Equipment[];
+  public equipmentsByCountry: EquipmentOther[];
   public countryDetail: CountryDetail;
 
-  public equipments: Equipment[];
+  public equipments: EquipmentOther[];
   public districts: District[];
   public locations: Location[];
   public states: EquipmentState[];
@@ -102,11 +102,11 @@ export class EquipmentSummaryComponent implements OnInit {
     this.sidebarLocations = new Array<SidebarDetail>();
     this.sidebarStates = new Array<SidebarDetail>();
 
-    const locationGrouping = this.equipments.reduce((result: any, equipment: Equipment) => ({
+    const locationGrouping = this.equipments.reduce((result: any, equipment: EquipmentOther) => ({
         ...result, [equipment.location.name]: [ ...(result[equipment.location.name] || []), equipment ],
       }), {});
 
-    const stateGrouping = this.equipments.reduce((result: any, equipment: Equipment) => ({
+    const stateGrouping = this.equipments.reduce((result: any, equipment: EquipmentOther) => ({
       ...result, [equipment.state.state]: [ ...(result[equipment.state.state] || []), equipment ],
     }), {});
 
@@ -122,7 +122,7 @@ export class EquipmentSummaryComponent implements OnInit {
   private SetBodyDetail(): void {
     this.summaryData = new Array<SummaryTable>();
 
-    const nameGrouping = this.equipments.reduce((result: any, equipment: Equipment) => ({
+    const nameGrouping = this.equipments.reduce((result: any, equipment: EquipmentOther) => ({
       ...result, [equipment.model.name.name]: [ ...(result[equipment.model.name.name] || []), equipment ],
     }), {});
 
@@ -130,12 +130,12 @@ export class EquipmentSummaryComponent implements OnInit {
       let total = 0;
       const summaryTable: SummaryTable = new SummaryTable(`${name} - Área N° ${nameGrouping[name][0].name.area} Inventario de Equipos`, `Total ${name}`);
 
-      const modelGrouping = nameGrouping[name].reduce((result: any, equipment: Equipment) => ({
+      const modelGrouping = nameGrouping[name].reduce((result: any, equipment: EquipmentOther) => ({
         ...result, [equipment.model.model]: [ ...(result[equipment.model.model] || []), equipment ],
       }), {});
 
       for (const model in modelGrouping){
-        const models: Equipment[] = modelGrouping[model].filter(x => x.model.model === model);
+        const models: EquipmentOther[] = modelGrouping[model].filter(x => x.model.model === model);
         const operative = models.filter(model => model.state.id == EEquipmentState.Operative).length;
         const fault = models.filter(model => model.state.id == EEquipmentState.Averia).length;
         const hold = models.filter(model => model.state.id == EEquipmentState.Hold).length;

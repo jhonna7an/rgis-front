@@ -1,0 +1,69 @@
+.sidebar-content {
+  padding: 20px 0px 0px 20px;
+}
+
+.sidebar-content div:first-child {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidebar-content div:first-child button {
+  padding: 0px 5px;
+  height: 30px;
+  font-size: 13px;
+}
+
+.filter-historic {
+  display: flex;
+}
+
+.filter-historic ul {
+  padding-inline-start: 0px;
+  list-style: none;
+  display: flex;
+}
+
+.filter-historic ul li {
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #777;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+
+.container-item-filter {
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  width: 100%;
+}
+
+.mat-form {
+  width: 100%;
+}
+
+form div:first-child {
+  width: 75%;
+}
+
+form div:last-child {
+  width: 25%;
+  margin-left: 10px;
+}
+
+.search-btn {
+  height: 51px;
+  margin-top: 4px;
+  width: 100%;
+  padding: 0px 10px;
+}

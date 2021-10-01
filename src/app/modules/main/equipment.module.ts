@@ -1,12 +1,4 @@
-import { CommentService } from './services/comment.service';
-import { DetailCurrentComponent } from './components/dialogs/equipments/dialog-detail/detail-current/detail-current.component';
-import { SidebarDetailItemComponent } from './components/sidebar/sidebar-detail/sidebar-detail-item/sidebar-detail-item.component';
-import { SidebarDetailComponent } from './components/sidebar/sidebar-detail/sidebar-detail.component';
-import { DatatableComponent } from './components/body/detail/datatable/datatable.component'
-import { CurrentDetailComponent } from './components/body/detail/current-detail/current-detail.component';
-import { HistoricDetailComponent } from './components/body/detail/historic-detail/historic-detail.component';
-import { DetailComponent } from './components/body/detail/detail.component';
-import { EquipmentNameService } from './services/equipment-name.service';
+import { DetailService } from './services/workflow/detail.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
@@ -16,6 +8,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { DetailCurrentComponent } from './components/dialogs/equipments/dialog-detail/detail-current/detail-current.component';
+import { SidebarDetailItemComponent } from './components/sidebar/sidebar-detail/sidebar-detail-item/sidebar-detail-item.component';
+import { SidebarDetailComponent } from './components/sidebar/sidebar-detail/sidebar-detail.component';
+import { DatatableComponent } from './components/body/detail/datatable/datatable.component';
+import { CurrentDetailComponent } from './components/body/detail/current-detail/current-detail.component';
+import { HistoricDetailComponent } from './components/body/detail/historic-detail/historic-detail.component';
+import { DetailComponent } from './components/body/detail/detail.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { EquipmentSummaryComponent } from './pages/summary/equipment-summary.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -24,13 +23,19 @@ import { EquipmentDetailComponent } from './pages/detail/equipment-detail.compon
 import { SidebarComponent } from './components/sidebar/sidebar/sidebar.component';
 import { DialogDetailComponent } from './components/dialogs/equipments/dialog-detail/dialog-detail.component';
 import { DialogHistoricComponent } from './components/dialogs/historics/dialog-historic/dialog-historic.component';
-import { LoadingComponent } from './components/loading/loading.component';
 import { DialogEditComponent } from './components/dialogs/equipments/dialog-edit/dialog-edit.component';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { ProgressComponent } from './components/upload-file/progress/progress.component';
 import { PreviewComponent } from './components/upload-file/preview/preview.component';
 import { CreateEquipmentComponent } from './pages/create/create-equipment.component';
+import { CommentComponent } from './components/dialogs/equipments/dialog-detail/comments/comments.component';
+import { DetailHistoricComponent } from './components/dialogs/equipments/dialog-detail/detail-historic/detail-historic.component';
+import { DeleteConfirmComponent } from './components/dialogs/equipments/dialog-detail/comments/delete-confirm/delete-confirm.component';
+import { DetailItemComponent } from './components/dialogs/equipments/dialog-detail/detail-item/detail-item.component';
+import { EditItemComponent } from './components/dialogs/equipments/dialog-detail/edit-item/edit-item.component';
 
+import { EquipmentNameService } from './services/equipment-name.service';
+import { CommentService } from './services/comment.service';
 import { EquipmentService } from './services/equipment.service';
 import { LocationService } from './services/location.service';
 import { EquipmentStateService } from './services/equipment-state.service';
@@ -46,9 +51,6 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { AccentPipe } from './pipes/accent.pipe';
 
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
-import { CommentComponent } from './components/dialogs/equipments/dialog-detail/comments/comments.component';
-import { DetailHistoricComponent } from './components/dialogs/equipments/dialog-detail/detail-historic/detail-historic.component';
-import { DeleteConfirmComponent } from './components/dialogs/equipments/dialog-detail/comments/delete-confirm/delete-confirm.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,6 @@ import { DeleteConfirmComponent } from './components/dialogs/equipments/dialog-d
     EquipmentSummaryComponent,
     HomeComponent,
     ToolbarComponent,
-    LoadingComponent,
     EquipmentDetailComponent,
     SidebarDetailItemComponent,
     SidebarComponent,
@@ -78,7 +79,9 @@ import { DeleteConfirmComponent } from './components/dialogs/equipments/dialog-d
     DetailCurrentComponent,
     CommentComponent,
     DetailHistoricComponent,
-    DeleteConfirmComponent
+    DeleteConfirmComponent,
+    DetailItemComponent,
+    EditItemComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +105,8 @@ import { DeleteConfirmComponent } from './components/dialogs/equipments/dialog-d
     BrandService,
     ModelService,
     EquipmentNameService,
-    CommentService
+    CommentService,
+    DetailService
   ],
   bootstrap: []
 })

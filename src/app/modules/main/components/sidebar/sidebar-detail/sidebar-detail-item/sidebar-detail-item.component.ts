@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FilterData, FilterDetail } from '../../../../models/pages/equipment-detail';
+import { FilterData, FilterDetail } from 'src/app/modules/main/models/detailData.model';
 
 @Component({
   selector: 'app-sidebar-detail-item',
@@ -25,12 +25,13 @@ export class SidebarDetailItemComponent implements OnInit {
   @Output() public sendFilter = new EventEmitter<FilterData>();
 
   constructor() {
-    this.isTitleExpanded = true;
   }
 
   ngOnInit(): void {
+    this.isTitleExpanded = true;
   }
 
-  public SetFilter = (group: string, value: string): void =>
+  public SetFilter(group: string, value: string): void{
     this.sendFilter.emit(new FilterData(group, value));
+  }
 }

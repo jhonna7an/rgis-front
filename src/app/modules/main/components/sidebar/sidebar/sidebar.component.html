@@ -19,7 +19,11 @@
 
     <div class="sidebar-menu" *ngIf="!isSidebarHide">
         <div *ngIf="isHistoricTab">
-            <form class="d-flex serial-form" [formGroup]="serialForm" autocomplete="off" novalidate (ngSubmit)="searchBySerial(serialForm.value)">
+            <form class="d-flex serial-form"
+                  [formGroup]="serialForm"
+                  autocomplete="off"
+                  novalidate
+                  (ngSubmit)="searchBySerial(serialForm.value)">
                 <div>
                     <mat-form-field class="mat-form" appearance="outline">
                         <mat-label>Serial</mat-label>

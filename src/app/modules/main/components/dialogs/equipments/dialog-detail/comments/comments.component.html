@@ -1,4 +1,4 @@
-<div>
+<div class="animated fadeInUp">
     <div class="title">
         <h3>Comentarios</h3>
         <div>
@@ -14,100 +14,109 @@
     </div>
 
     <div class="comment-container">
-        <form class="d-flex serial-form mr-20"
+        <ng-container *ngIf="isLoading; else notLoading">
+            <app-loading [isLoading]="isLoading" [message]="'Cargando información, espere por favor...'"></app-loading>
+        </ng-container>
+
+        <ng-template #notLoading>
+            <ng-container *ngIf="equipmentComments.length > 0; else empty">
+                <form class="d-flex serial-form mr-20"
                       [formGroup]="commentsForm"
                       autocomplete="off"
                       novalidate>
-            <div class="comment-list">
-                <div #input formArrayName="comments" *ngFor="let comment of comments.controls; let i = index">
-                    <div [formGroupName]="i" class="container-item">
-
-                        <ng-container *ngIf="comment.value.input">
-                            <mat-form-field class="example-full-width"
-                                            appearance="outline"
-                                            [hideRequiredMarker]="false">
-                                <mat-label>Comentario {{i}}</mat-label>
-                                <textarea type="text"
-                                          formControlName="comment"
-                                          matInput
-                                          placeholder="Ingrese Comentario"
-                                          required>
-                                </textarea>
-                                <mat-error *ngIf="comment.invalid">Es necesario ingresar un valor</mat-error>
-                                <!-- <mat-error *ngIf="validateControl('serial') && hasError('serial', 'maxlength')">
-                                    El valor debe ser de 10 dígitos
-                                </mat-error>
-                                <mat-error *ngIf="validateControl('serial') && hasError('serial', 'minlength')">
-                                    El valor debe ser de 10 dígitos
-                                </mat-error> -->
-                            </mat-form-field>
-                        </ng-container>
-
-                        <ng-container *ngIf="!comment.value.input">
-                            <div class="item">
-                                <div class="item-label">
-                                    <span>{{comment.value.comment}}</span>
-                                </div>
-                                <div class="item-detail">
-                                  <small>
-                                      Última modificación: {{comment.value.modificationDate | date: 'dd/MM/yyyy'}} por {{comment.value.modificationUser}}
-                                  </small>
-                                </div>
-                            </div>
-                        </ng-container>
-
-                        <div class="action-container">
-                          <button mat-raised-button
-                                  mat-icon-button
-                                  [matMenuTriggerFor]="menu"
-                                  aria-label="Example icon-button with a menu"
-                                  (mouseover)="menuTrigger.openMenu()"
-                                  #menuTrigger="matMenuTrigger">
-                              <mat-icon>more_vert</mat-icon>
-                          </button>
-                          <mat-menu #menu="matMenu" xPosition="before">
-                              <span (mouseleave)="menuTrigger.closeMenu()">
-                                  <ng-container *ngIf="comment.value.edit">
-                                      <button mat-menu-item
-                                              class="action-button"
-                                              (click)="enableEdit(i, comment)">
-                                          <mat-icon>edit</mat-icon>
-                                          <span>Editar</span>
-                                      </button>
-                                  </ng-container>
-
-                                  <ng-container *ngIf="!comment.value.edit && !comment.value.isNewComment">
-                                    <button mat-menu-item
-                                            class="action-button"
-                                            (click)="cancel(comment)">
-                                        <mat-icon>cancel</mat-icon>
-                                        <span>Cancelar</span>
-                                    </button>
+                    <div class="comment-list">
+                        <div #input
+                            formArrayName="comments"
+                            *ngFor="let comment of comments.controls; let i = index">
+                            <div [formGroupName]="i" class="container-item">
+                                <ng-container *ngIf="comment.value.input">
+                                    <mat-form-field class="example-full-width"
+                                                    appearance="outline"
+                                                    [hideRequiredMarker]="false">
+                                        <mat-label>Comentario {{i + 1}}</mat-label>
+                                        <textarea type="text"
+                                                  formControlName="comment"
+                                                  matInput
+                                                  placeholder="Ingrese Comentario"
+                                                  required>
+                                        </textarea>
+                                        <mat-error *ngIf="comment.invalid">Es necesario ingresar un valor</mat-error>
+                                    </mat-form-field>
                                 </ng-container>
 
-                                  <ng-container *ngIf="comment.value.save">
-                                      <button mat-menu-item
-                                              class="action-button"
-                                              [disabled]="!comments.controls[i].valid"
-                                              (click)="submit(comment.value)">
-                                          <mat-icon>save</mat-icon>
-                                          <span>Guardar</span>
-                                      </button>
-                                  </ng-container>
+                                <ng-container *ngIf="!comment.value.input">
+                                    <div class="item">
+                                        <div class="item-label">
+                                            <span>{{comment.value.comment}}</span>
+                                        </div>
+                                        <div class="item-detail">
+                                          <small>
+                                              Última modificación: {{comment.value.modificationDate | date: 'dd/MM/yyyy'}} por {{comment.value.modificationUser}}
+                                          </small>
+                                        </div>
+                                    </div>
+                                </ng-container>
 
-                                  <button mat-menu-item
-                                          class="action-button"
-                                          (click)="remove(i, comment.value.isNewComment)">
-                                      <mat-icon>delete</mat-icon>
-                                      <span>Eliminar</span>
-                                </button>
-                              </span>
-                          </mat-menu>
+                                <div class="action-container">
+                                    <button mat-raised-button
+                                            mat-icon-button
+                                            [matMenuTriggerFor]="menu"
+                                            aria-label="Example icon-button with a menu"
+                                            (mouseover)="menuTrigger.openMenu()"
+                                            #menuTrigger="matMenuTrigger">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu" xPosition="before">
+                                        <span (mouseleave)="menuTrigger.closeMenu()">
+                                            <ng-container *ngIf="comment.value.edit">
+                                                <button mat-menu-item
+                                                        class="action-button"
+                                                        (click)="enableEdit(i, comment)">
+                                                    <mat-icon>edit</mat-icon>
+                                                    <span>Editar</span>
+                                                </button>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="!comment.value.edit && !comment.value.isNewComment">
+                                                <button mat-menu-item
+                                                        class="action-button"
+                                                        (click)="cancel(comment)">
+                                                    <mat-icon>cancel</mat-icon>
+                                                    <span>Cancelar</span>
+                                                </button>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="comment.value.save">
+                                                <button mat-menu-item
+                                                        class="action-button"
+                                                        [disabled]="!comments.controls[i].valid"
+                                                        (click)="submit(comment)">
+                                                    <mat-icon>save</mat-icon>
+                                                    <span>Guardar</span>
+                                                </button>
+                                            </ng-container>
+
+                                            <button mat-menu-item
+                                                    class="action-button"
+                                                    (click)="remove(i, comment.value)">
+                                                <mat-icon>delete</mat-icon>
+                                                <span>Eliminar</span>
+                                            </button>
+                                        </span>
+                                    </mat-menu>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </form>
+            </ng-container>
+
+            <ng-template #empty>
+                <div class="empty">
+                  <span><i>Sin comentarios</i></span>
                 </div>
-            </div>
-        </form>
+            </ng-template>
+        </ng-template>
     </div>
 </div>
 

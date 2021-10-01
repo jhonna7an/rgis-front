@@ -1,10 +1,10 @@
-import { Component, Input, OnInit, Output, EventEmitter, Predicate, OnDestroy } from '@angular/core';
-import { Equipment } from '../../../models/equipments/equipment';
+import { Component, Input, OnInit, Predicate, OnDestroy } from '@angular/core';
+import { EquipmentOther } from '../../../models/equipments/equipment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../services/data.service';
 import { Subscription } from 'rxjs';
-import { FilterData, FilterDetail, FilterDetailItem, FilterSend, HistoricDataSend } from '../../../models/pages/equipment-detail';
 import { EquipmentService } from '../../../services/equipment.service';
+import { FilterData, FilterDetail, FilterSend, HistoricDataSend } from '../../../models/detailData.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,8 +13,8 @@ import { EquipmentService } from '../../../services/equipment.service';
 })
 export class SidebarComponent implements OnInit, OnDestroy {
 
-  private equipments: Equipment[];
-  private historicsBackup: Equipment[];
+  private equipments: EquipmentOther[];
+  private historicsBackup: EquipmentOther[];
 
   private equipmentSubscription: Subscription;
   private historicsSubscription: Subscription;
@@ -65,13 +65,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.equipmentSubscription = this.dataService.equipment$
-      .subscribe((equipments: Equipment[]) => {
-        if (equipments) {
-          this.equipments = equipments;
-          this.setFilters();
-        }
-      });
+    // this.equipmentSubscription = this.dataService.equipment$
+    //   .subscribe((equipments: EquipmentOther[]) => {
+    //     if (equipments) {
+    //       this.equipments = equipments;
+    //       this.setFilters();
+    //     }
+    //   });
 
     this.filterSubscription = this.dataService.filter$
       .subscribe((data: FilterSend) => {
@@ -79,22 +79,22 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.filterList.push(data.serialFilter);
       });
 
-    this.historicsSubscription = this.dataService.hitorics$
-      .subscribe((data: HistoricDataSend) => {
-        if (data) {
-          setTimeout(() => this.loading = false, 500);
-          this.equipments = data.historics;
-          this.isSidebarHide = false;
-          this.setFilters();
-          if (data.isFirstHistoricCall) {
-            this.historicsBackup = data.historics;
-          }
+    // this.historicsSubscription = this.dataService.hitorics$
+    //   .subscribe((data: HistoricDataSend) => {
+    //     if (data) {
+    //       setTimeout(() => this.loading = false, 500);
+    //       this.equipments = data.historics;
+    //       this.isSidebarHide = false;
+    //       this.setFilters();
+    //       if (data.isFirstHistoricCall) {
+    //         this.historicsBackup = data.historics;
+    //       }
 
-          if (data.isHistoricTab != null) {
-            this.isHistoricTab = data.isHistoricTab;
-          }
-        }
-      });
+    //       if (data.isHistoricTab != null) {
+    //         this.isHistoricTab = data.isHistoricTab;
+    //       }
+    //     }
+    //   });
   }
 
   ngOnDestroy(): void {
@@ -103,65 +103,65 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.filterSubscription.unsubscribe();
   }
 
-  public restartFilters(): void{
-    this.loading = true;
-    this.filterList = new Array<string>();
-    if (!this._isHistoricTab) {
-      this.equipmentService.get()
-        // .subscribe((response: Equipment[]) => {
-        //   this.equipments = response;
-        //   this.dataService.equipment$.emit(this.equipments);
-        // });
-    } else {
-      const historicsBackup = new HistoricDataSend(this.historicsBackup, true);
-      this.dataService.hitorics$.emit(historicsBackup);
-    }
+  // public restartFilters(): void{
+  //   this.loading = true;
+  //   this.filterList = new Array<string>();
+  //   if (!this._isHistoricTab) {
+  //     this.equipmentService.get()
+  //       // .subscribe((response: Equipment[]) => {
+  //       //   this.equipments = response;
+  //       //   this.dataService.equipment$.emit(this.equipments);
+  //       // });
+  //   } else {
+  //     const historicsBackup = new HistoricDataSend(this.historicsBackup, true);
+  //     this.dataService.hitorics$.emit(historicsBackup);
+  //   }
 
-    this.hasFilter = false;
-    this.hasTypeFilter = false;
-    this.serialFilter = '';
-  }
+  //   this.hasFilter = false;
+  //   this.hasTypeFilter = false;
+  //   this.serialFilter = '';
+  // }
 
-  public searchByFilter = (filter: FilterData): void => {
-    const predicate = this.getFilterPredicate(filter);
-    this.equipments = this.equipments.filter(predicate);
-    this.hasFilter = true;
-    if (filter.group === 'Equipo'){
-      this.hasTypeFilter = true;
-      this.model = this.SetFilterDetail('Modelo');
-      this.brand = this.SetFilterDetail('Marca');
-    }
+  // public searchByFilter = (filter: FilterData): void => {
+  //   const predicate = this.getFilterPredicate(filter);
+  //   this.equipments = this.equipments.filter(predicate);
+  //   this.hasFilter = true;
+  //   if (filter.group === 'Equipo'){
+  //     this.hasTypeFilter = true;
+  //     this.model = this.SetFilterDetail('Modelo');
+  //     this.brand = this.SetFilterDetail('Marca');
+  //   }
 
-    this.filterList.push(filter.value);
-    if (!this._isHistoricTab) {
-      this.dataService.equipment$.emit(this.equipments);
-    } else {
-      const historicsByFilter = new HistoricDataSend(this.equipments, false);
-      this.dataService.hitorics$.emit(historicsByFilter);
-    }
-  }
+  //   this.filterList.push(filter.value);
+  //   if (!this._isHistoricTab) {
+  //     this.dataService.equipment$.emit(this.equipments);
+  //   } else {
+  //     const historicsByFilter = new HistoricDataSend(this.equipments, false);
+  //     this.dataService.hitorics$.emit(historicsByFilter);
+  //   }
+  // }
 
-  public searchBySerial = (value: any): void => {
-    if (this.serialForm.valid){
-      const serialFiltered = this.equipments.filter(x => x.serial == value.serial);
-      const historicData = new HistoricDataSend(serialFiltered, false);
-      this.dataService.hitorics$.emit(historicData);
+  // public searchBySerial = (value: any): void => {
+  //   if (this.serialForm.valid){
+  //     const serialFiltered = this.equipments.filter(x => x.serial == value.serial);
+  //     const historicData = new HistoricDataSend(serialFiltered, false);
+  //     this.dataService.hitorics$.emit(historicData);
 
-      this.filterList.push(value.serial);
-      this.serialForm.controls.serial.setValue('');
-      this.hasFilter = true;
-    }
-  }
+  //     this.filterList.push(value.serial);
+  //     this.serialForm.controls.serial.setValue('');
+  //     this.hasFilter = true;
+  //   }
+  // }
 
-  private setFilters(): void{
-    this.type = this.SetFilterDetail('Equipo');
-    this.district = this.SetFilterDetail('Distrito');
-    this.location = this.SetFilterDetail('Ubicación');
-    this.state = this.SetFilterDetail('Estado');
-    this.model = this.SetFilterDetail('Modelo');
-    this.brand = this.SetFilterDetail('Marca');
-    setTimeout(() => this.loading = false, 500);
-  }
+  // private setFilters(): void{
+  //   this.type = this.SetFilterDetail('Equipo');
+  //   this.district = this.SetFilterDetail('Distrito');
+  //   this.location = this.SetFilterDetail('Ubicación');
+  //   this.state = this.SetFilterDetail('Estado');
+  //   this.model = this.SetFilterDetail('Modelo');
+  //   this.brand = this.SetFilterDetail('Marca');
+  //   setTimeout(() => this.loading = false, 500);
+  // }
 
   private createSerialForm(): void{
     this.serialForm = this.formBuilder.group({
@@ -172,23 +172,23 @@ export class SidebarComponent implements OnInit, OnDestroy {
     });
   }
 
-  private SetFilterDetail(title: string): FilterDetail{
-    if (this.equipments){
-      const filterGrouping = this.equipments.reduce((result: any, equipment: Equipment) => ({
-        ...result, [this.getFilterParam(title, equipment)]: [ ...(result[this.getFilterParam(title, equipment)] || []), equipment ],
-      }), {});
+  // private SetFilterDetail(title: string): FilterDetail{
+  //   if (this.equipments){
+  //     const filterGrouping = this.equipments.reduce((result: any, equipment: EquipmentOther) => ({
+  //       ...result, [this.getFilterParam(title, equipment)]: [ ...(result[this.getFilterParam(title, equipment)] || []), equipment ],
+  //     }), {});
 
-      const groupLength = Object.getOwnPropertyNames(filterGrouping).length;
-      const sidebarFilter = new Array<FilterDetailItem>();
-      for (const item in filterGrouping){
-        const models: Equipment[] = filterGrouping[item];
-        sidebarFilter.push(new FilterDetailItem(item, models.length));
-      }
-      return new FilterDetail(title, sidebarFilter, groupLength);
-    }
-  }
+  //     const groupLength = Object.getOwnPropertyNames(filterGrouping).length;
+  //     const sidebarFilter = new Array<FilterDetailItem>();
+  //     for (const item in filterGrouping){
+  //       const models: EquipmentOther[] = filterGrouping[item];
+  //       sidebarFilter.push(new FilterDetailItem(item, models.length));
+  //     }
+  //     return new FilterDetail(title, sidebarFilter, groupLength);
+  //   }
+  // }
 
-  private getFilterParam(filter: string, equipment: Equipment): string{
+  private getFilterParam(filter: string, equipment: EquipmentOther): string{
     switch (filter) {
       case 'Equipo':
         return equipment.model.name.name;
@@ -205,20 +205,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getFilterPredicate = (filter: FilterData): Predicate<Equipment> => {
+  private getFilterPredicate = (filter: FilterData): Predicate<EquipmentOther> => {
     switch (filter.group) {
       case 'Equipo':
-        return (x: Equipment) => x.model.name.name === filter.value;
+        return (x: EquipmentOther) => x.model.name.name === filter.value;
       case 'Distrito':
-        return (x: Equipment) => x.branchOffice.district.districtName === filter.value;
+        return (x: EquipmentOther) => x.branchOffice.district.districtName === filter.value;
       case 'Ubicación':
-        return (x: Equipment) => x.location.name === filter.value;
+        return (x: EquipmentOther) => x.location.name === filter.value;
       case 'Estado':
-        return (x: Equipment) => x.state.state === filter.value;
+        return (x: EquipmentOther) => x.state.state === filter.value;
       case 'Modelo':
-        return (x: Equipment) => x.model.model === filter.value;
+        return (x: EquipmentOther) => x.model.model === filter.value;
       case 'Marca':
-        return (x: Equipment) => x.model.brand.brand === filter.value;
+        return (x: EquipmentOther) => x.model.brand.brand === filter.value;
       default:
         break;
     }

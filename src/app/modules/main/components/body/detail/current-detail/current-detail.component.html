@@ -28,12 +28,13 @@
             </div>
 
             <ng-template #enabledMultiEdit>
-                <div class="multi-edit-actions">
+                <div class="actions multi-edit-actions">
                     <button mat-raised-button
                             color="primary"
                             class="mr-btn"
                             (click)="triggerMultiEdit(true)">
-                        Editar
+                        <mat-icon style="margin-right: 5px;">edit</mat-icon>
+                        <span>Editar</span>
                     </button>
                     <button mat-raised-button
                             (click)="triggerMultiEdit(false)"
@@ -44,7 +45,9 @@
             </ng-template>
 
             <div *ngIf="!isEnableMultiEdit" class="btn-container">
-                <button mat-raised-button color="primary"
+                <button mat-raised-button
+                        color="primary"
+                        class="multi-edit-btn"
                         (click)="triggerMultiEdit(false)"
                         [disabled]="isDisableMultiEditBtn">
                     <mat-icon class="icon">storage</mat-icon>
@@ -79,6 +82,6 @@
     </div>
 
     <div class="tabl-e">
-        <app-datatable [equipments]="equipments"></app-datatable>
+        <app-datatable [equipments]="equipments" [detailData]="detailData"></app-datatable>
     </div>
 </div>

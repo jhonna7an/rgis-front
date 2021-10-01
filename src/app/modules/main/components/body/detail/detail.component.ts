@@ -1,7 +1,9 @@
-import { TabHandler } from './TabHandler';
+import { EquipmentService } from 'src/app/modules/main/services/equipment.service';
+import { DetailData } from './../../../models/detailData.model';
+import { DetailService } from '../../../services/workflow/detail.service';
 import { ETabDetail } from './ETabDetail';
 import { AppDateAdapter, APP_DATE_FORMATS } from './../../../../shared/helpers/date-adapter';
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
@@ -18,55 +20,29 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 })
 export class DetailComponent extends BaseComponent implements OnInit {
 
-  public tabHandler: TabHandler;
-
-  @Output() public sendIsHistoricTab = new EventEmitter<boolean>();
+  public detailData: DetailData;
 
   constructor(
+    private detailService: DetailService,
     public dialog: MatDialog
   ) {
     super();
   }
 
   ngOnInit(): void {
-    // this.dataService.equipment$
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe((equipments: Equipment[]) => {
-    //     this.loading = true;
-    //     this.equipments = equipments;
-    //     setTimeout(() => this.loading = false, 500);
-    //   });
-
-
+    this.detailData = new DetailData(false);
+    this.detailService.setDetailData(this.detailData);
   }
 
   public changeTab(event: MatTabChangeEvent): void {
     if (event.index === ETabDetail.DETAIL) {
-      this.tabHandler = new TabHandler(true, false);
-      console.log(this.tabHandler);
+      this.detailData.changeMainTab(false);
     }
 
     if (event.index === ETabDetail.HISTORIC) {
-      this.tabHandler = new TabHandler(false, true);
+      this.detailData.changeMainTab(true);
     }
+
+    this.detailService.setDetailData(this.detailData);
   }
-
-
-  //   if (index === ETabDetail.DETAIL) {
-
-  //     // this.loading = true;
-  //     // this.isDetailTab = true;
-  //     // this.isHistoricTab = false;
-  //     // this.isEmptyHistoric = false;
-  //   }
-
-  //   if (index === ETabDetail.HISTORIC) {
-  //     this.isDetailTab = false;
-  //     this.isHistoricTab = true;
-  //     this.isEmptyHistoric = true;
-  //     this.createHistoricForm();
-  //   }
-
-  //   // this.sendIsHistoricTab.emit(this.isHistoricTab);
-  // }
 }

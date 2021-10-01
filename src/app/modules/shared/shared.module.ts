@@ -1,3 +1,4 @@
+import { SidenavService } from './services/sidenav.service';
 import { ToastService } from './services/toast.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -32,12 +33,14 @@ import { SpinnerService } from './services/spinner.service';
     BrowserAnimationsModule
   ],
   exports: [
-    SpinnerComponent
+    SpinnerComponent,
+    LoadingComponent
   ],
   providers: [
     ManagerService,
     ToastService,
-    SpinnerService
+    SpinnerService,
+    SidenavService
   ]
 })
 export class SharedModule { }

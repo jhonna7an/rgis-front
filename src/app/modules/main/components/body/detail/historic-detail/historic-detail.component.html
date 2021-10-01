@@ -36,16 +36,18 @@
                 </div>
             </form>
 
-            <div *ngIf="!isEmptyHistoric">
-                <button mat-raised-button
-                        color="primary"
-                        (click)="openDialogHistoricMatched()">
-                    Coincidencias
-                </button>
-            </div>
+            <ng-container *ngIf="!isEmptyHistoric">
+                <div class="actions">
+                    <button mat-raised-button
+                            color="primary"
+                            (click)="openDialogHistoricMatched()">
+                        Coincidencias
+                    </button>
+                </div>
+            </ng-container>
         </div>
 
-        <div>
+        <div class="menu-container">
             <button mat-icon-button
                     [matMenuTriggerFor]="menu"
                     aria-label="Example icon-button with a menu">
@@ -72,14 +74,20 @@
     </div>
 
     <div class="body">
-        <div class="empty-message" *ngIf="isEmptyHistoric && !isLoading">
-            <p>Seleccione una fecha de búsqueda</p>
-        </div>
+        <ng-container *ngIf="isEmptyHistoric && !isLoading">
+            <div class="empty-message">
+                <p>Seleccione una fecha de búsqueda</p>
+            </div>
+        </ng-container>
 
-        <app-loading *ngIf="isLoading"></app-loading>
+        <ng-container *ngIf="isLoading">
+            <app-loading [isLoading]="isLoading" [message]="'Buscando registros, espere por favor...'"></app-loading>
+        </ng-container>
 
-        <div *ngIf="!isEmptyHistoric && !isLoading" class="tabl-e">
-            <app-datatable [equipments]="historics"></app-datatable>
-        </div>
+        <ng-container *ngIf="!isEmptyHistoric && !isLoading">
+            <div class="tabl-e">
+                <app-datatable [equipments]="historics" [detailData]="detailData"></app-datatable>
+            </div>
+        </ng-container>
     </div>
 </div>

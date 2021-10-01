@@ -1,6 +1,6 @@
 import { ToastService } from './../../../shared/services/toast.service';
 import { Component, OnInit } from '@angular/core';
-import { Equipment } from '../../models/equipments/equipment';
+import { EquipmentOther } from '../../models/equipments/equipment';
 import { EquipmentService } from '../../services/equipment.service';
 import { DataService } from '../../services/data.service';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
@@ -15,7 +15,7 @@ export class EquipmentDetailComponent extends BaseComponent implements OnInit {
 
   public hasFilter: boolean;
   public hasTypeFilter: boolean;
-  public equipments: Equipment[];
+  public equipments: EquipmentOther[];
   public serialFilter: string;
   public loading: boolean;
 
@@ -37,12 +37,12 @@ export class EquipmentDetailComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.GetEquipments();
 
-    this.equipmentService.edited$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((flag: boolean) => {
-        this.GetEquipments();
-        this.toastService.showSuccess('Se completó la solicitud correctamente');
-      });
+    // this.equipmentService.edited$
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((flag: boolean) => {
+    //     this.GetEquipments();
+    //     this.toastService.showSuccess('Se completó la solicitud correctamente');
+    //   });
 
     this.dataService.restart$
       .subscribe((value: boolean) => {

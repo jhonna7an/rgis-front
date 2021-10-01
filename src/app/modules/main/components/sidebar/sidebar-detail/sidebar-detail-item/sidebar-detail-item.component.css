@@ -2,10 +2,10 @@
     border-radius: 0px !important;
 }
 
-.menu-detail {
+/* .menu-detail {
     padding-right: 20px;
     padding-left: 20px;
-}
+} */
 
 .menu-detail ul {
     list-style: none;
@@ -26,4 +26,14 @@
 .filter-label+span,
 .filter-label:disabled {
     color: #8c8c8c;
+}
+
+.item {
+  padding: 3px 20px;
+}
+
+.item:hover,
+.item:hover button {
+  background-color: #673ab7;
+  color: #fff;
 }

@@ -1,17 +1,16 @@
+import { DetailData, HistoricData, MultiEditData } from 'src/app/modules/main/models/detailData.model';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, Output, ViewChild, EventEmitter, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Equipment, EquipmentRead } from '../../../../models/equipments/equipment';
+import { Equipment } from '../../../../models/equipments/equipment';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
 import { EquipmentService } from 'src/app/modules/main/services/equipment.service';
 import { takeUntil } from 'rxjs/operators';
-import { MultiEditData } from 'src/app/modules/main/models/pages/equipment-detail';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogDetailComponent } from '../../../dialogs/equipments/dialog-detail/dialog-detail.component';
 import { DialogEditComponent } from '../../../dialogs/equipments/dialog-edit/dialog-edit.component';
-import { EEquipmentState } from 'src/app/modules/main/models/EEquipmentState';
 
 @Component({
   selector: 'app-datatable',
@@ -21,30 +20,43 @@ import { EEquipmentState } from 'src/app/modules/main/models/EEquipmentState';
 export class DatatableComponent extends BaseComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = ['name', 'model', 'serial', 'brand', 'districtName', 'location', 'state', 'star'];
-  public dataSource: MatTableDataSource<EquipmentRead> = new MatTableDataSource();
+  public dataSource: MatTableDataSource<Equipment> = new MatTableDataSource();
   public columnsToDisplay: string[] = this.displayedColumns.slice();
+
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('paginator') paginator: MatPaginator;
 
-  public selection = new SelectionModel<EquipmentRead>(true, []);
-  public equipmentsSelected: EquipmentRead[];
+  public selection = new SelectionModel<Equipment>(true, []);
+  public equipmentsSelected: Equipment[];
 
-  public _equipments: EquipmentRead[];
+  private _detailData: DetailData;
+  public _equipments: Equipment[];
+  public _historicData: HistoricData;
+
   public isLoading: boolean;
 
   @Input()
-  set equipments(equipments: EquipmentRead[]) {
-    console.log(equipments);
-
-    if (equipments) {
-      this._equipments = equipments;
-      this.dataSource.data = equipments;
+  set equipments(value: Equipment[]) {
+    if (value) {
+      this._equipments = value;
+      this.dataSource.data = value;
       this.isLoading = false;
     }
   }
 
-  get equipments(): EquipmentRead[]{
+  get equipments(): Equipment[]{
     return this._equipments;
+  }
+
+  @Input()
+  set detailData(value: DetailData) {
+    if (value) {
+      this._detailData = value;
+    }
+  }
+
+  get detailData(): DetailData {
+    return this._detailData;
   }
 
   constructor(
@@ -52,12 +64,11 @@ export class DatatableComponent extends BaseComponent implements OnInit, OnDestr
     private dialog: MatDialog
   ) {
     super();
-    this.equipmentsSelected = new Array<EquipmentRead>();
+    this.equipmentsSelected = new Array<Equipment>();
+    this.isLoading = true;
   }
 
-  ngOnInit() {
-    this.isLoading = true;
-
+  ngOnInit(): void {
     this.equipmentService.getMultiEditData()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: MultiEditData) => {
@@ -67,9 +78,10 @@ export class DatatableComponent extends BaseComponent implements OnInit, OnDestr
 
         response.isEnableMultiEdit ? this.showMultiEditCol() : this.hideCheckboxCol();
       });
+
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -77,13 +89,10 @@ export class DatatableComponent extends BaseComponent implements OnInit, OnDestr
   public openDetailDialog(equipment: Equipment): void {
     const multiEditData = new MultiEditData(false, false);
     this.equipmentService.setMultiEditData(multiEditData);
-      // const historicInfo = {isHistoricTab: this.tabHandler.isHistoricTab,
-      //                       search: this.historicSearch,
-      //                       from: this.historicFrom,
-      //                       to: this.historicTo};
-    const historicInfo = null;
+
+    this.detailData.setEquipmentDetail(equipment);
     this.dialog.open(DialogDetailComponent,
-      { width: '80%', data: {equipment, historicInfo} });
+      { width: '80%', data: this.detailData });
   }
 
   public openMultiEditDialog(): void {
@@ -95,7 +104,7 @@ export class DatatableComponent extends BaseComponent implements OnInit, OnDestr
   }
 
   // Handler Checkbox Column
-  public selectRow($event: any, equipment: EquipmentRead): void {
+  public selectRow($event: any, equipment: Equipment): void {
     this.selection.toggle(equipment);
     if ($event.checked) {
       this.equipmentsSelected.push(equipment);
@@ -146,7 +155,7 @@ export class DatatableComponent extends BaseComponent implements OnInit, OnDestr
   }
 
   /** The label for the checkbox on the passed row */
-  public checkboxLabel(row?: EquipmentRead): string {
+  public checkboxLabel(row?: Equipment): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
@@ -154,6 +163,6 @@ export class DatatableComponent extends BaseComponent implements OnInit, OnDestr
   }
 
   public resetEquipmentsSelected(): void{
-    this.equipmentsSelected = new Array<EquipmentRead>();
+    this.equipmentsSelected = new Array<Equipment>();
   }
 }

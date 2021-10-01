@@ -20,10 +20,18 @@
 
 .actions button,
 .btn-container button {
-  height: 94%;
+  height: 51px;
+  margin-top: 4px;
+}
+
+.multi-edit-actions {
+  margin-bottom: 22px;
 }
 
 .multi-edit-actions button:first-child {
   margin-right: 10px;
 }
 
+.multi-edit-btn span {
+  line-height: 35px;
+}

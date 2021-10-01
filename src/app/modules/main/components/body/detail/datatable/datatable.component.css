@@ -33,3 +33,7 @@ th, td {
   border-radius: 5px;
   padding: 3px;
 }
+
+.loading {
+  margin: 70px 0px;
+}

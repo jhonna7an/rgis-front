@@ -1,4 +1,5 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { EditData } from './../../../../models/detailData.model';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { District } from 'src/app/modules/main/models/equipments/district';
@@ -9,11 +10,11 @@ import { EquipmentStateService } from '../../../../services/equipment-state.serv
 import { EquipmentLocation } from '../../../../models/equipments/location';
 import { EquipmentValoration } from '../../../../models/equipments/equipment-valoration';
 import { EquipmentState } from '../../../../models/equipments/equipment-state';
-import { EquipmentService } from '../../../../services/equipment.service';
 import { BranchOffice } from '../../../../models/manager/branch-office';
 import { BranchOfficeService } from 'src/app/modules/main/services/branch-office.service';
 import { EquipmentAbm } from '../../../../models/equipments/equipment';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dialog-edit',
@@ -36,8 +37,7 @@ export class DialogEditComponent extends BaseComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<DialogEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private equipmentService: EquipmentService,
+    @Inject(MAT_DIALOG_DATA) public data: EditData,
     private districtService: DistrictService,
     private branchOfficeService: BranchOfficeService,
     private locationService: LocationService,
@@ -114,11 +114,11 @@ export class DialogEditComponent extends BaseComponent implements OnInit {
       };
     } else {
       controls = {
-        district: [this.data.equipments[0]?.branchOffice.district.id, Validators.required],
-        branchOffice: [this.data.equipments[0]?.branchOffice.id, Validators.required],
-        location: [this.data.equipments[0]?.location.id, Validators.required],
-        state: [this.data.equipments[0]?.state.id, Validators.required],
-        valoration: [this.data.equipments[0]?.valoration.id, Validators.required],
+        district: [this.data.equipments[0]?.districtId, Validators.required],
+        branchOffice: [this.data.equipments[0]?.branchOfficeId, Validators.required],
+        location: [this.data.equipments[0]?.locationId, Validators.required],
+        state: [this.data.equipments[0]?.stateId, Validators.required],
+        valoration: [this.data.equipments[0]?.valorationId, Validators.required],
         inservices: [this.data.equipments[0]?.inServices, Validators.required],
         datein: [this.data.equipments[0]?.creationDate, Validators.required],
         comments: new FormArray([])
@@ -134,13 +134,14 @@ export class DialogEditComponent extends BaseComponent implements OnInit {
     this.GetStates();
     this.GetValoration();
     if (!this.data.isMultiEdit) {
-      this.GetBranchOffices(this.data.equipments[0]?.branchOffice.district.id);
+      this.GetBranchOffices(this.data.equipments[0]?.districtId);
     }
     this.loading = false;
   }
 
   private GetDistricts = (): void => {
-    const districts$ = this.districtService.Get()
+    this.districtService.Get()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: District[]) => {
         this.districts = response;
       }, error => {
@@ -149,7 +150,8 @@ export class DialogEditComponent extends BaseComponent implements OnInit {
   }
 
   private GetLocations = (): void => {
-    const location$ = this.locationService.Get()
+    this.locationService.Get()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: EquipmentLocation[]) => {
           this.locations = response;
       }, error => {
@@ -158,7 +160,8 @@ export class DialogEditComponent extends BaseComponent implements OnInit {
   }
 
   private GetBranchOffices(districtId: number): void {
-    const branchOffice$ = this.branchOfficeService.Get(districtId)
+    this.branchOfficeService.Get(districtId)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: BranchOffice[]) => {
           this.branchOffices = response;
       }, error => {
@@ -167,7 +170,8 @@ export class DialogEditComponent extends BaseComponent implements OnInit {
   }
 
   private GetStates(): void {
-    const districts$ = this.stateService.Get()
+    this.stateService.Get()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: EquipmentState[]) => {
         this.states = response;
       }, error => {
@@ -176,7 +180,8 @@ export class DialogEditComponent extends BaseComponent implements OnInit {
   }
 
   private GetValoration(): void {
-    const districts$ = this.valorationService.Get()
+    this.valorationService.Get()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: EquipmentValoration[]) => {
         this.valorations = response;
       }, error => {
@@ -187,9 +192,9 @@ export class DialogEditComponent extends BaseComponent implements OnInit {
   private createEquipmentAbmList(formValue: any): EquipmentAbm[]{
     const equipments = new Array<EquipmentAbm>();
 
-    for (const equipment of this.data.equipments) {
-      equipments.push(new EquipmentAbm(equipment, this.data.isMultiEdit, formValue));
-    }
+    // for (const equipment of this.data.equipments) {
+    //   equipments.push(new EquipmentAbm(equipment, this.data.isMultiEdit, formValue));
+    // }
 
     return equipments;
   }

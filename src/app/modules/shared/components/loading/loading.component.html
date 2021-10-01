@@ -1,1 +1,6 @@
-<p>loading works!</p>
+<ng-container *ngIf="isLoading">
+    <div class="loading-container">
+        <mat-spinner class="spinner"></mat-spinner>
+        <span>{{message}}</span>
+    </div>
+</ng-container>
