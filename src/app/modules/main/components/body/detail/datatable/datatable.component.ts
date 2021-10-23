@@ -1,6 +1,7 @@
+import { DetailService } from 'src/app/modules/main/services/workflow/detail.service';
 import { DetailData, HistoricData, MultiEditData } from 'src/app/modules/main/models/detailData.model';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, Input, ChangeDetectorRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -40,7 +41,7 @@ export class DatatableComponent extends BaseComponent implements OnInit, OnDestr
     if (value) {
       this._equipments = value;
       this.dataSource.data = value;
-      this.isLoading = false;
+      this.detailService.setLoading(false);
     }
   }
 
@@ -60,12 +61,13 @@ export class DatatableComponent extends BaseComponent implements OnInit, OnDestr
   }
 
   constructor(
+    public detailService: DetailService,
     private equipmentService: EquipmentService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdref: ChangeDetectorRef
   ) {
     super();
     this.equipmentsSelected = new Array<Equipment>();
-    this.isLoading = true;
   }
 
   ngOnInit(): void {
@@ -79,11 +81,20 @@ export class DatatableComponent extends BaseComponent implements OnInit, OnDestr
         response.isEnableMultiEdit ? this.showMultiEditCol() : this.hideCheckboxCol();
       });
 
+    this.detailService.getLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: boolean) => {
+        this.isLoading = response;
+      });
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  ngAfterViewChecked() {
+    this.cdref.detectChanges();
   }
 
   public openDetailDialog(equipment: Equipment): void {

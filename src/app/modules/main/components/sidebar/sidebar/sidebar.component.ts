@@ -54,9 +54,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
     return this._isHistoricTab;
   }
 
-  constructor( private formBuilder: FormBuilder,
-               private dataService: DataService,
-               private equipmentService: EquipmentService ) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private dataService: DataService,
+    private equipmentService: EquipmentService
+  ) {
     this.loading = false;
     this.filterList = new Array<string>();
     this.hasTypeFilter = false;

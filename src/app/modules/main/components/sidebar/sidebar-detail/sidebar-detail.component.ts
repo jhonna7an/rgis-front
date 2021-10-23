@@ -1,11 +1,14 @@
+import { HistoricService } from 'src/app/modules/main/services/historic.service';
 import { DetailData, EquipmentData, FilterData, FilterDetail, FilterDetailItem, FilterSend, HistoricDataSend } from 'src/app/modules/main/models/detailData.model';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
-import { Component, Input, OnInit, Predicate } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, Predicate, ɵclearResolutionOfComponentResourcesQueue } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../services/data.service';
 import { Equipment, EquipmentOther } from '../../../models/equipments/equipment';
 import { DetailService } from '../../../services/workflow/detail.service';
+import { EquipmentService } from '../../../services/equipment.service';
+import { Historic } from '../../../models/equipments/historicEquipment';
 
 @Component({
   selector: 'app-sidebar-detail',
@@ -17,9 +20,7 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
   public detailData: DetailData;
   private equipmentData: EquipmentData;
 
-  public hasFilter: boolean;
-  public hasTypeFilter: boolean;
-  public isSidebarHide: boolean;
+
 
   public serialForm: FormGroup;
 
@@ -31,7 +32,13 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
   public brand: FilterDetail;
 
   public filterList: string[];
-
+  public currentFilterList: string[];
+  public historicFilterList: string[]
+  public hasFilter: boolean;
+  public hasCurrentFilter: boolean;
+  public hasHistoricFilter: boolean;
+  public hasTypeFilter: boolean;
+  public isSidebarHide: boolean;
 
 
 
@@ -39,40 +46,20 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
 
   private historicsBackup: EquipmentOther[];
 
-  public isLoading: boolean;
-
   public serialFilter: string;
 
-  public _isHistoricTab: boolean;
-
-
-
-
-  // @Input()
-  // public set isHistoricTab(value: boolean){
-  //   if (value != null) {
-  //     this.loading = true;
-  //     this._isHistoricTab = value;
-  //     this.isSidebarHide = value;
-  //     this.hasFilter = false;
-  //     this.filterList = new Array<string>();
-  //     this.createSerialForm();
-  //   }
-  // }
-
-  // public get isHistoricTab(): boolean {
-  //   return this._isHistoricTab;
-  // }
-
   constructor(
-    private detailService: DetailService,
+    public detailService: DetailService,
+    private equipmentService: EquipmentService,
+    private historicService: HistoricService,
     private formBuilder: FormBuilder,
-    private dataService: DataService
+    private dataService: DataService,
+    private cdref: ChangeDetectorRef
   ) {
     super();
     this.filterList = new Array<string>();
-    // this.isSidebarHide = true;
-    this.isLoading = true;
+    this.currentFilterList = new Array<string>();
+    this.historicFilterList = new Array<string>();
 
     this.hasFilter = false;
     this.hasTypeFilter = false;
@@ -86,8 +73,19 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: DetailData) => {
         if (response) {
+          console.log(response);
           this.detailData = response;
-          this.isSidebarHide = response.isMainHistoricTab;
+
+          if (!response.historicData.hasHistoricSearch) {
+            this.isSidebarHide = response.isMainHistoricTab;
+          }
+
+          this.filterList = new Array<string>();
+          if (!response.isMainHistoricTab) {
+            this.filterList = this.currentFilterList;
+          } else {
+            this.filterList = this.historicFilterList;
+          }
         }
       });
 
@@ -95,92 +93,98 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
     this.detailService.getEquipments()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: EquipmentData) => {
-        console.log(response);
-
-        this.isLoading = false;
         if (response) {
           this.equipmentData = response;
           this.isSidebarHide = false;
           this.setFilters();
+
+          if (!response.isSidebarEvent) {
+            this.detailService.setLoading(false);
+          }
         }
       });
 
-
-
-
-    // this.dataService.equipment$
-    //   .subscribe((equipments: EquipmentOther[]) => {
-    //     // if (equipments) {
-    //     //   this.equipments = equipments;
-    //     //   this.setFilters();
-    //     // }
+    // this.dataService.filter$
+    //   .subscribe((data: FilterSend) => {
+    //     this.hasFilter = data.hasFilter;
+    //     this.filterList.push(data.serialFilter);
     //   });
+  }
 
-    this.dataService.filter$
-      .subscribe((data: FilterSend) => {
-        this.hasFilter = data.hasFilter;
-        this.filterList.push(data.serialFilter);
+  ngAfterViewChecked() {
+    this.cdref.detectChanges();
+  }
+
+  public restartCurrentFilters(): void {
+    this.detailService.setLoading(true);
+    this.equipmentService.get()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: Equipment[]) => {
+        if (response) {
+          this.equipmentData.setEventFromSidebar(response, this.detailData.isMainHistoricTab);
+          this.detailService.setEquipments(this.equipmentData);
+
+          this.filterList = new Array<string>();
+          this.hasFilter = false;
+          this.hasTypeFilter = false;
+          this.serialFilter = '';
+        }
       });
-
-    // this.dataService.hitorics$
-    //   .subscribe((data: HistoricDataSend) => {
-    //     // if (data) {
-    //     //   setTimeout(() => this.loading = false, 500);
-    //     //   this.equipments = data.historics;
-    //     //   this.isSidebarHide = false;
-    //     //   this.setFilters();
-    //     //   if (data.isFirstHistoricCall) {
-    //     //     this.historicsBackup = data.historics;
-    //     //   }
-
-    //     //   if (data.isHistoricTab != null) {
-    //     //     this.isHistoricTab = data.isHistoricTab;
-    //     //   }
-    //     // }
-    //   });
   }
 
-  public restartFilters(): void{
-    // this.loading = true;
-    // this.filterList = new Array<string>();
-    // if (!this._isHistoricTab) {
-    //   this.equipmentService.get()
-    //     // .subscribe((response: Equipment[]) => {
-    //     //   this.equipments = response;
-    //     //   this.dataService.equipment$.emit(this.equipments);
-    //     // });
-    // } else {
-    //   const historicsBackup = new HistoricDataSend(this.historicsBackup, true);
-    //   this.dataService.hitorics$.emit(historicsBackup);
-    // }
+  public restartHistoricFilters(): void{
+    this.detailService.setLoading(true);
+    this.historicService.getByDate(
+      1,
+      this.detailData.historicData.search,
+      this.detailData.historicData.from,
+      this.detailData.historicData.to)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(((response: Historic[]) => {
+        if (response) {
+          this.equipmentData.setEventFromSidebar(response, this.detailData.isMainHistoricTab);
+          this.detailService.setEquipments(this.equipmentData);
 
-    // this.hasFilter = false;
-    // this.hasTypeFilter = false;
-    // this.serialFilter = '';
+          this.filterList = new Array<string>();
+          this.hasFilter = false;
+          this.hasTypeFilter = false;
+          this.serialFilter = '';
+        }
+      }));
   }
 
-  public searchByFilter = (filter: FilterData): void => {
+  public searchByFilter(filter: FilterData): void {
+    this.detailService.setLoading(true);
 
-    const predicate = this.getFilterPredicate(filter);
-    const equipmentsFiltered = this.equipmentData.equipments.filter(predicate);
-    this.equipmentData.setEventFromSidebar(equipmentsFiltered);
-    this.hasFilter = true;
+    setTimeout(() => {
+      const predicate = this.getFilterPredicate(filter);
+      const equipmentsFiltered = this.equipmentData.equipments.filter(predicate);
+      this.equipmentData.setEventFromSidebar(equipmentsFiltered, this.detailData.isMainHistoricTab);
+      this.hasFilter = true;
 
-    if (filter.group === 'Equipo'){
-      this.hasTypeFilter = true;
-      this.model = this.SetFilterDetail('Modelo');
-      this.brand = this.SetFilterDetail('Marca');
+      if (filter.group === 'Equipo'){
+        this.hasTypeFilter = true;
+        this.model = this.SetFilterDetail('Modelo');
+        this.brand = this.SetFilterDetail('Marca');
+      }
+
+      if (!this.detailData.isMainHistoricTab) {
+        this.hasCurrentFilter = true;
+      } else {
+        this.hasHistoricFilter = true;
+      }
+
+      this.breadcrumbsHandler(filter.value);
+      this.detailService.setEquipments(this.equipmentData);
+    }, 250);
+  }
+
+  private breadcrumbsHandler(filter: string){
+    if (!this.detailData.isMainHistoricTab) {
+      this.currentFilterList.push(filter);
+    } else {
+      this.historicFilterList.push(filter);
     }
-
-    this.filterList.push(filter.value);
-    this.detailService.setEquipments(this.equipmentData);
-
-    // if (!this._isHistoricTab) {
-    //   this.dataService.equipment$.emit(this.equipments);
-    // } else {
-    //   const historicsByFilter = new HistoricDataSend(this.equipments, false);
-    //   this.dataService.hitorics$.emit(historicsByFilter);
-    // }
   }
 
   public searchBySerial = (value: any): void => {
@@ -202,7 +206,6 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
     this.state = this.SetFilterDetail('Estado');
     this.model = this.SetFilterDetail('Modelo');
     this.brand = this.SetFilterDetail('Marca');
-    // setTimeout(() => this.loading = false, 500);
   }
 
   private createSerialForm(): void{
@@ -219,8 +222,6 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
       const filterGrouping = this.equipmentData.equipments.reduce((result: any, equipment: Equipment) => ({
         ...result, [this.getFilterParam(title, equipment)]: [ ...(result[this.getFilterParam(title, equipment)] || []), equipment ],
       }), {});
-
-      console.log(filterGrouping);
 
       const groupLength = Object.getOwnPropertyNames(filterGrouping).length;
       const sidebarFilter = new Array<FilterDetailItem>();
@@ -268,5 +269,4 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
         break;
     }
   }
-
 }

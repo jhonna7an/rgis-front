@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogHistoricComponent } from '../../../dialogs/historics/dialog-historic/dialog-historic.component';
 import { takeUntil } from 'rxjs/operators';
-import { DetailData, HistoricData, EquipmentData } from 'src/app/modules/main/models/detailData.model';
+import { DetailData, EquipmentData } from 'src/app/modules/main/models/detailData.model';
 import { Historic } from 'src/app/modules/main/models/equipments/historicEquipment';
 import { DetailService } from 'src/app/modules/main/services/workflow/detail.service';
 
@@ -42,12 +42,29 @@ export class HistoricDetailComponent extends BaseComponent implements OnInit {
     this.detailService.getDetailData()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: DetailData) => {
-        this.detailData = response;
+        if (response) {
+          this.detailData = response;
+          if (response.isMainHistoricTab && response.historicData.hasHistoricSearch) {
+            const equipmentData = new EquipmentData();
+            equipmentData.setEventFromBody(this.historics);
+            this.detailService.setEquipments(equipmentData);
+          }
+        }
+      });
+
+    // Get Equipments from Subject
+    this.detailService.getEquipments()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: EquipmentData) => {
+        if (response && response.isSidebarEvent && response.isHistoricTab) {
+          this.historics = response.equipments as Historic[];
+        }
       });
   }
 
   public searchHistorics(value: any): void {
     this.isLoading = true;
+    this.detailService.setLoading(true);
     const search = new DatePipe('en-US').transform(value.dateSearch, 'MM/dd/yyyy');
     const from = new DatePipe('en-US').transform(value.dateFrom, 'MM/dd/yyyy');
     const to = new DatePipe('en-US').transform(value.dateTo, 'MM/dd/yyyy');

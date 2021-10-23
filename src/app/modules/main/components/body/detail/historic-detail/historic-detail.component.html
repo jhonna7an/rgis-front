@@ -1,6 +1,6 @@
 <div class="tab-historic">
     <div class="header">
-        <div class="form-container">
+        <div class="form-container animated fadeInUp">
             <form class="d-flex serial-form"
                   [formGroup]="historicForm"
                   autocomplete="off"
@@ -37,7 +37,7 @@
             </form>
 
             <ng-container *ngIf="!isEmptyHistoric">
-                <div class="actions">
+                <div class="actions animated fadeInUp">
                     <button mat-raised-button
                             color="primary"
                             (click)="openDialogHistoricMatched()">

@@ -10,6 +10,7 @@ export class DetailService {
 
   private detailData$ = new BehaviorSubject<DetailData>(null);
   private equipmentData$ = new BehaviorSubject<EquipmentData>(null);
+  public loading$ = new BehaviorSubject<boolean>(true);
 
   constructor() { }
 
@@ -27,5 +28,13 @@ export class DetailService {
 
   public getEquipments(): Observable<EquipmentData> {
     return this.equipmentData$.asObservable();
+  }
+
+  public setLoading(value: boolean): void {
+      this.loading$.next(value);
+  }
+
+  public getLoading(): Observable<boolean> {
+    return this.loading$.asObservable();
   }
 }

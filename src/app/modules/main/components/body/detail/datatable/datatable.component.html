@@ -1,4 +1,4 @@
-<div>
+<div class="animated fadeInUp">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <!-- Checkbox Column -->
@@ -81,11 +81,11 @@
     </table>
 
     <!-- Loading -->
-    <ng-container *ngIf="isLoading">
+    <ng-container *ngIf="detailService.getLoading() | async">
         <div class="loading">
-            <app-loading [isLoading]="isLoading" [message]="'Buscando registros, espere por favor...'"></app-loading>
+            <app-loading [isLoading]="true" [message]="'Buscando registros, espere por favor...'"></app-loading>
         </div>
     </ng-container>
 
-    <mat-paginator #paginator [pageSize]="15" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+    <mat-paginator #paginator [pageSize]="20" [pageSizeOptions]="[20, 50, 100]" showFirstLastButtons></mat-paginator>
 </div>

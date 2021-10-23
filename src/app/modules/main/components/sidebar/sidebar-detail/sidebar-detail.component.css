@@ -13,6 +13,13 @@
   font-size: 13px;
 }
 
+.sidebar-menu {
+  display: flex;
+  justify-content: center;
+  min-height: 500px;
+  align-items: center;
+}
+
 .filter-historic {
   display: flex;
 }
@@ -40,6 +47,7 @@
 }
 
 .container-item-filter {
+  width: 100%;
   display: flex;
   flex-direction: column;
 }

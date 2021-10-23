@@ -5,26 +5,45 @@
             <h3>Filtros</h3>
         </div>
 
-        <div *ngIf="hasFilter">
-            <button mat-stroked-button (click)="restartFilters()">
-                <mat-icon>restart_alt</mat-icon>
-                <span>Reinicio</span>
-            </button>
+        <div>
+            <ng-container *ngIf="!detailData.isMainHistoricTab && hasCurrentFilter">
+                <button mat-stroked-button (click)="restartCurrentFilters()" class="animated fadeInUp">
+                    <mat-icon>restart_alt</mat-icon>
+                    <span>Reinicio</span>
+                </button>
+            </ng-container>
+
+            <ng-container *ngIf="detailData.isMainHistoricTab && hasHistoricFilter">
+                <button mat-stroked-button (click)="restartHistoricFilters()" class="animated fadeInUp">
+                    <mat-icon>restart_alt</mat-icon>
+                    <span>Reinicio</span>
+                </button>
+            </ng-container>
         </div>
     </div>
 
-    <ng-container *ngIf="hasFilter">
-        <div class="filter-historic">
+    <ng-container *ngIf="hasCurrentFilter">
+        <div class="filter-historic animated fadeInUp">
             <ul>
-                <li *ngFor="let filter of filterList">
+                <li *ngFor="let filter of currentFilterList">
                     {{filter}}
                 </li>
             </ul>
         </div>
     </ng-container>
 
+    <ng-container *ngIf="hasHistoricFilter">
+      <div class="filter-historic animated fadeInUp">
+          <ul>
+              <li *ngFor="let filter of historicFilterList">
+                  {{filter}}
+              </li>
+          </ul>
+      </div>
+    </ng-container>
+
     <div *ngIf="detailData?.isMainHistoricTab">
-        <form class="d-flex serial-form"
+        <form class="d-flex serial-form animated fadeInUp"
               [formGroup]="serialForm"
               autocomplete="off"
               novalidate
@@ -48,14 +67,14 @@
     </div>
 
   <div class="sidebar-menu" *ngIf="!isSidebarHide">
-      <ng-container *ngIf="isLoading; else sidebar">
+      <ng-container *ngIf="detailService.getLoading() | async; else sidebar">
           <div class="loading">
               <app-loading [isLoading]="true" [message]="'Cargando...'"></app-loading>
           </div>
       </ng-container>
 
       <ng-template #sidebar>
-          <div class="container-item-filter">
+          <div class="container-item-filter animated fadeInUp">
               <app-sidebar-detail-item [filter]="type" (sendFilter)="searchByFilter($event)"></app-sidebar-detail-item>
               <app-sidebar-detail-item [filter]="model" (sendFilter)="searchByFilter($event)" *ngIf="hasTypeFilter"></app-sidebar-detail-item>
               <app-sidebar-detail-item [filter]="brand" (sendFilter)="searchByFilter($event)" *ngIf="hasTypeFilter"></app-sidebar-detail-item>

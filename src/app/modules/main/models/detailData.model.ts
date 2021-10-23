@@ -57,22 +57,26 @@ export class HistoricData {
   public search: string;
   public from: string;
   public to: string;
+  public hasHistoricSearch: boolean;
 
   constructor(){
     this.search = '';
     this.from = '';
     this.to = '';
+    this.hasHistoricSearch = false;
   }
 
   public completeRange(from: string, to: string): void {
     this.reset();
     this.from = from;
     this.to = to;
+    this.hasHistoricSearch = true;
   }
 
   public completeSearch(search: string): void {
     this.reset();
     this.search = search;
+    this.hasHistoricSearch = true;
   }
 
   public reset(): void{
@@ -93,6 +97,7 @@ export class EditData {
 }
 
 export class EquipmentData {
+  public isHistoricTab: boolean;
   public isBodyEvent: boolean;
   public isSidebarEvent: boolean;
   public equipments: Equipment[];
@@ -108,12 +113,14 @@ export class EquipmentData {
     this.equipments = equipments;
   }
 
-  public setEventFromSidebar(equipments: Equipment[]): void{
+  public setEventFromSidebar(equipments: Equipment[], isHistoricTab: boolean): void{
+    this.isHistoricTab = isHistoricTab;
     this.isBodyEvent = false;
     this.isSidebarEvent = true;
     this.equipments = equipments;
   }
 }
+
 
 // SIDEBAR MODEL
 export class FilterData {

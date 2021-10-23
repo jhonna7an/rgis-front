@@ -2,7 +2,7 @@
     <div class="col-md-12 body-header">
         <div class="d-flex">
             <div *ngIf="!isEnableMultiEdit; else enabledMultiEdit">
-                <form class="d-flex serial-form mr-20"
+                <form class="d-flex serial-form mr-20 animated fadeInUp"
                       [formGroup]="serialForm"
                       autocomplete="off"
                       novalidate
@@ -28,7 +28,7 @@
             </div>
 
             <ng-template #enabledMultiEdit>
-                <div class="actions multi-edit-actions">
+                <div class="actions multi-edit-actions animated fadeInUp">
                     <button mat-raised-button
                             color="primary"
                             class="mr-btn"
@@ -47,7 +47,7 @@
             <div *ngIf="!isEnableMultiEdit" class="btn-container">
                 <button mat-raised-button
                         color="primary"
-                        class="multi-edit-btn"
+                        class="multi-edit-btn animated fadeInUp"
                         (click)="triggerMultiEdit(false)"
                         [disabled]="isDisableMultiEditBtn">
                     <mat-icon class="icon">storage</mat-icon>
