@@ -1,11 +1,11 @@
 import { HistoricService } from 'src/app/modules/main/services/historic.service';
-import { DetailData, EquipmentData, FilterData, FilterDetail, FilterDetailItem, FilterSend, HistoricDataSend } from 'src/app/modules/main/models/detailData.model';
+import { DetailData, EquipmentData, FilterData, FilterDetail, FilterDetailItem } from 'src/app/modules/main/models/detailData.model';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
-import { ChangeDetectorRef, Component, Input, OnInit, Predicate, ɵclearResolutionOfComponentResourcesQueue } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Predicate } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../services/data.service';
-import { Equipment, EquipmentOther } from '../../../models/equipments/equipment';
+import { Equipment } from '../../../models/equipments/equipment';
 import { DetailService } from '../../../services/workflow/detail.service';
 import { EquipmentService } from '../../../services/equipment.service';
 import { Historic } from '../../../models/equipments/historicEquipment';
@@ -19,9 +19,6 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
 
   public detailData: DetailData;
   private equipmentData: EquipmentData;
-
-
-
   public serialForm: FormGroup;
 
   public type: FilterDetail;
@@ -31,21 +28,10 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
   public model: FilterDetail;
   public brand: FilterDetail;
 
-  public filterList: string[];
-  public currentFilterList: string[];
-  public historicFilterList: string[]
-  public hasFilter: boolean;
-  public hasCurrentFilter: boolean;
-  public hasHistoricFilter: boolean;
   public hasTypeFilter: boolean;
   public isSidebarHide: boolean;
 
-
-
-
-
-  private historicsBackup: EquipmentOther[];
-
+  public filterApply: string;
   public serialFilter: string;
 
   constructor(
@@ -53,15 +39,9 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
     private equipmentService: EquipmentService,
     private historicService: HistoricService,
     private formBuilder: FormBuilder,
-    private dataService: DataService,
     private cdref: ChangeDetectorRef
   ) {
     super();
-    this.filterList = new Array<string>();
-    this.currentFilterList = new Array<string>();
-    this.historicFilterList = new Array<string>();
-
-    this.hasFilter = false;
     this.hasTypeFilter = false;
   }
 
@@ -73,18 +53,10 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: DetailData) => {
         if (response) {
-          console.log(response);
           this.detailData = response;
 
           if (!response.historicData.hasHistoricSearch) {
             this.isSidebarHide = response.isMainHistoricTab;
-          }
-
-          this.filterList = new Array<string>();
-          if (!response.isMainHistoricTab) {
-            this.filterList = this.currentFilterList;
-          } else {
-            this.filterList = this.historicFilterList;
           }
         }
       });
@@ -103,19 +75,21 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
           }
         }
       });
-
-    // this.dataService.filter$
-    //   .subscribe((data: FilterSend) => {
-    //     this.hasFilter = data.hasFilter;
-    //     this.filterList.push(data.serialFilter);
-    //   });
   }
 
   ngAfterViewChecked() {
     this.cdref.detectChanges();
   }
 
-  public restartCurrentFilters(): void {
+  public restartFilters(): void{
+    if (!this.detailData.isMainHistoricTab) {
+      this.restartCurrentFilters();
+    } else {
+      this.restartHistoricFilters();
+    }
+  }
+
+  private restartCurrentFilters(): void {
     this.detailService.setLoading(true);
     this.equipmentService.get()
       .pipe(takeUntil(this.destroy$))
@@ -123,16 +97,12 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
         if (response) {
           this.equipmentData.setEventFromSidebar(response, this.detailData.isMainHistoricTab);
           this.detailService.setEquipments(this.equipmentData);
-
-          this.filterList = new Array<string>();
-          this.hasFilter = false;
           this.hasTypeFilter = false;
-          this.serialFilter = '';
         }
       });
   }
 
-  public restartHistoricFilters(): void{
+  private restartHistoricFilters(): void{
     this.detailService.setLoading(true);
     this.historicService.getByDate(
       1,
@@ -144,11 +114,7 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
         if (response) {
           this.equipmentData.setEventFromSidebar(response, this.detailData.isMainHistoricTab);
           this.detailService.setEquipments(this.equipmentData);
-
-          this.filterList = new Array<string>();
-          this.hasFilter = false;
           this.hasTypeFilter = false;
-          this.serialFilter = '';
         }
       }));
   }
@@ -160,7 +126,6 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
       const predicate = this.getFilterPredicate(filter);
       const equipmentsFiltered = this.equipmentData.equipments.filter(predicate);
       this.equipmentData.setEventFromSidebar(equipmentsFiltered, this.detailData.isMainHistoricTab);
-      this.hasFilter = true;
 
       if (filter.group === 'Equipo'){
         this.hasTypeFilter = true;
@@ -168,35 +133,19 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
         this.brand = this.SetFilterDetail('Marca');
       }
 
-      if (!this.detailData.isMainHistoricTab) {
-        this.hasCurrentFilter = true;
-      } else {
-        this.hasHistoricFilter = true;
-      }
-
-      this.breadcrumbsHandler(filter.value);
+      this.filterApply = filter.value;
       this.detailService.setEquipments(this.equipmentData);
     }, 250);
   }
 
-  private breadcrumbsHandler(filter: string){
-    if (!this.detailData.isMainHistoricTab) {
-      this.currentFilterList.push(filter);
-    } else {
-      this.historicFilterList.push(filter);
-    }
-  }
+  public searchBySerial(value: any): void {
+    this.detailService.setLoading(true);
 
-  public searchBySerial = (value: any): void => {
-    // if (this.serialForm.valid){
-    //   const serialFiltered = this.equipments.filter(x => x.serial == value.serial);
-    //   const historicData = new HistoricDataSend(serialFiltered, false);
-    //   // this.dataService.hitorics$.emit(historicData);
-
-    //   this.filterList.push(value.serial);
-    //   this.serialForm.controls.serial.setValue('');
-    //   this.hasFilter = true;
-    // }
+    setTimeout(() => {
+      const equipmentsFilterBySerial = this.equipmentData.equipments.filter(x => x.serial === value.serial);
+      this.equipmentData.setEventFromSidebar(equipmentsFilterBySerial, this.detailData.isMainHistoricTab);
+      this.detailService.setEquipments(this.equipmentData);
+    }, 250);
   }
 
   private setFilters(): void{
@@ -225,7 +174,7 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
 
       const groupLength = Object.getOwnPropertyNames(filterGrouping).length;
       const sidebarFilter = new Array<FilterDetailItem>();
-      // tslint:disable-next-line: forin
+
       for (const item in filterGrouping) {
         const models: Equipment[] = filterGrouping[item];
         sidebarFilter.push(new FilterDetailItem(item, models.length));

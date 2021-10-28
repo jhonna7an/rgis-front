@@ -51,6 +51,7 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { AccentPipe } from './pipes/accent.pipe';
 
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { SidebarHeaderComponent } from './components/sidebar/sidebar-detail/sidebar-header/sidebar-header.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     DetailHistoricComponent,
     DeleteConfirmComponent,
     DetailItemComponent,
-    EditItemComponent
+    EditItemComponent,
+    SidebarHeaderComponent
   ],
   imports: [
     BrowserModule,
