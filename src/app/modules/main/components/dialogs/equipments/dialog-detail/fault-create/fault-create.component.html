@@ -1,0 +1,26 @@
+<form class="d-flex serial-form"
+      [formGroup]="faultForm"
+      autocomplete="off"
+      novalidate>
+
+      <mat-form-field appearance="outline">
+          <mat-label>Fecha de avería</mat-label>
+          <input matInput [matDatepicker]="faultDate" formControlName="date">
+          <mat-datepicker-toggle matSuffix [for]="faultDate"></mat-datepicker-toggle>
+          <mat-datepicker #faultDate></mat-datepicker>
+      </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Cliente</mat-label>
+        <input type="text" matInput formControlName="client" [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto>
+            <mat-option *ngFor="let client of clientFilter | async" [value]="client.clientName">
+                {{client.clientName}}
+            </mat-option>
+        </mat-autocomplete>
+        <!-- <ng-container *ngIf="fm.type.errors && (fm.type.dirty || fm.type.touched)">
+          <mat-error class="error-message" *ngIf="fm.type.errors.required">El equipo es requerido</mat-error>
+        </ng-container> -->
+    </mat-form-field>
+
+</form>

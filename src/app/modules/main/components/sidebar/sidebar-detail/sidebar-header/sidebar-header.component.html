@@ -30,7 +30,10 @@
         <div>
             <mat-form-field class="mat-form" appearance="outline">
                 <mat-label>Serial</mat-label>
-                <input type="text" formControlName="serial" matInput placeholder="Ingrese Serial">
+                <input type="text" matInput formControlName="serial" placeholder="Ingrese Serial">
+                <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                    <mat-icon>close</mat-icon>
+                  </button> -->
                 <!-- <mat-error *ngIf="validateControl('serial') && hasError('serial', 'maxlength')">
                     El valor debe ser de 10 dígitos
                 </mat-error>

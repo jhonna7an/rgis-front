@@ -67,11 +67,15 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
       .subscribe((response: EquipmentData) => {
         if (response) {
           this.equipmentData = response;
-          this.isSidebarHide = false;
+          if (response.equipments) {
+            this.isSidebarHide = false;
+          }
+
           this.setFilters();
 
           if (!response.isSidebarEvent) {
             this.detailService.setLoading(false);
+            this.filterApply = response.filterApply;
           }
         }
       });
@@ -87,6 +91,8 @@ export class SidebarDetailComponent extends BaseComponent implements OnInit {
     } else {
       this.restartHistoricFilters();
     }
+
+    this.filterApply = null;
   }
 
   private restartCurrentFilters(): void {

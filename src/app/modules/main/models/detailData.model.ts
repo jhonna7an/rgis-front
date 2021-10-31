@@ -97,6 +97,7 @@ export class EditData {
 }
 
 export class EquipmentData {
+  public filterApply: string;
   public isHistoricTab: boolean;
   public isBodyEvent: boolean;
   public isSidebarEvent: boolean;
@@ -107,7 +108,8 @@ export class EquipmentData {
     this.isSidebarEvent = false;
   }
 
-  public setEventFromBody(equipments: Equipment[]): void{
+  public setEventFromBody(equipments: Equipment[], filterApply: string = null): void{
+    this.filterApply = filterApply;
     this.isBodyEvent = true;
     this.isSidebarEvent = false;
     this.equipments = equipments;

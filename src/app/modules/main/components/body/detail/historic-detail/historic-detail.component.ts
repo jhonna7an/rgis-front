@@ -19,6 +19,7 @@ export class HistoricDetailComponent extends BaseComponent implements OnInit {
 
   public historicForm: FormGroup;
   public detailData: DetailData;
+  public equipmentData : EquipmentData;
 
   public historics: Historic[];
 
@@ -32,6 +33,7 @@ export class HistoricDetailComponent extends BaseComponent implements OnInit {
     private dialog: MatDialog
   ) {
     super();
+    this.equipmentData = new EquipmentData();
   }
 
   ngOnInit(): void {
@@ -44,10 +46,9 @@ export class HistoricDetailComponent extends BaseComponent implements OnInit {
       .subscribe((response: DetailData) => {
         if (response) {
           this.detailData = response;
-          if (response.isMainHistoricTab && response.historicData.hasHistoricSearch) {
-            const equipmentData = new EquipmentData();
-            equipmentData.setEventFromBody(this.historics);
-            this.detailService.setEquipments(equipmentData);
+          if (response.isMainHistoricTab) {
+            this.equipmentData.setEventFromBody(this.historics);
+            this.detailService.setEquipments(this.equipmentData);
           }
         }
       });
@@ -84,9 +85,8 @@ export class HistoricDetailComponent extends BaseComponent implements OnInit {
           }
 
           this.historicForm.reset();
-          const equipmentData = new EquipmentData();
-          equipmentData.setEventFromBody(response);
-          this.detailService.setEquipments(equipmentData);
+          this.equipmentData.setEventFromBody(response);
+          this.detailService.setEquipments(this.equipmentData);
         }
       }, error => {
         console.error(error);

@@ -26,6 +26,7 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
   public isDetailTab: boolean;
   public isHistoricTab: boolean;
   public isEditModule: boolean;
+  public isFaultCreate: boolean;
 
   public sidenavMessage: string;
   public isEditBtnDisabled: boolean;
@@ -49,11 +50,13 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
     this.isDetailTab = true;
     this.isHistoricTab = false;
     this.isEditModule = false;
+    this.isFaultCreate = false;
     this.sidenavMessage = 'Cerrar lista de históricos';
     this.isEditBtnDisabled = true;
 
     // Get Equipments from Edit Module to Save
-    this.equipmentService.getEquipmentToEdit()
+    this.equipmentService
+      .getEquipmentToEdit()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: EquipmentAbm) => {
         if (response) {
@@ -82,6 +85,14 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
       .subscribe(() => {
         this.isEditBtnDisabled = false;
       });
+
+      // Manage Fault Create
+      this.equipmentService
+        .getFaultCreate()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((response: EquipmentAbm) => {
+          this.isFaultCreate = true;
+        });
   }
 
   public getHistoric = (event: any): void => {

@@ -22,6 +22,7 @@ export class EquipmentService {
   private edit$ = new Subject<boolean>();
   private equipmentToEdit$ = new Subject<EquipmentAbm>();
   private multiEditData$ = new Subject<MultiEditData>();
+  private faultCreate$ = new Subject<EquipmentAbm>();
 
 
   // public edited$ = new EventEmitter<boolean>();
@@ -40,8 +41,6 @@ export class EquipmentService {
   }
 
   public edit(equipment: EquipmentAbm): Observable<boolean> {
-    console.log('editar');
-
     this.partialUrl = `${this.url}/api/v1/Equipment`;
     return this.http.put<boolean>(this.partialUrl, equipment);
   }
@@ -101,5 +100,13 @@ export class EquipmentService {
 
   public restartEquipmentsEvent(): Observable<void> {
     return this.restartEquipments$.asObservable();
+  }
+
+  public setFaultCreate(value: EquipmentAbm): void {
+    this.faultCreate$.next(value);
+  }
+
+  public getFaultCreate(): Observable<EquipmentAbm> {
+    return this.faultCreate$.asObservable();
   }
 }

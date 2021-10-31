@@ -1,3 +1,4 @@
+import { ClientService } from './services/client.service';
 import { DetailService } from './services/workflow/detail.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -52,6 +53,7 @@ import { AccentPipe } from './pipes/accent.pipe';
 
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { SidebarHeaderComponent } from './components/sidebar/sidebar-detail/sidebar-header/sidebar-header.component';
+import { FaultCreateComponent } from './components/dialogs/equipments/dialog-detail/fault-create/fault-create.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +85,8 @@ import { SidebarHeaderComponent } from './components/sidebar/sidebar-detail/side
     DeleteConfirmComponent,
     DetailItemComponent,
     EditItemComponent,
-    SidebarHeaderComponent
+    SidebarHeaderComponent,
+    FaultCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +111,8 @@ import { SidebarHeaderComponent } from './components/sidebar/sidebar-detail/side
     ModelService,
     EquipmentNameService,
     CommentService,
-    DetailService
+    DetailService,
+    ClientService
   ],
   bootstrap: []
 })

@@ -25,7 +25,13 @@
         </ng-container>
 
         <ng-template #edit_module>
-            <app-edit-item [detailData]="detailData"></app-edit-item>
+            <ng-container *ngIf="!isFaultCreate; else faultCreate">
+                <app-edit-item [detailData]="detailData"></app-edit-item>
+            </ng-container>
+
+            <ng-template #faultCreate>
+                <app-fault-create></app-fault-create>
+            </ng-template>
         </ng-template>
     </div>
 

@@ -1,3 +1,4 @@
+import { EEquipmentState } from './../../../../../pages/summary/summarytable';
 import { Equipment, EquipmentAbm } from './../../../../../models/equipments/equipment';
 import { EquipmentService } from 'src/app/modules/main/services/equipment.service';
 import { DetailData } from './../../../../../models/detailData.model';
@@ -81,7 +82,12 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
         if (response) {
           const equipment = new EquipmentAbm();
           equipment.completeToEdit(this.ef, this.detailData.equipment, 1);
-          this.equipmentService.setEquipmentToEdit(equipment);
+
+          if (equipment.stateId === EEquipmentState.Averia) {
+            this.equipmentService.setFaultCreate(equipment);
+          } else {
+            this.equipmentService.setEquipmentToEdit(equipment);
+          }
         }
       });
   }

@@ -50,7 +50,7 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
         if (response) {
           this.detailData = response;
 
-          if (!response.isMainHistoricTab && response.historicData.hasHistoricSearch) {
+          if (!response.isMainHistoricTab) {
             this.equipmentData.setEventFromBody(this.equipments);
             this.detailService.setEquipments(this.equipmentData);
           }
@@ -71,6 +71,8 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: EquipmentData) => {
         if (response && response.isSidebarEvent && !response.isHistoricTab) {
+          console.log(response);
+
           this.equipments = response.equipments;
         }
       });
@@ -100,13 +102,9 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
   public onSubmit(value: any): void {
     if (this.serialForm.valid) {
       this.serialForm.controls['serial'].reset();
-      const filterData = new FilterSend(true, value.serial);
-      // this.dataService.filter$.emit(filterData);
-
-      const filterBySerial = this.equipments.filter(
-        (x) => x.serial.toString() === value.serial
-      );
-      // this.dataService.equipment$.emit(filterBySerial);
+      this.equipments = this.equipments.filter(x => x.serial === value.serial);
+      this.equipmentData.setEventFromBody(this.equipments, value.serial);
+      this.detailService.setEquipments(this.equipmentData);
     }
   }
 
@@ -122,10 +120,8 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
 
   // Form Validation
   public validateControl = (control: string) => {
-    if (
-      this.serialForm.controls[control].invalid &&
-      this.serialForm.controls[control].touched
-    ) {
+    if (this.serialForm.controls[control].invalid &&
+      this.serialForm.controls[control].touched) {
       return true;
     }
 
