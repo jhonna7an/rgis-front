@@ -1,6 +1,6 @@
 import { BaseModel } from '../base-model';
 import { EquipmentBrand } from './equipment-brand';
-import { EquipmentName } from './equipment-name';
+import { EquipmentType } from './equipment-type';
 
 export class EquipmentModel extends BaseModel {
     public model: string;
@@ -8,5 +8,5 @@ export class EquipmentModel extends BaseModel {
     public brandId: number;
 
     public brand: EquipmentBrand;
-    public name: EquipmentName;
+    public name: EquipmentType;
 }

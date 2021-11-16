@@ -14,7 +14,7 @@ import { EquipmentService } from '../../services/equipment.service';
 import * as XLSX from 'xlsx';
 import { CountryData, CountryDetail } from '../../models/pages/equipment-summary';
 import { EquipmentTypeService } from '../../services/equipment-type.service';
-import { EquipmentName } from '../../models/equipments/equipment-name';
+import { EquipmentType } from '../../models/equipments/equipment-type';
 
 const districts = [
   {id: 1, label: 'Dist 653'},
@@ -52,7 +52,7 @@ export class EquipmentSummaryComponent implements OnInit {
   public currentDistrict: string;
 
   // COUNTRY DETAIL
-  public equipmentTypes: EquipmentName[];
+  public equipmentTypes: EquipmentType[];
 
   public xpandStatus: boolean;
   public bodyloading: boolean;
@@ -164,7 +164,7 @@ export class EquipmentSummaryComponent implements OnInit {
     this.bodyloading = true;
     if (!this.equipmentTypes){
       this.typeService.Get()
-      .subscribe((response: EquipmentName[]) => {
+      .subscribe((response: EquipmentType[]) => {
         this.equipmentTypes = response;
         this.setCountryDataTable();
       });

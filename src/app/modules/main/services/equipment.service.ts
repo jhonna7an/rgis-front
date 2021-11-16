@@ -15,7 +15,6 @@ export class EquipmentService {
   private url: string;
   private partialUrl: string;
 
-  // private detailData$ = new Subject<DetailData>();
   private equipments$ = new Subject<Equipment[]>();
   private restartEquipments$ = new Subject<void>();
 
@@ -23,9 +22,6 @@ export class EquipmentService {
   private equipmentToEdit$ = new Subject<EquipmentAbm>();
   private multiEditData$ = new Subject<MultiEditData>();
   private faultCreate$ = new Subject<EquipmentAbm>();
-
-
-  // public edited$ = new EventEmitter<boolean>();
 
   constructor(private http: ManagerService) {
     this.url = `${environment.baseURL}`;
@@ -70,13 +66,6 @@ export class EquipmentService {
   public getMultiEditData(): Observable<MultiEditData> {
     return this.multiEditData$.asObservable();
   }
-  // public setEquipmentDetail(value: DetailData): void {
-  //   this.detailData$.next(value);
-  // }
-
-  // public getEquipmentDetail(): Observable<DetailData> {
-  //   return this.detailData$.asObservable();
-  // }
 
   public saveEdit(): void {
     this.edit$.next(true);

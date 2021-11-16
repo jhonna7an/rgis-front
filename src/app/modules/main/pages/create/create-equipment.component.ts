@@ -1,6 +1,6 @@
 import { ToastService } from '../../../shared/services/toast.service';
-import { EquipmentName } from '../../models/equipments/equipment-name';
-import { EquipmentNameService } from '../../services/equipment-name.service';
+import { EquipmentType } from '../../models/equipments/equipment-type';
+import { EquipmentTypeService } from '../../services/equipment-name.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { District } from '../../models/equipments/district';
@@ -22,7 +22,7 @@ import { takeUntil } from 'rxjs/operators';
 export class CreateEquipmentComponent extends BaseComponent implements OnInit {
 
   public createForm: FormGroup;
-  public types: EquipmentName[];
+  public types: EquipmentType[];
   public brands: EquipmentBrand[];
   public models: EquipmentModel[];
   public districts: District[];
@@ -40,7 +40,7 @@ export class CreateEquipmentComponent extends BaseComponent implements OnInit {
     private modelService: ModelService,
     private districtService: DistrictService,
     private equipmentService: EquipmentService,
-    private nameService: EquipmentNameService,
+    private nameService: EquipmentTypeService,
     private toastService: ToastService
   ) {
     super();
@@ -134,7 +134,7 @@ export class CreateEquipmentComponent extends BaseComponent implements OnInit {
     this.loading = true;
     this.nameService.get()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: EquipmentName[]) => {
+      .subscribe((response: EquipmentType[]) => {
         if (response) {
           this.types = response;
           this.loading = false;

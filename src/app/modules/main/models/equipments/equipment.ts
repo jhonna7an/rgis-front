@@ -39,6 +39,7 @@ export class Equipment extends BaseModel {
   public state: string;
   public valoration: string;
 
+  public typeId: number;
   public modelId: number;
   public districtId: number;
   public branchOfficeId: number;
@@ -46,7 +47,6 @@ export class Equipment extends BaseModel {
   public stateId: number;
   public valorationId: number;
   public comments: string[];
-
 
   public historicCount: number;
 

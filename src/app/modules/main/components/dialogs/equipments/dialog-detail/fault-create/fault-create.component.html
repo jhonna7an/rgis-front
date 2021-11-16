@@ -3,24 +3,114 @@
       autocomplete="off"
       novalidate>
 
-      <mat-form-field appearance="outline">
-          <mat-label>Fecha de avería</mat-label>
-          <input matInput [matDatepicker]="faultDate" formControlName="date">
-          <mat-datepicker-toggle matSuffix [for]="faultDate"></mat-datepicker-toggle>
-          <mat-datepicker #faultDate></mat-datepicker>
-      </mat-form-field>
+    <div class="detail-container animated fadeInUp">
+        <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel [expanded]="true" class="expansion">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <h3 class="item-title">Detalle de Inventario</h3>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+    
+                <div class="form-container">
+                    <div>
+                        <div class="mat-item">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Fecha de avería</mat-label>
+                                <input matInput [matDatepicker]="faultDate" formControlName="date">
+                                <mat-datepicker-toggle matSuffix [for]="faultDate"></mat-datepicker-toggle>
+                                <mat-datepicker #faultDate></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="mat-item">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Cliente</mat-label>
+                                <input type="text" matInput formControlName="client" [matAutocomplete]="auto">
+                                <mat-autocomplete autoActiveFirstOption #auto>
+                                    <mat-option *ngFor="let client of clientFilter | async" [value]="client.clientName">
+                                        {{client.clientName}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <!-- <ng-container *ngIf="fm.type.errors && (fm.type.dirty || fm.type.touched)">
+                                  <mat-error class="error-message" *ngIf="fm.type.errors.required">El equipo es requerido</mat-error>
+                                </ng-container> -->
+                            </mat-form-field>
+                        </div>
 
-    <mat-form-field appearance="outline">
-        <mat-label>Cliente</mat-label>
-        <input type="text" matInput formControlName="client" [matAutocomplete]="auto">
-        <mat-autocomplete autoActiveFirstOption #auto>
-            <mat-option *ngFor="let client of clientFilter | async" [value]="client.clientName">
-                {{client.clientName}}
-            </mat-option>
-        </mat-autocomplete>
-        <!-- <ng-container *ngIf="fm.type.errors && (fm.type.dirty || fm.type.touched)">
-          <mat-error class="error-message" *ngIf="fm.type.errors.required">El equipo es requerido</mat-error>
-        </ng-container> -->
-    </mat-form-field>
+                        <div class="mat-item">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Local</mat-label>
+                                <input type="text" matInput formControlName="store">
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <div>
+                        <div class="mat-item">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Responsable de Inventario</mat-label>
+                                <mat-select formControlName="leader">
+                                    <mat-option *ngFor="let leader of leaders" [value]="leader?.id">
+                                        {{leader.name}} {{leader.lastName}}
+                                    </mat-option>
+                                </mat-select>
+                                <!-- <ng-container *ngIf="fm.type.errors && (fm.type.dirty || fm.type.touched)">
+                                  <mat-error class="error-message" *ngIf="fm.type.errors.required">El equipo es requerido</mat-error>
+                                </ng-container> -->
+                            </mat-form-field>
+                        </div>
 
+                        <div class="mat-item">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Supervisor/Gerencia</mat-label>
+                                <mat-select formControlName="supervisor">
+                                    <mat-option *ngFor="let supervisor of supervisors" [value]="supervisor?.id">
+                                        {{supervisor.name}} {{supervisor.lastName}}
+                                    </mat-option>
+                                </mat-select>
+                                <!-- <ng-container *ngIf="fm.type.errors && (fm.type.dirty || fm.type.touched)">
+                                  <mat-error class="error-message" *ngIf="fm.type.errors.required">El equipo es requerido</mat-error>
+                                </ng-container> -->
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="true" class="expansion">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h3 class="item-title">Detalle de Avería</h3>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-container">
+                <div>
+                    <div>
+                        <mat-form-field appearance="outline">
+                          <mat-label>Detalle de avería</mat-label>
+                          <mat-select formControlName="detail">
+                              <mat-option *ngFor="let detail of faultDetails" [value]="detail?.id">
+                                  {{detail.detail}}
+                              </mat-option>
+                          </mat-select>
+                          <!-- <ng-container *ngIf="fm.type.errors && (fm.type.dirty || fm.type.touched)">
+                            <mat-error class="error-message" *ngIf="fm.type.errors.required">El equipo es requerido</mat-error>
+                          </ng-container> -->
+                        </mat-form-field>
+                    </div>
+
+                    <div class="checkbox-container">
+                        <mat-checkbox class="example-margin"
+                                      formControlName="faultSheet"
+                                      color="primary">
+                            Tiene Planilla de Averías
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        </mat-accordion>
+    </div>
 </form>

@@ -1,3 +1,6 @@
+import { EquipmentFaultService } from './services/equipment-fault.service';
+import { EmployeeService } from './services/employee.service';
+import { FaultDetailService } from './services/fault-detail.service';
 import { ClientService } from './services/client.service';
 import { DetailService } from './services/workflow/detail.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -35,7 +38,7 @@ import { DeleteConfirmComponent } from './components/dialogs/equipments/dialog-d
 import { DetailItemComponent } from './components/dialogs/equipments/dialog-detail/detail-item/detail-item.component';
 import { EditItemComponent } from './components/dialogs/equipments/dialog-detail/edit-item/edit-item.component';
 
-import { EquipmentNameService } from './services/equipment-name.service';
+import { EquipmentTypeService } from './services/equipment-name.service';
 import { CommentService } from './services/comment.service';
 import { EquipmentService } from './services/equipment.service';
 import { LocationService } from './services/location.service';
@@ -109,10 +112,13 @@ import { FaultCreateComponent } from './components/dialogs/equipments/dialog-det
     DataService,
     BrandService,
     ModelService,
-    EquipmentNameService,
+    EquipmentTypeService,
     CommentService,
     DetailService,
-    ClientService
+    ClientService,
+    FaultDetailService,
+    EmployeeService,
+    EquipmentFaultService
   ],
   bootstrap: []
 })

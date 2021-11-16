@@ -1,3 +1,4 @@
+import { EquipmentFaultService } from './../../../../services/equipment-fault.service';
 import { ToastService } from './../../../../../shared/services/toast.service';
 import { EquipmentAbm } from './../../../../models/equipments/equipment';
 import { CommentService } from './../../../../services/comment.service';
@@ -31,9 +32,12 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
   public sidenavMessage: string;
   public isEditBtnDisabled: boolean;
 
+  public titleEditOrFault: string;
+
   constructor(
     private equipmentService: EquipmentService,
     private commentService: CommentService,
+    private equipmentFaultService: EquipmentFaultService,
     private sidenavService: SidenavService,
     private toastService: ToastService,
     public dialogRef: MatDialogRef<DialogDetailComponent>,
@@ -43,14 +47,15 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
     super();
     this.equipmentCurrent = data.equipment;
     this.detailData = data;
+    this.detailData.setIsEditModule(false);
   }
 
   ngOnInit(): void {
     this.isLoading = false;
-    this.isDetailTab = true;
-    this.isHistoricTab = false;
     this.isEditModule = false;
     this.isFaultCreate = false;
+    this.isDetailTab = true;
+    this.isHistoricTab = false;
     this.sidenavMessage = 'Cerrar lista de históricos';
     this.isEditBtnDisabled = true;
 
@@ -61,6 +66,8 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
       .subscribe((response: EquipmentAbm) => {
         if (response) {
           this.isLoading = true;
+          this.isEditModule = false;
+          this.isFaultCreate = false;
           this.equipmentService.edit(response)
             .pipe(takeUntil(this.destroy$))
             .subscribe((data: boolean) => {
@@ -92,6 +99,7 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe((response: EquipmentAbm) => {
           this.isFaultCreate = true;
+          this.titleEditOrFault = 'Avería';
         });
   }
 
@@ -115,6 +123,8 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
 
   public editDialog(): void {
     this.isEditModule = true;
+    this.isFaultCreate = false;
+    this.titleEditOrFault = 'Editar';
     const comments = this.commentService
       .getComments()
       .map(x => x.comment);
@@ -127,12 +137,19 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
     this.sidenavMessage = this.sidenavService.isOpened() ? 'Cerrar lista de históricos' : 'Abrir lista de históricos';
   }
 
-  public saveEdit(): void {
+  public saveChanges(): void {
     this.equipmentService.saveEdit();
   }
 
-  public cancelEdit(): void {
-    this.isEditModule = false;
+  public back(): void {
+    if (this.isFaultCreate) {
+      this.isFaultCreate = false;
+      this.titleEditOrFault = 'Editar';
+      this.detailData.setIsEditModule(true);
+      return;
+    }
+
     this.detailData.setIsEditModule(false);
+    this.isEditModule = false;
   }
 }
