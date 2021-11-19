@@ -20,6 +20,7 @@ export class EquipmentService {
 
   private edit$ = new Subject<boolean>();
   private equipmentToEdit$ = new Subject<EquipmentAbm>();
+  private editEndEvent = new Subject<boolean>();
   private multiEditData$ = new Subject<MultiEditData>();
   private faultCreate$ = new Subject<EquipmentAbm>();
 
@@ -67,12 +68,20 @@ export class EquipmentService {
     return this.multiEditData$.asObservable();
   }
 
-  public saveEdit(): void {
+  public setEditSaveEvent(): void {
     this.edit$.next(true);
   }
 
-  public saveEditListener(): Observable<boolean> {
+  public getEditSaveEvent(): Observable<boolean> {
     return this.edit$.asObservable();
+  }
+
+  public setEditEndEvent(value: boolean): void {
+    this.editEndEvent.next(value);
+  }
+
+  public getEditEndEvent(): Observable<boolean> {
+    return this.editEndEvent.asObservable();
   }
 
   public setEquipmentToEdit(value: EquipmentAbm): void {

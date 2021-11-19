@@ -76,12 +76,23 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
     this.initEditForm();
 
     // Subscriber get equipment info to edit
-    this.equipmentService.saveEditListener()
+    this.equipmentService.getEditSaveEvent()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: boolean) => {
         if (response) {
           const equipment = new EquipmentAbm();
           equipment.completeToEdit(this.ef, this.detailData.equipment, 1);
+
+          this.equipmentService
+            .edit(equipment)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              (response: boolean) => {
+                this.equipmentService.setEditEndEvent(response);
+              }, error => {
+                this.equipmentService.setEditEndEvent(false);
+                console.error(error);
+              });
 
           if (equipment.stateId === EEquipmentState.Averia) {
             this.equipmentService.setFaultCreate(equipment);

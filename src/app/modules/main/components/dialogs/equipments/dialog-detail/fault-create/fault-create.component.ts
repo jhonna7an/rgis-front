@@ -73,7 +73,7 @@ export class FaultCreateComponent extends BaseComponent implements OnInit {
             },
             error => {
               this.equipmentFaultService.setCreateEndEvent(false);
-              console.log(error)
+              console.error(error)
             });
       });
 

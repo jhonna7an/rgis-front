@@ -63,6 +63,18 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
     this.isEditBtnDisabled = true;
 
     // Get Equipments from Edit Module to Save
+  this.equipmentService
+    .getEditEndEvent()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((response: boolean) => {
+      if (response) {
+        this.equipmentService.triggerRestartEquipments();
+        this.toastService.showSuccess('Se guardaron los cambios correctamente');
+      } else {
+        this.toastService.showError('Se produjo un error al intentar guardar los cambios');
+      }
+    });
+
     this.equipmentService
       .getEquipmentToEdit()
       .pipe(takeUntil(this.destroy$))
@@ -113,17 +125,17 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
         this.isFaultButtonDisabled = value;
       });
 
+    // Fault Save End Event
     this.equipmentFaultService
       .getCreateEndEvent()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: boolean) => {
         if (response) {
           this.close();
-          this.equipmentService.triggerRestartEquipments();
           this.toastService.showSuccess('Se guardaron los cambios correctamente');
         }
         else {
-          this.toastService.showError('Se produjo un error al intentar guardar los cambios');
+          this.toastService.showError('Se produjo un error al intentar guardar la información');
         }
       });
   }
@@ -163,7 +175,7 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
   }
 
   public saveChanges(): void {
-    this.equipmentService.saveEdit();
+    this.equipmentService.setEditSaveEvent();
   }
 
   public back(): void {
