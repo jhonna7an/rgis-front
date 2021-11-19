@@ -6,12 +6,12 @@
     <div class="detail-container animated fadeInUp">
         <mat-accordion class="example-headers-align" multi>
             <mat-expansion-panel [expanded]="true" class="expansion">
-                  <mat-expansion-panel-header>
+                <mat-expansion-panel-header>
                     <mat-panel-title>
                       <h3 class="item-title">Detalle de Inventario</h3>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-    
+
                 <div class="form-container">
                     <div>
                         <div class="mat-item">
@@ -22,7 +22,7 @@
                                 <mat-datepicker #faultDate></mat-datepicker>
                             </mat-form-field>
                         </div>
-                        
+
                         <div class="mat-item">
                             <mat-form-field appearance="outline">
                                 <mat-label>Cliente</mat-label>
@@ -45,11 +45,11 @@
                             </mat-form-field>
                         </div>
                     </div>
-    
+
                     <div>
                         <div class="mat-item">
                             <mat-form-field appearance="outline">
-                                <mat-label>Responsable de Inventario</mat-label>
+                                <mat-label>Líder de Inventario</mat-label>
                                 <mat-select formControlName="leader">
                                     <mat-option *ngFor="let leader of leaders" [value]="leader?.id">
                                         {{leader.name}} {{leader.lastName}}
@@ -79,38 +79,38 @@
             </mat-expansion-panel>
 
             <mat-expansion-panel [expanded]="true" class="expansion">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <h3 class="item-title">Detalle de Avería</h3>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h3 class="item-title">Detalle de Avería</h3>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
 
-            <div class="form-container">
-                <div>
+                <div class="form-container">
                     <div>
-                        <mat-form-field appearance="outline">
-                          <mat-label>Detalle de avería</mat-label>
-                          <mat-select formControlName="detail">
-                              <mat-option *ngFor="let detail of faultDetails" [value]="detail?.id">
-                                  {{detail.detail}}
-                              </mat-option>
-                          </mat-select>
-                          <!-- <ng-container *ngIf="fm.type.errors && (fm.type.dirty || fm.type.touched)">
-                            <mat-error class="error-message" *ngIf="fm.type.errors.required">El equipo es requerido</mat-error>
-                          </ng-container> -->
-                        </mat-form-field>
-                    </div>
+                        <div>
+                            <mat-form-field appearance="outline">
+                              <mat-label>Detalle de avería</mat-label>
+                              <mat-select formControlName="detail">
+                                  <mat-option *ngFor="let detail of faultDetails" [value]="detail?.id">
+                                      {{detail.detail}}
+                                  </mat-option>
+                              </mat-select>
+                              <!-- <ng-container *ngIf="fm.type.errors && (fm.type.dirty || fm.type.touched)">
+                                <mat-error class="error-message" *ngIf="fm.type.errors.required">El equipo es requerido</mat-error>
+                              </ng-container> -->
+                            </mat-form-field>
+                        </div>
 
-                    <div class="checkbox-container">
-                        <mat-checkbox class="example-margin"
-                                      formControlName="faultSheet"
-                                      color="primary">
-                            Tiene Planilla de Averías
-                        </mat-checkbox>
+                        <div class="checkbox-container">
+                            <mat-checkbox class="example-margin"
+                                          formControlName="faultSheet"
+                                          color="primary">
+                                Tiene Planilla de Averías
+                            </mat-checkbox>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </mat-expansion-panel>
+            </mat-expansion-panel>
         </mat-accordion>
     </div>
 </form>

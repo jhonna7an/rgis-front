@@ -42,6 +42,12 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
     this.createSerialForm();
     this.getEquipments();
 
+    this.serialForm.valueChanges
+      .subscribe(status => {
+        console.log(this.serialForm);
+
+      })
+
     // Subscribe DetailData for dialogs
     this.detailService
       .getDetailData()

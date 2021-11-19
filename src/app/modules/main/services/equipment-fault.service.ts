@@ -1,6 +1,6 @@
 import { EquipmentFault } from './../models/equipments/equipment-fault.model';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ManagerService } from '../../shared/services/manager.service';
 
@@ -12,7 +12,9 @@ export class EquipmentFaultService {
   private url: string;
   private partialUrl: string;
 
-  private create$ = new Subject<void>();
+  private isDisabled$ = new BehaviorSubject<boolean>(false);
+  private createSubmitEvent$ = new Subject<void>();
+  private createEndEvent$ = new Subject<boolean>();
 
   constructor(private http: ManagerService) {
     this.url = `${environment.baseURL}`;
@@ -23,11 +25,27 @@ export class EquipmentFaultService {
     return this.http.post<boolean>(this.partialUrl, equipmentFault);
   }
 
-  public saveCreate(): void {
-    this.create$.next();
+  public setIsDisabled(value: boolean): void {
+    this.isDisabled$.next(value);
   }
 
-  public saveCreateListener(): Observable<void> {
-    return this.create$.asObservable();
+  public getIsDisabled(): Observable<boolean> {
+    return this.isDisabled$.asObservable();
+  }
+
+  public setSaveCreateEvent(): void {
+    this.createSubmitEvent$.next();
+  }
+
+  public getSaveCreateEvent(): Observable<void> {
+    return this.createSubmitEvent$.asObservable();
+  }
+
+  public setCreateEndEvent(value: boolean): void {
+    this.createEndEvent$.next(value);
+  }
+
+  public getCreateEndEvent(): Observable<boolean> {
+    return this.createEndEvent$.asObservable();
   }
 }

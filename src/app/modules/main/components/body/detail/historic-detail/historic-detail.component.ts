@@ -40,6 +40,13 @@ export class HistoricDetailComponent extends BaseComponent implements OnInit {
     this.isEmptyHistoric = true;
     this.createHistoricForm();
 
+    this.historicForm.statusChanges
+    .subscribe(status => {
+      console.log(status);
+      console.log(this.historicForm);
+
+    })
+
     // Subscribe to Tab Main Changes
     this.detailService.getDetailData()
       .pipe(takeUntil(this.destroy$))

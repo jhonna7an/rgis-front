@@ -53,11 +53,22 @@
         </ng-container>
 
         <ng-container *ngIf="isEditModule">
+            <ng-container *ngIf="!isFaultCreate; else faultCreateBtn">
                 <button mat-raised-button
                         color="primary"
                         (click)="saveChanges()">
                     Guardar cambios
                 </button>
+            </ng-container>
+
+            <ng-template #faultCreateBtn>
+                <button mat-raised-button
+                        (click)="saveFault()"
+                        color="primary"
+                        [disabled]="!isFaultButtonDisabled">
+                    Guardar
+                </button>
+            </ng-template>
         </ng-container>
 
         <button mat-stroked-button (click)="close()">Cancelar</button>

@@ -1,3 +1,4 @@
+import { EquipmentFault } from './../../../../models/equipments/equipment-fault.model';
 import { EquipmentFaultService } from './../../../../services/equipment-fault.service';
 import { ToastService } from './../../../../../shared/services/toast.service';
 import { EquipmentAbm } from './../../../../models/equipments/equipment';
@@ -34,10 +35,12 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
 
   public titleEditOrFault: string;
 
+  public isFaultButtonDisabled: boolean;
+
   constructor(
     private equipmentService: EquipmentService,
     private commentService: CommentService,
-    private equipmentFaultService: EquipmentFaultService,
+    public equipmentFaultService: EquipmentFaultService,
     private sidenavService: SidenavService,
     private toastService: ToastService,
     public dialogRef: MatDialogRef<DialogDetailComponent>,
@@ -93,14 +96,36 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
         this.isEditBtnDisabled = false;
       });
 
-      // Manage Fault Create
-      this.equipmentService
-        .getFaultCreate()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((response: EquipmentAbm) => {
-          this.isFaultCreate = true;
-          this.titleEditOrFault = 'Avería';
-        });
+    // Manage Fault Create
+    this.equipmentService
+      .getFaultCreate()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: EquipmentAbm) => {
+        this.isFaultCreate = true;
+        this.titleEditOrFault = 'Avería';
+      });
+
+    // Fault Button Disabled Handler
+    this.equipmentFaultService
+      .getIsDisabled()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((value) => {
+        this.isFaultButtonDisabled = value;
+      });
+
+    this.equipmentFaultService
+      .getCreateEndEvent()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: boolean) => {
+        if (response) {
+          this.close();
+          this.equipmentService.triggerRestartEquipments();
+          this.toastService.showSuccess('Se guardaron los cambios correctamente');
+        }
+        else {
+          this.toastService.showError('Se produjo un error al intentar guardar los cambios');
+        }
+      });
   }
 
   public getHistoric = (event: any): void => {
@@ -151,5 +176,9 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
 
     this.detailData.setIsEditModule(false);
     this.isEditModule = false;
+  }
+
+  public saveFault(): void {
+    this.equipmentFaultService.setSaveCreateEvent();
   }
 }
