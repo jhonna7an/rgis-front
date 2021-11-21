@@ -10,7 +10,7 @@ import { BaseComponent } from 'src/app/modules/core/components/base/base.compone
 import { startWith, takeUntil, map, filter, distinctUntilChanged } from 'rxjs/operators';
 import { ClientService } from './../../../../../services/client.service';
 import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Client } from 'src/app/modules/main/models/equipments/client';
 import { fromEvent, Observable } from 'rxjs';
 
@@ -31,6 +31,7 @@ export class FaultCreateComponent extends BaseComponent implements OnInit {
   public supervisors: Employee[];
 
   public clientFilter: Observable<Client[]>
+  public isLoading: boolean;
 
   @Input()
   public set equipment(value: Equipment){
@@ -45,7 +46,7 @@ export class FaultCreateComponent extends BaseComponent implements OnInit {
   }
 
   constructor(
-    private equipmentFaultService: EquipmentFaultService,
+    public equipmentFaultService: EquipmentFaultService,
     private clientService: ClientService,
     private faultDetailService: FaultDetailService,
     private employeeService: EmployeeService,
@@ -60,15 +61,26 @@ export class FaultCreateComponent extends BaseComponent implements OnInit {
     this._getEmployees();
 
     this.equipmentFaultService
+      .getIsLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: boolean) => {
+        this.isLoading = response;
+      });
+
+    // CREATE FAULT
+    this.equipmentFaultService
       .getSaveCreateEvent()
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
+        this.equipmentFaultService.setIsLoading(true);
         const equipmentFault = new EquipmentFault(this.faultForm.value, this.equipment.id, 1, this._clients);
-        console.log(equipmentFault);
-        this.equipmentFaultService.create(equipmentFault)
+
+        this.equipmentFaultService
+          .create(equipmentFault)
           .pipe(takeUntil(this.destroy$))
           .subscribe(
             (response: boolean) => {
+              this.equipmentFaultService.setIsLoading(false);
               this.equipmentFaultService.setCreateEndEvent(response);
             },
             error => {
@@ -81,6 +93,10 @@ export class FaultCreateComponent extends BaseComponent implements OnInit {
       .subscribe(() => {
         this.equipmentFaultService.setIsDisabled(this.faultForm.valid);
       });
+  }
+
+  public getControl(value: string): AbstractControl {
+    return this.faultForm.controls[value];
   }
 
   private createForm(): void {

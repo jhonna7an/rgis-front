@@ -9,6 +9,15 @@
   background-color: #F9F9F9;
 }
 
+.fault-alert {
+  border: solid 1px #da3633;
+  display: flex;
+  padding: 10px;
+  color: #da3633;
+  border-radius: 4px;
+  margin: 10px 20px;
+}
+
 .mat-dialog-content {
   max-height: 75vh;
 }

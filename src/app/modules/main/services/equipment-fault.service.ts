@@ -15,6 +15,7 @@ export class EquipmentFaultService {
   private isDisabled$ = new BehaviorSubject<boolean>(false);
   private createSubmitEvent$ = new Subject<void>();
   private createEndEvent$ = new Subject<boolean>();
+  private isLoading$ = new BehaviorSubject<boolean>(false);
 
   constructor(private http: ManagerService) {
     this.url = `${environment.baseURL}`;
@@ -47,5 +48,13 @@ export class EquipmentFaultService {
 
   public getCreateEndEvent(): Observable<boolean> {
     return this.createEndEvent$.asObservable();
+  }
+
+  public setIsLoading(value: boolean): void{
+    this.isLoading$.next(value);
+  }
+
+  public getIsLoading(): Observable<boolean>{
+    return this.isLoading$.asObservable();
   }
 }

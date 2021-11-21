@@ -13,9 +13,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
 import { takeUntil } from 'rxjs/operators';
+import { EEquipmentState } from 'src/app/modules/main/models/EEquipmentState';
 
 @Component({
   selector: 'app-dialog-detail',
+
   templateUrl: './dialog-detail.component.html',
   styleUrls: ['./dialog-detail.component.css']
 })
@@ -29,6 +31,7 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
   public isHistoricTab: boolean;
   public isEditModule: boolean;
   public isFaultCreate: boolean;
+  public showFaultAlert: boolean;
 
   public sidenavMessage: string;
   public isEditBtnDisabled: boolean;
@@ -36,6 +39,7 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
   public titleEditOrFault: string;
 
   public isFaultButtonDisabled: boolean;
+  public isEditSaveChangesDisabled: boolean;
 
   constructor(
     private equipmentService: EquipmentService,
@@ -57,17 +61,19 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
     this.isLoading = false;
     this.isEditModule = false;
     this.isFaultCreate = false;
+    this.showFaultAlert = false;
     this.isDetailTab = true;
     this.isHistoricTab = false;
     this.sidenavMessage = 'Cerrar lista de históricos';
     this.isEditBtnDisabled = true;
 
-    // Get Equipments from Edit Module to Save
+  // Get Equipments from Edit Module to Save
   this.equipmentService
     .getEditEndEvent()
     .pipe(takeUntil(this.destroy$))
     .subscribe((response: boolean) => {
       if (response) {
+        this.isLoading = false;
         this.equipmentService.triggerRestartEquipments();
         this.toastService.showSuccess('Se guardaron los cambios correctamente');
       } else {
@@ -75,34 +81,41 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
       }
     });
 
-    this.equipmentService
-      .getEquipmentToEdit()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((response: EquipmentAbm) => {
-        if (response) {
-          this.isLoading = true;
-          this.isEditModule = false;
-          this.isFaultCreate = false;
-          this.equipmentService.edit(response)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((data: boolean) => {
-              this.isLoading = false;
-              this.close();
-              if (data) {
-                this.equipmentService.triggerRestartEquipments();
-                this.toastService.showSuccess('Se guardaron los cambios correctamente');
+  this.equipmentService
+    .getEquipmentToEdit()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((response: EquipmentAbm) => {
+      if (response) {
+        this.isLoading = true;
+        this.equipmentService.edit(response)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((data: boolean) => {
+            this.isLoading = false;
+            if (data) {
+              this.equipmentService.triggerRestartEquipments();
+              this.toastService.showSuccess('Se guardaron los cambios correctamente');
+
+              if (response.stateId === EEquipmentState.Averia &&
+                  this.equipmentCurrent.stateId !== EEquipmentState.Averia) {
+                this.isFaultCreate = true;
+                this.titleEditOrFault = 'Avería';
+                this.dialogRef.disableClose = true;
               } else {
-                this.toastService.showError('Se produjo un error al intentar guardar los cambios');
+                this.close();
               }
-            }, error => {
+            } else {
               this.toastService.showError('Se produjo un error al intentar guardar los cambios');
-              console.error(error);
-            });
-        }
-      });
+            }
+          }, error => {
+            this.toastService.showError('Se produjo un error al intentar guardar los cambios');
+            console.error(error);
+          });
+      }
+    });
 
     // Manage button Edit disabled
-    this.commentService.commentsLoadedEvent()
+    this.commentService
+      .commentsLoadedEvent()
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.isEditBtnDisabled = false;
@@ -125,14 +138,22 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
         this.isFaultButtonDisabled = value;
       });
 
+    // Edit Save Changes Disabled Handler
+    this.equipmentService
+      .getIsSubmitBtnDisable()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((value: boolean) => {
+        this.isEditSaveChangesDisabled = value;
+      });
+
     // Fault Save End Event
     this.equipmentFaultService
       .getCreateEndEvent()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: boolean) => {
         if (response) {
-          this.close();
-          this.toastService.showSuccess('Se guardaron los cambios correctamente');
+          this.dialogRef.close();
+          this.toastService.showSuccess('Se guardó el nuevo registro correctamente');
         }
         else {
           this.toastService.showError('Se produjo un error al intentar guardar la información');
@@ -155,6 +176,11 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
   }
 
   public close(): void {
+    if (this.isFaultCreate) {
+      this.showFaultAlert = true;
+      return;
+    }
+
     this.dialogRef.close();
   }
 
@@ -175,6 +201,8 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
   }
 
   public saveChanges(): void {
+    this.isLoading = true;
+    this.isFaultCreate = false;
     this.equipmentService.setEditSaveEvent();
   }
 
@@ -191,6 +219,7 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
   }
 
   public saveFault(): void {
+    this.showFaultAlert = false;
     this.equipmentFaultService.setSaveCreateEvent();
   }
 }

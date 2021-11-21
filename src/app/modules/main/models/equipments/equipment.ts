@@ -143,7 +143,7 @@ export class EquipmentAbm extends BaseModel {
       this.districtId = value.district;
       this.inServices = value.inService;
       this.modificationDate = new Date();
-      this.modificationUserId = 1; // Falta implementacion de login
+      this.modificationUserId = 1; // TODO: Falta implementacion de login
       this.creationDate = new Date();
       this.creationUserId = 1;
     }

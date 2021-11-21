@@ -1,5 +1,5 @@
 import { Historic } from './equipments/historicEquipment';
-import { Equipment, EquipmentOther } from './equipments/equipment';
+import { Equipment } from './equipments/equipment';
 
 export class DetailData {
   public equipment: Equipment;

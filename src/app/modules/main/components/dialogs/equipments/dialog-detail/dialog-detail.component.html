@@ -1,15 +1,24 @@
 <ng-container *ngIf="!isLoading; else loading_module">
     <ng-container *ngIf="isEditModule">
         <div class="title-container">
-            <button mat-mini-fab (click)="back()">
-                <mat-icon class="material-icons-outlined">
-                    arrow_back
-                </mat-icon>
-            </button>
+            <ng-container *ngIf="!isFaultCreate">
+                <button mat-mini-fab (click)="back()">
+                    <mat-icon class="material-icons-outlined">
+                        arrow_back
+                    </mat-icon>
+                </button>
+            </ng-container>
+
             <h1 mat-dialog-title class="detail-title">
                 {{titleEditOrFault}}
             </h1>
         </div>
+
+        <ng-container *ngIf="showFaultAlert">
+            <div class="fault-alert animated fadeInUp">
+                Es necesario completar los datos de la avería para terminar el proceso
+            </div>
+        </ng-container>
     </ng-container>
 
     <div mat-dialog-content class="detail-tab-dialog">
@@ -71,7 +80,10 @@
             </ng-template>
         </ng-container>
 
-        <button mat-stroked-button (click)="close()">Cancelar</button>
+        <button mat-stroked-button
+                (click)="close()">
+            Cancelar
+        </button>
     </div>
 </ng-container>
 

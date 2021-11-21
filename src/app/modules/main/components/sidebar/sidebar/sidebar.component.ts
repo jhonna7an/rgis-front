@@ -13,9 +13,6 @@ import { FilterData, FilterDetail, FilterSend, HistoricDataSend } from '../../..
 })
 export class SidebarComponent implements OnInit, OnDestroy {
 
-  private equipments: EquipmentOther[];
-  private historicsBackup: EquipmentOther[];
-
   private equipmentSubscription: Subscription;
   private historicsSubscription: Subscription;
   private filterSubscription: Subscription;
@@ -80,23 +77,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.hasFilter = data.hasFilter;
         this.filterList.push(data.serialFilter);
       });
-
-    // this.historicsSubscription = this.dataService.hitorics$
-    //   .subscribe((data: HistoricDataSend) => {
-    //     if (data) {
-    //       setTimeout(() => this.loading = false, 500);
-    //       this.equipments = data.historics;
-    //       this.isSidebarHide = false;
-    //       this.setFilters();
-    //       if (data.isFirstHistoricCall) {
-    //         this.historicsBackup = data.historics;
-    //       }
-
-    //       if (data.isHistoricTab != null) {
-    //         this.isHistoricTab = data.isHistoricTab;
-    //       }
-    //     }
-    //   });
   }
 
   ngOnDestroy(): void {

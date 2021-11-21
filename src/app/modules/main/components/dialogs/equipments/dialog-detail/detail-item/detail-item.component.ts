@@ -5,7 +5,7 @@ import { DetailData } from './../../../../../models/detailData.model';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from '../../../../../../core/components/base/base.component';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BranchOffice } from 'src/app/modules/main/models/manager/branch-office';
 import { BranchOfficeService } from 'src/app/modules/main/services/branch-office.service';
 import { District } from 'src/app/modules/main/models/equipments/district';
@@ -78,29 +78,41 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
     // Subscriber get equipment info to edit
     this.equipmentService.getEditSaveEvent()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: boolean) => {
-        if (response) {
+      .subscribe(() => {
+          console.log('Subscribe to EDIT');
+
           const equipment = new EquipmentAbm();
           equipment.completeToEdit(this.ef, this.detailData.equipment, 1);
+          this.equipmentService.setEquipmentToEdit(equipment);
 
-          this.equipmentService
-            .edit(equipment)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(
-              (response: boolean) => {
-                this.equipmentService.setEditEndEvent(response);
-              }, error => {
-                this.equipmentService.setEditEndEvent(false);
-                console.error(error);
-              });
+          // this.equipmentService
+          //   .edit(equipment)
+          //   .pipe(takeUntil(this.destroy$))
+          //   .subscribe(
+          //     (response: boolean) => {
+          //       console.log('Edit response: ' + response);
 
-          if (equipment.stateId === EEquipmentState.Averia) {
-            this.equipmentService.setFaultCreate(equipment);
-          } else {
-            this.equipmentService.setEquipmentToEdit(equipment);
-          }
-        }
+          //       this.equipmentService.setEditEndEvent(response);
+          //       if (equipment.stateId === EEquipmentState.Averia) {
+          //         this.equipmentService.setFaultCreate(equipment);
+          //       }
+          //     }, error => {
+          //       this.equipmentService.setEditEndEvent(false);
+          //       console.error(error);
+          //     });
+
+          // } else {
+          // }
       });
+
+      this.editForm.statusChanges
+        .subscribe(() => {
+          this.equipmentService.setIsSubmitBtnDisable(this.editForm.valid);
+        });
+  }
+
+  public getControl(value: string): AbstractControl {
+    return this.editForm.controls[value];
   }
 
   public isHistoricType(params: Equipment): params is Historic {

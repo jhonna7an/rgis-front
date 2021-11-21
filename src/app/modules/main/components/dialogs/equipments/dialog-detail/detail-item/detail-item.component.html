@@ -78,6 +78,9 @@
                                         {{state.state}}
                                     </mat-option>
                                 </mat-select>
+                                <mat-error class="error-message" *ngIf="getControl('state').errors?.required">
+                                    El <strong>Estado</strong> es requerido
+                                </mat-error>
                             </mat-form-field>
                         </ng-template>
                     </div>
@@ -95,6 +98,9 @@
                                         {{valoration.valoration}}
                                     </mat-option>
                                 </mat-select>
+                                <mat-error class="error-message" *ngIf="getControl('valoration').errors?.required">
+                                    La <strong>Valoración</strong> es requerido
+                                </mat-error>
                             </mat-form-field>
                         </ng-template>
                     </div>
@@ -133,6 +139,9 @@
                                         {{district.districtName}}
                                     </mat-option>
                                 </mat-select>
+                                <mat-error class="error-message" *ngIf="getControl('district').errors?.required">
+                                    El <strong>Distrito</strong> es requerido
+                                </mat-error>
                             </mat-form-field>
                         </ng-template>
                     </div>
@@ -151,6 +160,9 @@
                                         {{branchOffice.branchOfficeName}}
                                     </mat-option>
                                 </mat-select>
+                                <mat-error class="error-message" *ngIf="getControl('branchOffice').errors?.required">
+                                    La <strong>Oficina</strong> es requerida
+                                </mat-error>
                             </mat-form-field>
                         </ng-template>
                     </div>
@@ -169,6 +181,9 @@
                                         {{location.name}}
                                     </mat-option>
                                 </mat-select>
+                                <mat-error class="error-message" *ngIf="getControl('location').errors?.required">
+                                    La <strong>Ubicación</strong> es requerida
+                                </mat-error>
                             </mat-form-field>
                         </ng-template>
                     </div>

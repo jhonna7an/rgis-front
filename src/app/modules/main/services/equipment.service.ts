@@ -18,7 +18,8 @@ export class EquipmentService {
   private equipments$ = new Subject<Equipment[]>();
   private restartEquipments$ = new Subject<void>();
 
-  private edit$ = new Subject<boolean>();
+  private edit$ = new Subject<void>();
+  private isBtnSubmitDisable$ = new BehaviorSubject<boolean>(false);
   private equipmentToEdit$ = new Subject<EquipmentAbm>();
   private editEndEvent = new Subject<boolean>();
   private multiEditData$ = new Subject<MultiEditData>();
@@ -69,10 +70,10 @@ export class EquipmentService {
   }
 
   public setEditSaveEvent(): void {
-    this.edit$.next(true);
+    this.edit$.next();
   }
 
-  public getEditSaveEvent(): Observable<boolean> {
+  public getEditSaveEvent(): Observable<void> {
     return this.edit$.asObservable();
   }
 
@@ -106,5 +107,14 @@ export class EquipmentService {
 
   public getFaultCreate(): Observable<EquipmentAbm> {
     return this.faultCreate$.asObservable();
+  }
+
+  public setIsSubmitBtnDisable(value: boolean): void{
+    this.isBtnSubmitDisable$.next(value);
+  }
+
+
+  public getIsSubmitBtnDisable(): Observable<boolean>{
+    return this.isBtnSubmitDisable$.asObservable();
   }
 }
