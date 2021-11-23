@@ -77,6 +77,10 @@
   padding: 3px;
 }
 
+.m-10 {
+  margin-left: 10px !important;
+}
+
 /* HISTORIC */
 .comment-historic {
   width: 100% !important;

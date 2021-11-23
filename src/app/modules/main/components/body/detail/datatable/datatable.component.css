@@ -37,3 +37,10 @@ th, td {
 .loading {
   margin: 70px 0px;
 }
+
+.row-hold {
+  /* border-radius: 4px; */
+  box-shadow: inset 10px 0px #17a2bb;
+}
+
+/* .row-hold: */

@@ -77,7 +77,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> -->
 
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" class="{{row?.isHold ? 'row-hold' : ''}} hola"></tr>
     </table>
 
     <!-- Loading -->

@@ -68,6 +68,12 @@
                             <span class="{{detailData?.equipment?.state | lowercase | accent}}">
                                 {{detailData?.equipment?.state}}
                             </span>
+
+                            <ng-container *ngIf="detailData?.equipment?.isHold">
+                                <span class="hold m-10">
+                                    Hold
+                                </span>
+                            </ng-container>
                         </ng-container>
 
                         <ng-template #state_edit>
@@ -114,10 +120,10 @@
 
         <mat-accordion>
             <mat-expansion-panel (opened)="true"
-                                  (closed)="false"
-                                  #location_info
-                                  [expanded]="true"
-                                  class="expansion">
+                                 (closed)="false"
+                                 #location_info
+                                 [expanded]="true"
+                                 class="expansion">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <h3 class="item-title">Distribución</h3>
