@@ -5,7 +5,7 @@ import { EquipmentAbm } from './../../../../models/equipments/equipment';
 import { CommentService } from './../../../../services/comment.service';
 import { EquipmentService } from 'src/app/modules/main/services/equipment.service';
 import { SidenavService } from './../../../../../shared/services/sidenav.service';
-import { DetailData } from './../../../../models/detailData.model';
+import { DetailData, EditOneData } from './../../../../models/detailData.model';
 import { ETabDetail } from './../../../body/detail/ETabDetail';
 import { Equipment } from 'src/app/modules/main/models/equipments/equipment';
 
@@ -37,6 +37,7 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
   public isEditBtnDisabled: boolean;
 
   public titleEditOrFault: string;
+  public holdButtonName: string;
 
   public isFaultButtonDisabled: boolean;
   public isEditSaveChangesDisabled: boolean;
@@ -188,6 +189,8 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
     this.isEditModule = true;
     this.isFaultCreate = false;
     this.titleEditOrFault = 'Editar';
+    this.holdButtonName = this.equipmentCurrent.isHold ? 'Quitar de hold' : 'Poner en hold';
+
     const comments = this.commentService
       .getComments()
       .map(x => x.comment);
@@ -203,7 +206,20 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
   public saveChanges(): void {
     this.isLoading = true;
     this.isFaultCreate = false;
-    this.equipmentService.setEditSaveEvent();
+    const editOneData = new EditOneData(false);
+    this.equipmentService.setEditSaveEvent(editOneData);
+  }
+
+  public holdHandler(): void {
+    this.isLoading = true;
+    this.isFaultCreate = false;
+    const editOneData = new EditOneData(true);
+    if (this.equipmentCurrent.isHold) {
+      editOneData.setRemoveToHold()
+    } else {
+      editOneData.setAddToHold();
+    }
+    this.equipmentService.setEditSaveEvent(editOneData);
   }
 
   public back(): void {

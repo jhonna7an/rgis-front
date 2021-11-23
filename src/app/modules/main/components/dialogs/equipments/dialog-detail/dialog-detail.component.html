@@ -63,11 +63,20 @@
 
         <ng-container *ngIf="isEditModule">
             <ng-container *ngIf="!isFaultCreate; else faultCreateBtn">
-                <button mat-raised-button
-                        color="primary"
-                        (click)="saveChanges()">
-                    Guardar cambios
-                </button>
+                <div>
+                    <button mat-raised-button
+                            color="primary"
+                            [disabled]="!isEditSaveChangesDisabled"
+                            (click)="saveChanges()">
+                        Guardar cambios
+                    </button>
+
+                    <button mat-raised-button
+                            color="primary"
+                            (click)="holdHandler()">
+                        {{holdButtonName}}
+                    </button>
+                </div>
             </ng-container>
 
             <ng-template #faultCreateBtn>

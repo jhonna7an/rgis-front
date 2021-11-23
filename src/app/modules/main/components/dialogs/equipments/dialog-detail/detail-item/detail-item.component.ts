@@ -1,7 +1,6 @@
-import { EEquipmentState } from './../../../../../pages/summary/summarytable';
 import { Equipment, EquipmentAbm } from './../../../../../models/equipments/equipment';
 import { EquipmentService } from 'src/app/modules/main/services/equipment.service';
-import { DetailData } from './../../../../../models/detailData.model';
+import { DetailData, EditOneData } from './../../../../../models/detailData.model';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from '../../../../../../core/components/base/base.component';
 import { Component, Input, OnInit } from '@angular/core';
@@ -78,12 +77,17 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
     // Subscriber get equipment info to edit
     this.equipmentService.getEditSaveEvent()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-          console.log('Subscribe to EDIT');
-
+      .subscribe((response: EditOneData) => {
           const equipment = new EquipmentAbm();
           equipment.completeToEdit(this.ef, this.detailData.equipment, 1);
+
+          if (response.isHoldEvent) {
+            const isHold = response.isHold();
+            equipment.completeByHoldEvent(isHold);
+          }
+
           this.equipmentService.setEquipmentToEdit(equipment);
+
 
           // this.equipmentService
           //   .edit(equipment)
@@ -107,6 +111,8 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
 
       this.editForm.statusChanges
         .subscribe(() => {
+          console.log(this.editForm.valid);
+
           this.equipmentService.setIsSubmitBtnDisable(this.editForm.valid);
         });
   }
@@ -119,8 +125,11 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
     return (params as Historic).equipmentId !== undefined;
   }
 
-  public onChangeDistrict = (value: number): void => {
+  public onChangeDistrict(value: number): void {
+    console.log('OnChange District: ' + value);
+
     this.GetBranchOffices(value);
+    this.editForm.controls['branchOffice'].setValue(null);
     this.showBranchOffice = true;
   }
 
@@ -192,5 +201,8 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
       inservices: [this.detailData.equipment.inServices, Validators.required],
       datein: [this.detailData.equipment.creationDate, Validators.required]
     });
+
+    console.log(this.editForm.valid);
+
   }
 }

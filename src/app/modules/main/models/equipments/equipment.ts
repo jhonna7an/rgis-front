@@ -174,4 +174,8 @@ export class EquipmentAbm extends BaseModel {
       this.valorationId = value.valoration;
       this.comments = equipment.comments;
     }
+
+    public completeByHoldEvent(addOrRemoveHold: boolean) {
+      this.isHold = addOrRemoveHold;
+    }
 }

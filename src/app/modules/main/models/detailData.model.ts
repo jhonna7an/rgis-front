@@ -1,5 +1,5 @@
 import { Historic } from './equipments/historicEquipment';
-import { Equipment } from './equipments/equipment';
+import { Equipment, EquipmentAbm } from './equipments/equipment';
 
 export class DetailData {
   public equipment: Equipment;
@@ -93,6 +93,35 @@ export class EditData {
   constructor(equipments: Equipment[], isMultiEdit: boolean){
     this.equipments = equipments;
     this.isMultiEdit = isMultiEdit;
+  }
+}
+
+export class EditOneData {
+  public isHoldEvent: boolean;
+  public addOrRemoveToHold: boolean;
+  public equipment: EquipmentAbm;
+
+  constructor(isHoldEvent: boolean){
+    this.isHoldEvent = isHoldEvent;
+    this.addOrRemoveToHold = false;
+  }
+
+  public setAddToHold(){
+    this.isHoldEvent = true;
+    this.addOrRemoveToHold = true;
+  }
+
+  public setRemoveToHold() {
+    this.isHoldEvent = true;
+    this.addOrRemoveToHold = false;
+  }
+
+  public isHold(): boolean {
+    return this.addOrRemoveToHold;
+  }
+
+  public setEquipment(equipment: EquipmentAbm) {
+    this.equipment = equipment;
   }
 }
 

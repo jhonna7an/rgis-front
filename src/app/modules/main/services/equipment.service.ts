@@ -1,4 +1,4 @@
-import { DetailData, MultiEditData } from './../models/detailData.model';
+import { DetailData, EditOneData, MultiEditData } from './../models/detailData.model';
 import { EventEmitter, Injectable } from '@angular/core';
 
 import { ManagerService } from '../../shared/services/manager.service';
@@ -18,7 +18,7 @@ export class EquipmentService {
   private equipments$ = new Subject<Equipment[]>();
   private restartEquipments$ = new Subject<void>();
 
-  private edit$ = new Subject<void>();
+  private edit$ = new Subject<EditOneData>();
   private isBtnSubmitDisable$ = new BehaviorSubject<boolean>(false);
   private equipmentToEdit$ = new Subject<EquipmentAbm>();
   private editEndEvent = new Subject<boolean>();
@@ -69,11 +69,11 @@ export class EquipmentService {
     return this.multiEditData$.asObservable();
   }
 
-  public setEditSaveEvent(): void {
-    this.edit$.next();
+  public setEditSaveEvent(value: EditOneData): void {
+    this.edit$.next(value);
   }
 
-  public getEditSaveEvent(): Observable<void> {
+  public getEditSaveEvent(): Observable<EditOneData> {
     return this.edit$.asObservable();
   }
 
