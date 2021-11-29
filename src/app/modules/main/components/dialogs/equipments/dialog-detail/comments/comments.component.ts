@@ -2,11 +2,12 @@ import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.componen
 import { ToastService } from './../../../../../../shared/services/toast.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommentService } from './../../../../../services/comment.service';
-import { Component, ElementRef, Input, OnInit, Renderer2, ViewChildren } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
 import { EquipmentComment } from 'src/app/modules/main/models/equipments/equipment-comment';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-comments',
@@ -21,7 +22,8 @@ export class CommentComponent extends BaseComponent implements OnInit {
 
   public isLoading: boolean;
 
-  @ViewChildren('input') rows: ElementRef;
+  @ViewChildren('input') rows: QueryList<ElementRef>;
+  private subscription: Subscription = new Subscription();
 
   @Input()
   set equipmentId(value: number){
@@ -39,7 +41,8 @@ export class CommentComponent extends BaseComponent implements OnInit {
     private commentService: CommentService,
     private toastService: ToastService,
     private formBuilder: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private renderer: Renderer2
   ) {
     super();
   }
@@ -49,6 +52,18 @@ export class CommentComponent extends BaseComponent implements OnInit {
     this.commentsForm = this.formBuilder.group({
       comments: this.formBuilder.array([])
     });
+  }
+
+  ngAfterViewInit() {
+    // this.subscription = this.rows.changes
+    //   .subscribe(() => {
+    //     if (this.rows.length > 1) {
+    //       console.log(this.rows);
+
+    //       this.rows.last.nativeElement.focus();
+    //     }
+    //   });
+    // this.renderer.selectRootElement(this.rows.last).focus()
   }
 
   get comments(): FormArray{

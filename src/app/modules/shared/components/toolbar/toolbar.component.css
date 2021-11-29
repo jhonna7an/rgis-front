@@ -1,0 +1,46 @@
+.toolbar-container {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.nav-container {
+  padding: 5px 50px;
+}
+
+.nav-item-custom {
+  display: flex;
+  align-items: center;
+}
+
+.badge-notification {
+  position: absolute;
+  left: 20px;
+}
+
+.notification-container {
+  position: relative;
+  padding: 0px 10px;
+}
+
+mat-toolbar {
+  background-color: #fff !important;
+  color: #282424 !important;
+  box-shadow: 0 1px 2px -1px #0003, 0 1px 4px #00000024, 0 2px 8px #0000001f;
+  position: relative;
+  z-index: 1000;
+}
+
+.nav-options-container,
+.options-right {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.menu-btn {
+  color: #282424;
+}
+
+.mat-menu-option {
+  color: #282424;
+}

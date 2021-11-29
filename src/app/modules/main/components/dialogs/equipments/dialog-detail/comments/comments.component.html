@@ -25,7 +25,7 @@
                       autocomplete="off"
                       novalidate>
                     <div class="comment-list">
-                        <div #input
+                        <div
                             formArrayName="comments"
                             *ngFor="let comment of comments.controls; let i = index">
                             <div [formGroupName]="i" class="container-item">
@@ -38,7 +38,8 @@
                                                   formControlName="comment"
                                                   matInput
                                                   placeholder="Ingrese Comentario"
-                                                  required>
+                                                  required
+                                                  #input>
                                         </textarea>
                                         <mat-error *ngIf="comment.invalid">Es necesario ingresar un valor</mat-error>
                                     </mat-form-field>

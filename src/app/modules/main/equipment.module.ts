@@ -19,10 +19,8 @@ import { DatatableComponent } from './components/body/detail/datatable/datatable
 import { CurrentDetailComponent } from './components/body/detail/current-detail/current-detail.component';
 import { HistoricDetailComponent } from './components/body/detail/historic-detail/historic-detail.component';
 import { DetailComponent } from './components/body/detail/detail.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { EquipmentSummaryComponent } from './pages/summary/equipment-summary.component';
 import { HomeComponent } from './pages/home/home.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { EquipmentDetailComponent } from './pages/detail/equipment-detail.component';
 import { SidebarComponent } from './components/sidebar/sidebar/sidebar.component';
 import { DialogDetailComponent } from './components/dialogs/equipments/dialog-detail/dialog-detail.component';
@@ -60,10 +58,8 @@ import { FaultCreateComponent } from './components/dialogs/equipments/dialog-det
 
 @NgModule({
   declarations: [
-    FooterComponent,
     EquipmentSummaryComponent,
     HomeComponent,
-    ToolbarComponent,
     EquipmentDetailComponent,
     SidebarDetailItemComponent,
     SidebarComponent,

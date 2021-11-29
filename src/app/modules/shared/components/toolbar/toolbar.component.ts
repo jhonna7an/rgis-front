@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
 
+  public badgeId: string;
+  public notificationCount: number;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.badgeId = '66900038';
+    this.notificationCount = 3;
   }
-
 }

@@ -45,7 +45,7 @@
     </div>
 
     <div mat-dialog-actions>
-        <ng-container *ngIf="isDetailTab && !isEditModule">
+        <ng-container *ngIf="isDetailTab && !isEditModule && !detailData.isMainHistoricTab">
             <button mat-raised-button
                     color="primary"
                     [disabled]="isEditBtnDisabled"
@@ -72,7 +72,8 @@
                     </button>
 
                     <button mat-raised-button
-                            color="primary"
+                            color="secondary"
+                            class="hold-btn"
                             (click)="holdHandler()">
                         {{holdButtonName}}
                     </button>

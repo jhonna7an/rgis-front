@@ -34,7 +34,9 @@ import { SpinnerService } from './services/spinner.service';
   ],
   exports: [
     SpinnerComponent,
-    LoadingComponent
+    LoadingComponent,
+    ToolbarComponent,
+    FooterComponent
   ],
   providers: [
     ManagerService,

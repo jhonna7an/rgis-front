@@ -234,10 +234,10 @@
 
             <mat-accordion>
                 <mat-expansion-panel (opened)="true"
-                                      (closed)="false"
-                                      #comment_info
-                                      [expanded]="true"
-                                      class="expansion">
+                                     (closed)="false"
+                                     #comment_info
+                                     [expanded]="true"
+                                     class="expansion">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <h3 class="item-title">Comentarios</h3>
@@ -245,7 +245,7 @@
                     </mat-expansion-panel-header>
 
                     <div class="item-body">
-                        <div class="comment-historic" *ngFor="let comment of historic?.comments">
+                        <div #commentaryRow class="comment-historic" *ngFor="let comment of historic?.comments">
                             <span class="comment-item">
                                 {{comment}}
                             </span>

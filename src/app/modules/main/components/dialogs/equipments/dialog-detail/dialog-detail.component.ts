@@ -53,6 +53,8 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
     public dialog: MatDialog
   ) {
     super();
+    console.log(data);
+
     this.equipmentCurrent = data.equipment;
     this.detailData = data;
     this.detailData.setIsEditModule(false);
@@ -144,6 +146,8 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
       .getIsSubmitBtnDisable()
       .pipe(takeUntil(this.destroy$))
       .subscribe((value: boolean) => {
+        console.log('Padre:' + value);
+
         this.isEditSaveChangesDisabled = value;
       });
 

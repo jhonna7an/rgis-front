@@ -1,5 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
+@font-face {
+  font-family: Hurgada;
+  src: url("/src/assets/fonts/Amin_Hurgada.ttf") format("truetype");
+}
+
 html,
 body {
     height: 100%;
@@ -16,6 +21,11 @@ p {
 
 label, h3 {
   margin-bottom: 0px;
+}
+
+a {
+  /* color: rgba(0,0,0,.87); */
+  text-decoration: none !important;
 }
 
 

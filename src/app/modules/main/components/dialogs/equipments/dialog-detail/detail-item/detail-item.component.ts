@@ -16,6 +16,7 @@ import { EquipmentStateService } from 'src/app/modules/main/services/equipment-s
 import { EquipmentValorationService } from 'src/app/modules/main/services/equipment-valoration.service';
 import { LocationService } from 'src/app/modules/main/services/location.service';
 import { Historic } from 'src/app/modules/main/models/equipments/historicEquipment';
+import { EEquipmentState } from 'src/app/modules/main/models/EEquipmentState';
 
 @Component({
   selector: 'app-detail-item',
@@ -157,7 +158,7 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
     this.stateService.Get()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: EquipmentState[]) => {
-        this.states = response;
+        this.states = response.filter(x => x.id !== EEquipmentState.Hold);
       }, error => {
         console.error(error);
       });
@@ -203,6 +204,9 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
     });
 
     console.log(this.editForm.valid);
+    if (this.editForm.valid) {
+      this.equipmentService.setIsSubmitBtnDisable(this.editForm.valid);
+    }
 
   }
 }
