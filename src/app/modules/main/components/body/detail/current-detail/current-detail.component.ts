@@ -11,6 +11,8 @@ import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
 import { EquipmentService } from 'src/app/modules/main/services/equipment.service';
 import { DetailService } from 'src/app/modules/main/services/workflow/detail.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogMultiChoiceComponent } from '../../../dialogs/equipments/dialog-multi-choice/dialog-multi-choice.component';
 
 @Component({
   selector: 'app-current-detail',
@@ -20,6 +22,7 @@ import { DetailService } from 'src/app/modules/main/services/workflow/detail.ser
 export class CurrentDetailComponent extends BaseComponent implements OnInit {
   public serialForm: FormGroup;
   public equipments: Equipment[];
+  public multiChoiceEquipments: Equipment[];
 
   public isEnableMultiEdit: boolean;
   public isDisableMultiEditBtn: boolean;
@@ -30,12 +33,14 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
   constructor(
     private equipmentService: EquipmentService,
     private detailService: DetailService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialog: MatDialog
   ) {
     super();
     this.isEnableMultiEdit = false;
     this.isDisableMultiEditBtn = true;
     this.equipmentData = new EquipmentData();
+    this.multiChoiceEquipments = new Array<Equipment>();
   }
 
   ngOnInit(): void {
@@ -89,6 +94,26 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: MultiEditData) => {
         this.isEnableMultiEdit = response.isEnableMultiEdit;
+      });
+
+    // MultiChoice Handler
+    this.equipmentService
+      .getMultiChoiceEquipment()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: Equipment) => {
+        if (response) {
+          this.multiChoiceEquipments.push(response);
+        }
+      });
+
+    // If some equipments is removed from Multichoice dialog
+    this.equipmentService
+      .getMultiChoiceEquipments()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: Equipment[]) => {
+        if (response) {
+          this.multiChoiceEquipments = response;
+        }
       });
   }
 
@@ -154,5 +179,10 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
         this.equipmentData.setEventFromBody(response);
         this.detailService.setEquipments(this.equipmentData);
       });
+  }
+
+  public openMultiChoice(): void{
+    this.dialog.open(DialogMultiChoiceComponent,
+      { width: '40%', minHeight: '300px', data: this.multiChoiceEquipments });
   }
 }

@@ -53,6 +53,14 @@
                     <mat-icon class="icon">storage</mat-icon>
                     <span>Edición múltiple</span>
                 </button>
+
+                <button mat-icon-button (click)="openMultiChoice()">
+                    <mat-icon matBadge="{{multiChoiceEquipments.length}}"
+                              [matBadgeHidden]="[multiChoiceEquipments.length > 0 ? 'false' : 'true']"
+                              matBadgeColor="warn">
+                        checklist
+                    </mat-icon>
+                </button>
             </div>
         </div>
 

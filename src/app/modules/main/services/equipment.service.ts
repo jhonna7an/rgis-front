@@ -24,6 +24,8 @@ export class EquipmentService {
   private editEndEvent = new Subject<boolean>();
   private multiEditData$ = new Subject<MultiEditData>();
   private faultCreate$ = new Subject<EquipmentAbm>();
+  private multiChoice$ = new Subject<Equipment>();
+  private multiChoiceEquipments$ = new Subject<Equipment[]>();
 
   constructor(private http: ManagerService) {
     this.url = `${environment.baseURL}`;
@@ -116,5 +118,21 @@ export class EquipmentService {
 
   public getIsSubmitBtnDisable(): Observable<boolean>{
     return this.isBtnSubmitDisable$.asObservable();
+  }
+
+  public setMultiChoiceEquipment(value: Equipment): void{
+    this.multiChoice$.next(value);
+  }
+
+  public getMultiChoiceEquipment(): Observable<Equipment>{
+    return this.multiChoice$.asObservable();
+  }
+
+  public setMultiChoiceEquipments(value: Equipment[]): void{
+    this.multiChoiceEquipments$.next(value);
+  }
+
+  public getMultiChoiceEquipments(): Observable<Equipment[]>{
+    return this.multiChoiceEquipments$.asObservable();
   }
 }

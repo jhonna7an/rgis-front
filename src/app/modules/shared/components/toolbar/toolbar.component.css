@@ -44,3 +44,7 @@ mat-toolbar {
 .mat-menu-option {
   color: #282424;
 }
+
+.badge-custom {
+  margin-left: 3px;
+}

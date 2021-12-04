@@ -176,4 +176,8 @@ export class DatatableComponent extends BaseComponent implements OnInit, OnDestr
   public resetEquipmentsSelected(): void{
     this.equipmentsSelected = new Array<Equipment>();
   }
+
+  public multiChoiceSelect(equipment: Equipment): void{
+    this.equipmentService.setMultiChoiceEquipment(equipment);
+  }
 }

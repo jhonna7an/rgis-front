@@ -1,0 +1,45 @@
+.dialog-body-container {
+  padding: 20px 30px;
+}
+
+.message-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #6c757d;
+  margin: 100px 0px;
+}
+
+.message-container mat-icon {
+  margin-right: 5px;
+}
+
+.body-container,
+.body-container table {
+  width: 100%;
+}
+
+.action-btn {
+  margin-right: 10px;
+}
+
+.restart-btn {
+  background-color: #fff;
+}
+
+.chips-container {
+  margin-bottom: 10px;
+}
+
+mat-chip {
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  padding: 7px 12px;
+  border-radius: 16px;
+  align-items: center;
+  cursor: default;
+  min-height: 32px;
+  height: 1px;
+  cursor: pointer;
+}

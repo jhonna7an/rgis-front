@@ -64,12 +64,31 @@
         <ng-container matColumnDef="star" stickyEnd>
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let equipment">
-                <mat-icon matBadge="+{{equipment?.historicCount}}"
+                <!-- <mat-icon matBadge="+{{equipment?.historicCount}}"
                           [matBadgeHidden]="[(equipment?.historicCount > 0) ? 'false' : 'true']"
                           class="icon-container"
                           (click)="openDetailDialog(equipment)">
                     visibility
-                </mat-icon>
+                </mat-icon> -->
+
+                <div>
+                    <button mat-icon-button
+                            [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item
+                                class="mat-menu-option"
+                                (click)="openDetailDialog(equipment)">
+                            Detalle
+                        </button>
+                        <button mat-menu-item
+                                class="mat-menu-option"
+                                (click)="multiChoiceSelect(equipment)">
+                            Seleccionar
+                        </button>
+                    </mat-menu>
+                </div>
             </td>
         </ng-container>
 

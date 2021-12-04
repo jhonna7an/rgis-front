@@ -55,6 +55,7 @@ import { AccentPipe } from './pipes/accent.pipe';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { SidebarHeaderComponent } from './components/sidebar/sidebar-detail/sidebar-header/sidebar-header.component';
 import { FaultCreateComponent } from './components/dialogs/equipments/dialog-detail/fault-create/fault-create.component';
+import { DialogMultiChoiceComponent } from './components/dialogs/equipments/dialog-multi-choice/dialog-multi-choice.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { FaultCreateComponent } from './components/dialogs/equipments/dialog-det
     DetailItemComponent,
     EditItemComponent,
     SidebarHeaderComponent,
-    FaultCreateComponent
+    FaultCreateComponent,
+    DialogMultiChoiceComponent
   ],
   imports: [
     BrowserModule,

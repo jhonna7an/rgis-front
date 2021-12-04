@@ -1,0 +1,142 @@
+<div class="d-flex justify-content-between">
+    <h2 mat-dialog-title>Selección Múltiple</h2>
+    <ng-container *ngIf="equipments.length > 0">
+        <div class="d-flex ">
+            <button mat-mini-fab
+                    color="primary"
+                    (click)="edit()"
+                    [disabled]="editBtnDisabled"
+                    class="mr-2">
+                <mat-icon class="material-icons-round">
+                    edit
+                </mat-icon>
+            </button>
+            <button mat-mini-fab
+                    (click)="restartFilter()"
+                    [disabled]="restartBtnDisabled"
+                    class="restart-btn">
+                <mat-icon class="material-icons-round">
+                    refresh
+                </mat-icon>
+            </button>
+        </div>
+    </ng-container>
+</div>
+<mat-dialog-content class="mat-typography dialog-body-container">
+    <ng-container *ngIf="hasData; else noData">
+        <div class="body-container">
+            <mat-chip-list aria-label="Fish selection" class="d-flex chips-container">
+                <ng-container *ngFor="let type of types">
+                    <mat-chip (click)="filterApply(type)">{{type}}</mat-chip>
+                </ng-container>
+                <!-- <mat-chip color="primary" selected>Primary fish</mat-chip>
+                <mat-chip color="accent" selected>Accent fish</mat-chip> -->
+            </mat-chip-list>
+
+            <table mat-table [dataSource]="dataSource" class="animated fadeInUp">
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef>Equipo</th>
+                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="serial">
+                    <th mat-header-cell *matHeaderCellDef>Serial</th>
+                    <td mat-cell *matCellDef="let element"> {{element.serial}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef>Estado</th>
+                  <td mat-cell *matCellDef="let equipment">
+                      <button mat-icon-button>
+                          <mat-icon class="material-icons-round icon-container">
+                              watch_later
+                          </mat-icon>
+                      </button>
+                  </td>
+              </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let equipment">
+                        <button mat-icon-button>
+                            <mat-icon class="material-icons-round icon-container"
+                                      (click)="remove(equipment)">
+                                edit
+                            </mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                            <mat-icon class="material-icons-round icon-container"
+                                      (click)="remove(equipment)">
+                                delete
+                            </mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+
+        <!-- <ng-container *ngFor="let item of multiChoices">
+            <mat-accordion>
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="align-items-center">
+                            <span>
+                                {{item.type}}
+                            </span>
+                        </mat-panel-title>
+                        <button mat-icon-button
+                                class="action-btn"
+                                (click)="editGroup($event)">
+                            <mat-icon class="material-icons-round">
+                                edit
+                            </mat-icon>
+                        </button>
+                    </mat-expansion-panel-header>
+
+                    <div class="expansion-body-container">
+                        <table mat-table [dataSource]="dataSource">
+                            <ng-container matColumnDef="type">
+                                <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="serial">
+                                <td mat-cell *matCellDef="let element"> {{element.serial}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action" stickyEnd>
+                                <td mat-cell *matCellDef="let equipment">
+                                    <button mat-icon-button>
+                                        <mat-icon class="material-icons-round icon-container"
+                                                  (click)="remove(equipment)">
+                                            delete
+                                        </mat-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </ng-container> -->
+    </ng-container>
+
+    <ng-template #noData>
+        <div class="message-container">
+          <mat-icon class="material-icons-outlined">info</mat-icon>
+            <p>Sin equipos seleccionados...</p>
+        </div>
+    </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+</mat-dialog-actions>
+
+
+
