@@ -4,16 +4,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CoreModule } from './modules/core/core.module';
 
+import { MaterialModule } from '../app/material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EquipmentModule } from './modules/main/equipment.module';
 import { SharedModule } from './modules/shared/shared.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +24,12 @@ import { SharedModule } from './modules/shared/shared.module';
     HttpClientModule,
     EquipmentModule,
     SharedModule,
-    CoreModule
+    CoreModule,
+    AuthModule,
+    MaterialModule
+  ],
+  exports: [
+      MaterialModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }

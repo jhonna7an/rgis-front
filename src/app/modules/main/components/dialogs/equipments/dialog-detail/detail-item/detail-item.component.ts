@@ -17,6 +17,8 @@ import { EquipmentValorationService } from 'src/app/modules/main/services/equipm
 import { LocationService } from 'src/app/modules/main/services/location.service';
 import { Historic } from 'src/app/modules/main/models/equipments/historicEquipment';
 import { EEquipmentState } from 'src/app/modules/main/models/EEquipmentState';
+import { EquipmentAssignmentService } from 'src/app/modules/main/services/equipment-assignment.service';
+import { EquipmentAssignment } from 'src/app/modules/main/models/equipments/equipment-assignment.model';
 
 @Component({
   selector: 'app-detail-item',
@@ -27,6 +29,8 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
 
   public _detailData: DetailData;
   public historic: Historic;
+  public assignment: EquipmentAssignment;
+  public isLoadingAssignment: boolean;
 
   public editForm: FormGroup;
   public showBranchOffice: boolean;
@@ -39,6 +43,8 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
 
   @Input()
   set detailData(value: DetailData) {
+    console.log("Input", value);
+
     if (value) {
       this._detailData = value;
 
@@ -49,6 +55,8 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
       if (value.isEditModule) {
         this.GetDropDownData();
       }
+
+
     }
   }
 
@@ -63,9 +71,11 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
     private locationService: LocationService,
     private valorationService: EquipmentValorationService,
     private stateService: EquipmentStateService,
+    private assignmentService: EquipmentAssignmentService,
     private formBuilder: FormBuilder
   ) {
     super();
+    this.isLoadingAssignment = true;
   }
 
   get ef(): any {
@@ -73,6 +83,8 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.assignment);
+
     this.initEditForm();
 
     // Subscriber get equipment info to edit
@@ -110,12 +122,23 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
           // }
       });
 
-      this.editForm.statusChanges
-        .subscribe(() => {
-          console.log(this.editForm.valid);
+    this.assignmentService
+      .getByEquipmentId(this.detailData.equipment.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: EquipmentAssignment) => {
+        this.isLoadingAssignment = false;
+        if (response) {
+          this.assignment = response;
+        }
+        console.log(this.assignment);
+      }, error => {
+        console.log(error);
+      });
 
-          this.equipmentService.setIsSubmitBtnDisable(this.editForm.valid);
-        });
+    this.editForm.statusChanges
+      .subscribe(() => {
+        this.equipmentService.setIsSubmitBtnDisable(this.editForm.valid);
+      });
   }
 
   public getControl(value: string): AbstractControl {
@@ -203,7 +226,6 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
       datein: [this.detailData.equipment.creationDate, Validators.required]
     });
 
-    console.log(this.editForm.valid);
     if (this.editForm.valid) {
       this.equipmentService.setIsSubmitBtnDisable(this.editForm.valid);
     }

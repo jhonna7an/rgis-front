@@ -46,7 +46,6 @@ export class DialogEditComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     super();
-    console.log(data);
     this.loading = true;
     this.showBranchOffice = data.isMultiEdit ? false : true;
     this.showInputsInMultiEdit = data.isMultiEdit ? false : true;

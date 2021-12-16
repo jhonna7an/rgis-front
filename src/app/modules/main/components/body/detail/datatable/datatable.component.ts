@@ -12,6 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogDetailComponent } from '../../../dialogs/equipments/dialog-detail/dialog-detail.component';
 import { DialogEditComponent } from '../../../dialogs/equipments/dialog-edit/dialog-edit.component';
+import { CreateAssignmentComponent } from '../../../dialogs/equipments/create-asignation/create-assignment.component';
 
 @Component({
   selector: 'app-datatable',
@@ -58,6 +59,16 @@ export class DatatableComponent extends BaseComponent implements OnInit, OnDestr
 
   get detailData(): DetailData {
     return this._detailData;
+  }
+
+  @Input()
+  set serialFilter(value: Event){
+    console.log(value);
+
+    if (value) {
+      const filterValue = (value.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   constructor(
@@ -179,5 +190,10 @@ export class DatatableComponent extends BaseComponent implements OnInit, OnDestr
 
   public multiChoiceSelect(equipment: Equipment): void{
     this.equipmentService.setMultiChoiceEquipment(equipment);
+  }
+
+  public assignEquipment(equipment: Equipment): void{
+    this.dialog.open(CreateAssignmentComponent,
+      { width: '30%', data: equipment });
   }
 }

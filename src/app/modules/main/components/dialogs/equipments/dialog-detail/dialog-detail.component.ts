@@ -29,9 +29,11 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
   public isLoading: boolean;
   public isDetailTab: boolean;
   public isHistoricTab: boolean;
+  public isAssignmentTab: boolean;
   public isEditModule: boolean;
   public isFaultCreate: boolean;
   public showFaultAlert: boolean;
+  public actionsWithoutBtns: string = '';
 
   public sidenavMessage: string;
   public isEditBtnDisabled: boolean;
@@ -53,8 +55,6 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
     public dialog: MatDialog
   ) {
     super();
-    console.log(data);
-
     this.equipmentCurrent = data.equipment;
     this.detailData = data;
     this.detailData.setIsEditModule(false);
@@ -67,6 +67,7 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
     this.showFaultAlert = false;
     this.isDetailTab = true;
     this.isHistoricTab = false;
+    this.isAssignmentTab = false;
     this.sidenavMessage = 'Cerrar lista de históricos';
     this.isEditBtnDisabled = true;
 
@@ -146,8 +147,6 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
       .getIsSubmitBtnDisable()
       .pipe(takeUntil(this.destroy$))
       .subscribe((value: boolean) => {
-        console.log('Padre:' + value);
-
         this.isEditSaveChangesDisabled = value;
       });
 
@@ -166,17 +165,26 @@ export class DialogDetailComponent extends BaseComponent implements OnInit {
       });
   }
 
-  public getHistoric = (event: any): void => {
+  public changeTab(event: any): void {
     if (event.index === ETabDetail.DETAIL){
       this.isDetailTab = true;
       this.isHistoricTab = false;
       this.detailData.changeDialogTab(this.equipmentCurrent, false);
+      this.actionsWithoutBtns = ''
     }
 
     if (event.index === ETabDetail.HISTORIC) {
       this.isDetailTab = false;
       this.isHistoricTab = true;
       this.detailData.changeDialogTab(this.equipmentCurrent, true);
+      this.actionsWithoutBtns = ''
+    }
+
+    if (event.index === ETabDetail.ASSIGNMENT) {
+      this.isDetailTab = false;
+      this.isHistoricTab = false;
+      this.isAssignmentTab = true;
+      this.actionsWithoutBtns = 'actions-container-custom';
     }
   }
 

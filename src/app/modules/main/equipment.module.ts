@@ -56,6 +56,8 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { SidebarHeaderComponent } from './components/sidebar/sidebar-detail/sidebar-header/sidebar-header.component';
 import { FaultCreateComponent } from './components/dialogs/equipments/dialog-detail/fault-create/fault-create.component';
 import { DialogMultiChoiceComponent } from './components/dialogs/equipments/dialog-multi-choice/dialog-multi-choice.component';
+import { CreateAssignmentComponent } from './components/dialogs/equipments/create-asignation/create-assignment.component';
+import { DetailAssignmentComponent } from './components/dialogs/equipments/dialog-detail/detail-assignment/detail-assignment.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +89,9 @@ import { DialogMultiChoiceComponent } from './components/dialogs/equipments/dial
     EditItemComponent,
     SidebarHeaderComponent,
     FaultCreateComponent,
-    DialogMultiChoiceComponent
+    DialogMultiChoiceComponent,
+    CreateAssignmentComponent,
+    DetailAssignmentComponent
   ],
   imports: [
     BrowserModule,

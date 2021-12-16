@@ -63,6 +63,10 @@ button:focus {
     width: 50% !important;
 }
 
+.mat-table {
+  width: 100%;
+}
+
 /* .mat-form-field-wrapper {
     height: 50px;
     margin: 0px !important;
@@ -211,4 +215,29 @@ button:focus {
 /* MOUSE POINTER */
 .mouse-pointer {
   cursor: pointer;
+}
+
+/* CHECKBOX BACKGROUND COLOR */
+.mat-checkbox .mat-checkbox-frame {
+  border-color: rgba(0,0,0,.12);
+  background-color: #FFF !important;
+}
+
+.mat-checkbox-indeterminate.mat-primary .mat-checkbox-background,
+.mat-checkbox-checked.mat-primary .mat-checkbox-background {
+  background-color: #D60D2B !important;
+
+}
+
+/* MAT INPUT BORDER COLOR */
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick,
+.mat-form-field.mat-focused .mat-form-field-label {
+  /* color: #01608A; */
+  color: #0225D6;
+  /* color: #425b76; */
+}
+
+.mat-form-field.mat-form-field-invalid .mat-form-field-label {
+  color: #f44336;
 }

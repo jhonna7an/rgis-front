@@ -1,0 +1,66 @@
+<ng-container *ngIf="isLoading; else assignment">
+  <app-loading [isLoading]="loading"></app-loading>
+</ng-container>
+
+<ng-template #assignment>
+  <h1 mat-dialog-title>Asignar Equipo</h1>
+  <div mat-dialog-content>
+      <form class="d-flex serial-form"
+            [formGroup]="assignmentForm"
+            autocomplete="off"
+            novalidate>
+          <div class="input-container">
+              <mat-form-field appearance="outline">
+                  <mat-label>Fecha de asignación</mat-label>
+                  <input matInput [matDatepicker]="dateSearch" formControlName="startDate">
+                  <mat-datepicker-toggle matSuffix [for]="dateSearch"></mat-datepicker-toggle>
+                  <mat-datepicker #dateSearch></mat-datepicker>
+                  <mat-error class="error-message" *ngIf="getControl('startDate').errors?.required">
+                      La <strong>Fecha de asignación</strong> es requerida
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="input-item">
+                  <mat-label>Tipo de asignación</mat-label>
+                  <mat-select formControlName="type">
+                      <mat-option *ngFor="let type of assignmentsType" [value]="type.id">
+                          {{type.type}}
+                      </mat-option>
+                  </mat-select>
+                  <mat-error class="error-message" *ngIf="getControl('type').errors?.required">
+                      El <strong>Tipo de asignación</strong> es requerida
+                  </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                  <mat-label>Cliente</mat-label>
+                  <input type="text" matInput formControlName="client">
+                  <!-- <mat-error class="error-message" *ngIf="getControl('client').errors?.required">
+                      El <strong>N° de Local</strong> es requerido
+                  </mat-error> -->
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="input-item">
+                  <mat-label>Responsable</mat-label>
+                  <mat-select formControlName="employee">
+                      <mat-option *ngFor="let employee of employees" [value]="employee.id">
+                          {{employee.name}} {{employee.lastName}}
+                      </mat-option>
+                  </mat-select>
+                  <mat-error class="error-message" *ngIf="getControl('employee').errors?.required">
+                      El <strong>Nombre del responsable</strong> es requerido
+                  </mat-error>
+              </mat-form-field>
+          </div>
+      </form>
+  </div>
+
+  <div mat-dialog-actions class="action-container">
+      <button mat-raised-button
+              color="primary"
+              (click)="submit()"
+              [disabled]="!assignmentForm.valid">Guardar</button>
+      <button mat-button mat-dialog-close (click)="close($event)">Cancelar</button>
+  </div>
+</ng-template>
+

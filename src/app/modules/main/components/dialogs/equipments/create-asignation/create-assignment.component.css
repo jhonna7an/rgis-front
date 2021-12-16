@@ -1,0 +1,9 @@
+
+.input-container {
+  padding: 10px 20px;
+}
+
+.action-container {
+  display: flex;
+  justify-content: space-between;
+}

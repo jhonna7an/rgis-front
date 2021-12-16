@@ -23,12 +23,15 @@
 
     <div mat-dialog-content class="detail-tab-dialog">
         <ng-container *ngIf="!isEditModule; else edit_module">
-            <mat-tab-group (selectedTabChange)="getHistoric($event)">
+            <mat-tab-group (selectedTabChange)="changeTab($event)">
                 <mat-tab label="Detalle">
                     <app-detail-current [detailData]="detailData"></app-detail-current>
                 </mat-tab>
                 <mat-tab label="Histórico">
                     <app-detail-historic [detailData]="detailData"></app-detail-historic>
+                </mat-tab>
+                <mat-tab label="Asignaciones">
+                    <app-detail-assignment [equipmentId]="detailData.equipment.id"></app-detail-assignment>
                 </mat-tab>
             </mat-tab-group>
         </ng-container>
@@ -44,7 +47,7 @@
         </ng-template>
     </div>
 
-    <div mat-dialog-actions>
+    <div mat-dialog-actions class="{{actionsWithoutBtns}}">
         <ng-container *ngIf="isDetailTab && !isEditModule && !detailData.isMainHistoricTab">
             <button mat-raised-button
                     color="primary"

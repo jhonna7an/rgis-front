@@ -29,6 +29,7 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
 
   public detailData: DetailData;
   public equipmentData: EquipmentData;
+  public serialEvent: Event;
 
   constructor(
     private equipmentService: EquipmentService,
@@ -137,6 +138,10 @@ export class CurrentDetailComponent extends BaseComponent implements OnInit {
       this.equipmentData.setEventFromBody(this.equipments, value.serial);
       this.detailService.setEquipments(this.equipmentData);
     }
+  }
+
+  public applyFilter(event: Event): void{
+    this.serialEvent = event;
   }
 
   // Multi edit Event

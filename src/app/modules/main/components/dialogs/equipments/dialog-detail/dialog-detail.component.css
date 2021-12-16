@@ -43,3 +43,7 @@
   background-color: #17a2bb;
   color: #fff;
 }
+
+.actions-container-custom {
+  justify-content: flex-end;
+}

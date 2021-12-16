@@ -2,7 +2,7 @@
     <div class="col-md-12 body-header">
         <div class="d-flex">
             <div *ngIf="!isEnableMultiEdit; else enabledMultiEdit">
-                <form class="d-flex serial-form mr-20 animated fadeInUp"
+                <!-- <form class="d-flex serial-form mr-20 animated fadeInUp"
                       [formGroup]="serialForm"
                       autocomplete="off"
                       novalidate
@@ -23,12 +23,29 @@
                     <div class="actions mr-btn">
                         <button mat-stroked-button [disabled]="!serialForm.valid">Buscar</button>
                     </div>
+                </form> -->
 
-                </form>
+                <div class="serial-input">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Serial</mat-label>
+                        <input matInput
+                              (keyup)="serialEvent=$event"
+                              placeholder="Ingrese serial"
+                              [(ngModel)]="input.value"
+                              #input>
+                        <button *ngIf="input.value"
+                                matSuffix
+                                mat-icon-button
+                                aria-label="Clear"
+                                (click)="input.value=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
             </div>
 
             <ng-template #enabledMultiEdit>
-                <div class="actions multi-edit-actions animated fadeInUp">
+                <!-- <div class="actions multi-edit-actions animated fadeInUp">
                     <button mat-raised-button
                             color="primary"
                             class="mr-btn"
@@ -41,20 +58,23 @@
                             class="mr-btn">
                         Cancelar
                     </button>
-                </div>
+                </div> -->
             </ng-template>
 
             <div *ngIf="!isEnableMultiEdit" class="btn-container">
-                <button mat-raised-button
+                <!-- <button mat-raised-button
                         color="primary"
                         class="multi-edit-btn animated fadeInUp"
                         (click)="triggerMultiEdit(false)"
                         [disabled]="isDisableMultiEditBtn">
                     <mat-icon class="icon">storage</mat-icon>
                     <span>Edición múltiple</span>
-                </button>
+                </button> -->
 
-                <button mat-icon-button (click)="openMultiChoice()">
+                <button mat-mini-fab
+                        (click)="openMultiChoice()"
+                        class="multi-choice-btn"
+                        color="primary">
                     <mat-icon matBadge="{{multiChoiceEquipments.length}}"
                               [matBadgeHidden]="[multiChoiceEquipments.length > 0 ? 'false' : 'true']"
                               matBadgeColor="warn">
@@ -90,6 +110,8 @@
     </div>
 
     <div class="tabl-e">
-        <app-datatable [equipments]="equipments" [detailData]="detailData"></app-datatable>
+        <app-datatable [equipments]="equipments"
+                       [detailData]="detailData"
+                       [serialFilter]="serialEvent"></app-datatable>
     </div>
 </div>

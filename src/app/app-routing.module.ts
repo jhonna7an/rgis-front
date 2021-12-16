@@ -10,6 +10,10 @@ const routes: Routes = [
   { path: 'equipment/summary', component: EquipmentSummaryComponent },
   { path: 'equipment/detail', component: EquipmentDetailComponent },
   { path: 'equipment/create', component: CreateEquipmentComponent },
+  {
+    path: 'auth',
+    loadChildren: '../app/modules/auth/auth.module#AuthModule'
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
