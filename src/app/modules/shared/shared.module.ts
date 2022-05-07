@@ -14,8 +14,11 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { AnimationComponent } from './components/animation/animation.component';
 import { ManagerService } from './services/manager.service';
 import { SpinnerService } from './services/spinner.service';
+import{ DistrictService } from './services/district.service';
+import { BranchOfficeService } from './services/branch-office.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -29,8 +32,7 @@ import { SpinnerService } from './services/spinner.service';
   ],
   imports: [
     CommonModule,
-    MaterialModule,
-    BrowserAnimationsModule
+    MaterialModule
   ],
   exports: [
     SpinnerComponent,
@@ -42,7 +44,14 @@ import { SpinnerService } from './services/spinner.service';
     ManagerService,
     ToastService,
     SpinnerService,
-    SidenavService
+    SidenavService,
+    DistrictService,
+    BranchOfficeService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }
   ]
 })
 export class SharedModule { }

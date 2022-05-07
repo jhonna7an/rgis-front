@@ -1,0 +1,176 @@
+<main class="main-container">
+    <div class="register-container col-12">
+        <header class="row col-12 d-flex flex-column justify-content-center">
+            <h1>Registro</h1>
+        </header>
+
+        <div class="row col-12">
+          <mat-horizontal-stepper [linear]="isLinear" #stepper>
+            <mat-step [stepControl]="firstFormGroup" state="person">
+                <form class="d-flex flex-column col-12"
+                      [formGroup]="firstFormGroup"
+                      autocomplete="off"
+                      novalidate>
+                    <ng-template matStepLabel>Usuario</ng-template>
+
+                    <div class="input-container col-12 d-flex">
+                        <div class="input-item col-6">
+                            <label>Nombre</label>
+                            <mat-form-field appearance="outline">
+                                <input type="text" matInput formControlName="name" placeholder="Ingrese su nombre">
+                                <mat-error class="error-message" *ngIf="getControl(firstFormGroup, 'name').errors?.required">
+                                    El <strong>Nombre</strong> es requerido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="input-item col-6">
+                            <label>Apellido</label>
+                            <mat-form-field appearance="outline">
+                                <input type="text" matInput formControlName="lastName" placeholder="Ingrese su apellido">
+                                <mat-error class="error-message" *ngIf="getControl(firstFormGroup, 'lastName').errors?.required">
+                                    El <strong>Apellido</strong> es requerido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="input-item col-6">
+                            <label>BadgeId</label>
+                            <mat-form-field appearance="outline">
+                                <input type="text" matInput formControlName="badgeId" placeholder="Ingrese su badgeId">
+                                <mat-error class="error-message" *ngIf="getControl(firstFormGroup, 'badgeId').errors?.required">
+                                    El <strong>BadgeId</strong> es requerido
+                                </mat-error>
+                                <mat-error class="error-message" *ngIf="getControl(firstFormGroup, 'badgeId').errors?.pattern">
+                                    El <strong>BadgeId</strong> solo puede contener carácteres numéricos
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="input-item col-6">
+                            <label>Distrito</label>
+                            <mat-form-field appearance="outline">
+                                <mat-select formControlName="district"
+                                            placeholder="Seleccione su distrito"
+                                            (selectionChange)="onChangeDistrict($event.value)">
+                                  <mat-option *ngFor="let dist of districts$ | async" [value]="dist.id">{{dist.districtName}}</mat-option>
+                                </mat-select>
+                                <mat-error class="error-message" *ngIf="getControl(firstFormGroup, 'district').errors?.required">
+                                    La <strong>Oficina</strong> es requerida
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="input-item col-6">
+                          <label>Oficina</label>
+                          <mat-form-field appearance="outline">
+                              <mat-select formControlName="branchOffice"
+                                          placeholder="Seleccione su oficina">
+                                <mat-option *ngFor="let branchOffice of branchOffices"
+                                            [value]="branchOffice.id">
+                                    {{branchOffice.branchOfficeName}}
+                                </mat-option>
+                              </mat-select>
+                              <mat-error class="error-message" *ngIf="getControl(firstFormGroup, 'branchOffice').errors?.required">
+                                  La <strong>Oficina</strong> es requerida
+                              </mat-error>
+                          </mat-form-field>
+                      </div>
+
+                        <div class="input-item col-6">
+                            <label>Correo Electrónico</label>
+                            <mat-form-field appearance="outline">
+                                <input type="text" matInput formControlName="mail" placeholder="Ingrese su correo electrónico">
+                                <mat-error class="error-message" *ngIf="getControl(firstFormGroup, 'mail').errors?.required">
+                                    El <strong>Email</strong> es requerido
+                                </mat-error>
+                                <mat-error class="error-message" *ngIf="getControl(firstFormGroup, 'mail').errors?.email">
+                                    El formato del <strong>Email</strong> es incorrecto
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button mat-raised-button
+                                color="primary"
+                                (click)="saveUserForm()"
+                                [disabled]="!firstFormGroup.valid">
+                            Siguiente
+                        </button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="secondFormGroup" state="security">
+                <ng-container *ngIf="!(loading$ | async); else loading_true">
+                    <form [formGroup]="secondFormGroup">
+                          <ng-template matStepLabel>Seguridad</ng-template>
+                          <div class="input-container col-12 d-flex">
+
+                              <div class="input-item col-6">
+                                  <label>Contraseña</label>
+                                  <mat-form-field appearance="outline">
+                                      <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" placeholder="Ingrese su contraseña">
+                                      <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                      </button>
+                                      <mat-error class="error-message" *ngIf="getControl(secondFormGroup, 'password').errors?.required">
+                                          El <strong>Password</strong> es requerido
+                                      </mat-error>
+                                  </mat-form-field>
+                              </div>
+
+                              <div class="input-item col-6">
+                                  <label>Confirmar contraseña</label>
+                                  <mat-form-field appearance="outline">
+                                      <input matInput formControlName="confirm_password" [type]="hide ? 'password' : 'text'" placeholder="Vuelva a ingresar su contraseña">
+                                      <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                      </button>
+                                      <mat-error class="error-message" *ngIf="!getControl(secondFormGroup, 'confirm_password').errors?.isMatching">
+                                          Las <strong>Contraseñas</strong> no coinciden
+                                      </mat-error>
+                                  </mat-form-field>
+                              </div>
+
+                          </div>
+                          <div>
+                              <button mat-raised-button matStepperPrevious>Atrás</button>
+                              <button mat-raised-button
+                                      color="primary"
+                                      (click)="register()"
+                                      [disabled]="!secondFormGroup.valid">
+                                  Registrar
+                              </button>
+                          </div>
+                    </form>
+                </ng-container>
+
+                <ng-template #loading_true>
+                    <div class="loading">
+                        <app-loading [isLoading]="true"
+                                     [message]="'Procesando los datos para el registro, espere por favor ...'">
+                        </app-loading>
+                    </div>
+                </ng-template>
+
+            </mat-step>
+
+            <mat-step state="how_to_reg">
+                <ng-template matStepLabel>Registro</ng-template>
+
+                <app-register-message [result]="result"></app-register-message>
+
+            </mat-step>
+
+          <ng-template matStepperIcon="person">
+            <mat-icon>person</mat-icon>
+          </ng-template>
+          <ng-template matStepperIcon="security">
+            <mat-icon>security</mat-icon>
+          </ng-template>
+        </mat-horizontal-stepper>
+        </div>
+    </div>
+</main>

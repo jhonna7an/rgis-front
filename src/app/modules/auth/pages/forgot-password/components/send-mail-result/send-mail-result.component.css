@@ -1,0 +1,38 @@
+.result-container {
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px;
+}
+ span {
+   text-align: center;
+ }
+
+ .message-container {
+   display: flex;
+   flex-direction: column;
+   margin: 0px 20px 20px;
+ }
+
+ .message-container span:nth-child(odd) {
+   margin-top: 20px;
+ }
+
+ mat-icon {
+  font-size: 100px;
+  height: 100px;
+  width: 100px;
+ }
+
+ .success {
+   color: #009924;
+ }
+
+ .failed {
+   color: #DB202F;
+ }
+
+ .action {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+ }

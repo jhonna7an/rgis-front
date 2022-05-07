@@ -1,0 +1,25 @@
+<div class="result-container d-flex">
+    <span>
+        <mat-icon fontSet="material-icons-round" class="{{result.class}}">
+            {{result.icon}}
+        </mat-icon>
+    </span>
+
+    <div class="message-container">
+        <span>
+          {{result.message}}
+        </span>
+
+
+        <span *ngIf="result.isResultOk">
+          <br>
+          Enviamos un link de activación de cuenta a: <strong>{{result.mail}}</strong>
+        </span>
+    </div>
+
+    <div class="action">
+        <button mat-raised-button color="primary" routerLink="../../login">
+            Volver al inicio de sesión
+        </button>
+    </div>
+</div>

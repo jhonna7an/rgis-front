@@ -1,17 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
 
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-
 const routes: Routes = [
     {
         path: 'login',
-        component: LoginComponent
+        loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
     },
     {
-      path: 'register',
-      component: RegisterComponent
+        path: 'register',
+        loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule)
+    },
+    {
+        path: 'confirm-account',
+        loadChildren: () => import('./pages/confirm-account/confirm-account.module').then(m => m.ConfirmAccountModule)
+    },
+    {
+        path: 'forgot-password',
+        loadChildren: () => import('./pages/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
+    },
+    {
+        path: 'reset-password',
+        loadChildren: () => import('./pages/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
     }
 ];
 
@@ -19,4 +28,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class AuthRouting { }
+export class AuthRoutingModule { }

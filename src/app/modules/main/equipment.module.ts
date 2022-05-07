@@ -3,14 +3,12 @@ import { EmployeeService } from './services/employee.service';
 import { FaultDetailService } from './services/fault-detail.service';
 import { ClientService } from './services/client.service';
 import { DetailService } from './services/workflow/detail.service';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from './material.module';
-import { AppRoutingModule } from '../../app-routing.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EquipmentRoutingModule } from './equipment.routing';
 
 import { DetailCurrentComponent } from './components/dialogs/equipments/dialog-detail/detail-current/detail-current.component';
 import { SidebarDetailItemComponent } from './components/sidebar/sidebar-detail/sidebar-detail-item/sidebar-detail-item.component';
@@ -20,7 +18,6 @@ import { CurrentDetailComponent } from './components/body/detail/current-detail/
 import { HistoricDetailComponent } from './components/body/detail/historic-detail/historic-detail.component';
 import { DetailComponent } from './components/body/detail/detail.component';
 import { EquipmentSummaryComponent } from './pages/summary/equipment-summary.component';
-import { HomeComponent } from './pages/home/home.component';
 import { EquipmentDetailComponent } from './pages/detail/equipment-detail.component';
 import { SidebarComponent } from './components/sidebar/sidebar/sidebar.component';
 import { DialogDetailComponent } from './components/dialogs/equipments/dialog-detail/dialog-detail.component';
@@ -58,11 +55,13 @@ import { FaultCreateComponent } from './components/dialogs/equipments/dialog-det
 import { DialogMultiChoiceComponent } from './components/dialogs/equipments/dialog-multi-choice/dialog-multi-choice.component';
 import { CreateAssignmentComponent } from './components/dialogs/equipments/create-asignation/create-assignment.component';
 import { DetailAssignmentComponent } from './components/dialogs/equipments/dialog-detail/detail-assignment/detail-assignment.component';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
 
+export { DistrictService } from './services/district.service';
 @NgModule({
   declarations: [
     EquipmentSummaryComponent,
-    HomeComponent,
     EquipmentDetailComponent,
     SidebarDetailItemComponent,
     SidebarComponent,
@@ -94,14 +93,13 @@ import { DetailAssignmentComponent } from './components/dialogs/equipments/dialo
     DetailAssignmentComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
+    CommonModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    EquipmentRoutingModule
   ],
   providers: [
     EquipmentService,

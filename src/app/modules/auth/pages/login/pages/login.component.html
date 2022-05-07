@@ -1,0 +1,60 @@
+<main class="main-container">
+    <div class="login-container">
+        <header class="row d-flex flex-column justify-content-center">
+            <div class="user-icon">
+              <mat-icon class="">account_circle</mat-icon>
+            </div>
+            <h1>Iniciar sesión</h1>
+        </header>
+
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <form class="d-flex serial-form"
+                      [formGroup]="loginForm"
+                      autocomplete="off"
+                      novalidate>
+                    <div class="input-container">
+                        <mat-form-field appearance="outline">
+                            <mat-label>BadgeId</mat-label>
+                            <input type="text" matInput formControlName="badgeId" placeholder="Ingrese su badgeId">
+                            <mat-error class="error-message" *ngIf="getControl('badgeId').errors?.required">
+                                El <strong>BadgeId</strong> es requerido
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Contraseña</mat-label>
+                            <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" placeholder="Ingrese su contraseña">
+                            <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error class="error-message" *ngIf="getControl('password').errors?.required">
+                                La <strong>Contraseña</strong> es requerida
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div class="option-container">
+                            <mat-checkbox formControlName="rememberMe" color="primary">
+                                Recordar contraseña
+                            </mat-checkbox>
+                            <a routerLink="../../forgot-password" class="link">Olvidó su contraseña?</a>
+                        </div>
+
+                        <button mat-raised-button
+                                type="submit"
+                                color="primary"
+                                class="col-12"
+                                (click)="login()"
+                                [disabled]="!loginForm.valid">
+                            Iniciar sesión
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-10">
+                <P>Si no eres usuario <a routerLink="../../register" class="link">Registrate aquí</a></P>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,26 @@
+export class SendMailResult {
+  message: string;
+  icon: string;
+  isResultOk: boolean;
+  mail: string;
+  class: string;
+
+  constructor(){
+  }
+
+  public success(mail: string): void {
+    this.message = '';
+    this.icon = 'check_circle';
+    this.isResultOk = true;
+    this.mail = mail;
+    this.class = 'success';
+  }
+
+
+  public failed(): void {
+    this.message = 'Se produjo un error al intentar procesar la solicitud.';
+    this.icon = 'cancel';
+    this.isResultOk = false;
+    this.class = 'failed';
+  }
+}
