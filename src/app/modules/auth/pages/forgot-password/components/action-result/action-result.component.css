@@ -1,7 +1,7 @@
 .result-container {
   flex-direction: column;
   justify-content: center;
-  padding: 50px;
+  padding: 20px;
 }
  span {
    text-align: center;
@@ -10,7 +10,7 @@
  .message-container {
    display: flex;
    flex-direction: column;
-   margin: 0px 20px 20px;
+   margin: 0px 10px 10px;
  }
 
  .message-container span:nth-child(odd) {
@@ -31,7 +31,11 @@
    color: #DB202F;
  }
 
- .action {
+.warning {
+  color: #ffc937
+}
+
+.action {
   display: flex;
   justify-content: center;
   margin-top: 20px;

@@ -31,6 +31,10 @@
    color: #DB202F;
  }
 
+ .warning {
+   color: #ffc937
+ }
+
  .action {
   display: flex;
   justify-content: center;

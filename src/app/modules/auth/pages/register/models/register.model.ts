@@ -3,8 +3,8 @@ export class Register {
   public lastName: string;
   public badgeId: string;
   public district: number;
-  public branchOffice: number;
-  public mail: string;
+  public branchOfficeId: number;
+  public email: string;
   public password: string;
   public confirmPassword: string;
 
@@ -22,8 +22,8 @@ export class Register {
     this.name = name;
     this.lastName = lastName;
     this.badgeId = badgeId;
-    this.branchOffice = branchOffice;
-    this.mail = mail;
+    this.branchOfficeId = branchOffice;
+    this.email = mail;
   }
 
   setSecondForm(password: string, confirm_password: string){

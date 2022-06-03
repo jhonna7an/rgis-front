@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  font-family: 'Poppins', sans-serif;
+}
 
 @font-face {
   font-family: Hurgada;
@@ -240,4 +243,26 @@ button:focus {
 
 .mat-form-field.mat-form-field-invalid .mat-form-field-label {
   color: #f44336;
+}
+
+/* BACKDROP */
+.cdk-overlay-backdrop {
+  backdrop-filter: blur(2px);
+}
+
+/* BUTTON */
+.primary-btn {
+  border: 1px solid #d60d2b !important;
+  background-color: transparent !important;
+  color: #d60d2b !important;
+  font-weight: 500 !important;
+  box-shadow: none !important;
+}
+
+.cancel-btn {
+  border: 1px solid #7a7a7a !important;
+  background-color: transparent !important;
+  color: #7a7a7a !important;
+  font-weight: 500 !important;
+  box-shadow: none !important;
 }

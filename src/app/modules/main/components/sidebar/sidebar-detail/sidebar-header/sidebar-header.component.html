@@ -6,7 +6,7 @@
 
     <ng-container *ngIf="!detailData.isMainHistoricTab && currentBreadcrumbs.length > 0 ||
                          detailData.isMainHistoricTab && historicBreadcrumbs.length > 0">
-        <button mat-stroked-button (click)="restartFilters()" class="animated fadeInUp">
+        <button mat-stroked-button (click)="restartFilters()" class="animated fadeInUp cancel-btn">
             <mat-icon>restart_alt</mat-icon>
             <span>Reinicio</span>
         </button>

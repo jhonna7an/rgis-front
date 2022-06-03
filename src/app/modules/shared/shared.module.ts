@@ -2,7 +2,7 @@ import { SidenavService } from './services/sidenav.service';
 import { ToastService } from './services/toast.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedRoutingModule } from './shared.routing';
 
 import { FooterComponent } from './components/footer/footer.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
@@ -19,6 +19,7 @@ import { BranchOfficeService } from './services/branch-office.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -28,11 +29,13 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     DialogComponent,
     ToastComponent,
     SpinnerComponent,
-    AnimationComponent
+    AnimationComponent,
+    NotFoundComponent
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    SharedRoutingModule
   ],
   exports: [
     SpinnerComponent,

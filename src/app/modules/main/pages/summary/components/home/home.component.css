@@ -1,0 +1,226 @@
+/* BODY DETAIL DISTRICT */
+.container {
+  padding: 0px !important;
+  margin-top: 20px;
+  height: 100%;
+}
+
+.body {
+  width: 100%;
+}
+
+.body-content {
+  min-height: 250px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.detail {
+  min-width: 200px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+  margin-top: 20px;
+}
+
+.mat-elevation-z8 {
+  box-shadow: none !important;
+}
+
+tr {
+  height: 35px !important;
+}
+
+.ml-20 {
+  margin-left: 20px;
+}
+
+.chart {
+  position: relative;
+  overflow: hidden;
+  width: 350px;
+  height: 320px;
+  margin: 20px 0px 0px 20px;
+  flex-basis: 100%;
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 250px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+  border: none;
+}
+
+.card-content {
+  font-size: 50px;
+  color: #414141;
+  padding: 25px;
+}
+
+
+
+.body-content-empty {
+  display: flex;
+  color: #6c757d;
+  margin-top: 20px;
+}
+
+.detail-district {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  display: flex;
+}
+
+.detail-district div mat-accordion div mat-expansion-panel mat-expansion-panel-header span div {
+  padding: 0px;
+}
+
+.detail-district div mat-accordion div mat-expansion-panel .mat-expansion-panel-header {
+  border-radius: initial;
+}
+
+.mat-expansion-panel-body {
+  display: flex;
+}
+
+.detail-district div {
+  width: 100%;
+}
+
+.detail-district div mat-accordion div {
+  padding: 0px 20px;
+}
+
+.body-content mat-expansion-panel-header {
+  padding: 20px 30px 20px 20px;
+  border-bottom: 1px solid #edeff2;
+}
+
+.expansion-body {
+  border-radius: 4px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.08) !important;
+  border: solid 1px #edeff2;
+  padding: 0px 0px 0px 4px !important;
+  margin: 20px;
+}
+
+.body-content mat-expansion-panel {
+  margin-bottom: 20px;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: none;
+  padding: 0px 20px !important;
+}
+
+.table td,
+.table th {
+  padding: .75rem;
+  border-top: none;
+  padding: 10px 20px !important;
+}
+
+table thead tr th {
+  color: #cd3840;
+  text-align: center;
+  font-weight: 500;
+}
+
+table tbody tr td {
+  color: #6d7278;
+  text-align: center;
+}
+
+.title {
+  color: #6D7278;
+  font-size: 16px;
+}
+
+table {
+  margin-bottom: 0px !important;
+}
+
+
+/* BODY DETAIL COUNTRY */
+
+.detail-country,
+.detail-district {
+  background-color: #fff;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+  border-radius: 4px;
+}
+
+.detail-country div,
+.expansion-body {
+  padding: 20px;
+  box-shadow: inset 4px 0 0 0 #cd3840 !important;
+  border-radius: 4px;
+}
+
+.detail-country table thead tr,
+.summary-data thead tr {
+  border-bottom: 1px solid #edeff2;
+}
+
+.detail-country table thead tr th,
+.summary-data thead tr th {
+  padding: 10px 20px !important;
+}
+
+.detail-country table thead tr th:first-child,
+.detail-country table tbody tr td:first-child,
+.summary-data thead tr th:first-child,
+.summary-data tbody tr td:first-child {
+  border-right: 1px solid #edeff2;
+  font-weight: 500;
+}
+
+.summary-data thead tr th:last-child,
+.summary-data tbody tr td:last-child {
+  border-left: 1px solid #edeff2;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.detail-country table tbody tr:last-child,
+.summary-data tbody tr:last-child {
+  border-top: 1px solid #edeff2;
+}
+
+.detail-country table tbody tr:last-child td,
+.summary-data tbody tr:last-child td {
+  font-weight: 500;
+  color: #cd3840;
+}
+
+.loading {
+  width: 100%;
+  padding: 40px;
+}
+
+.dashboard-container {
+  width: 100%;
+  display: flex;
+  height: auto;
+  flex-direction: row;
+  align-content: center;
+  align-items: flex-start;
+}
+
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-container {
+  display: flex;
+  flex-basis: 50%;
+}

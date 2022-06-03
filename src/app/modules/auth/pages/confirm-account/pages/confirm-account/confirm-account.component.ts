@@ -28,23 +28,24 @@ export class ConfirmAccountComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.actionResult = new ActionResult();
     this.loading$ = this.authService.getLoading();
-    this.confirmAccount('asdad');
 
-    // this.route.queryParams
-    //   .subscribe(params => {
-    //     this.confirmAccount(params.activationCode);
-    //   });
+    this.route.queryParams
+      .subscribe(params => {
+        this.confirmAccount(params.code, params.m, params.b);
+      });
   }
 
-  private confirmAccount(activationCode: string): void {
+  private confirmAccount(code: string, mail: string, badgeId: string): void {
     this.authService.setLoading(true);
     this.authService
-      .confirmAccount(activationCode)
+      .confirmAccount(code, mail, badgeId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.actionResult.success("Se confirmó su cuenta correctamente", '');
       }, error => {
-        this.actionResult.failed("Ocurrió un error al intentar procesar la solicitud");
+        console.log(error);
+
+        this.actionResult.failed(error);
       })
       .add(() => {
         this.authService.setLoading(false);

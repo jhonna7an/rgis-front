@@ -7,7 +7,7 @@
             <h1>Iniciar sesión</h1>
         </header>
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center body">
             <div class="col-10">
                 <form class="d-flex serial-form"
                       [formGroup]="loginForm"
@@ -34,7 +34,7 @@
                         </mat-form-field>
 
                         <div class="option-container">
-                            <mat-checkbox formControlName="rememberMe" color="primary">
+                            <mat-checkbox formControlName="rememberMe" color="primary" class="checkbox">
                                 Recordar contraseña
                             </mat-checkbox>
                             <a routerLink="../../forgot-password" class="link">Olvidó su contraseña?</a>
@@ -52,7 +52,7 @@
                 </form>
             </div>
 
-            <div class="col-10">
+            <div class="col-10 footer">
                 <P>Si no eres usuario <a routerLink="../../register" class="link">Registrate aquí</a></P>
             </div>
         </div>

@@ -9,31 +9,28 @@ main,
 
 .main-container::after {
   content: '';
-    background-color: #425b76;
-    width: 100%;
-    height: 50%;
-    position: absolute;
-    top: 0px;
-    z-index: 1;
+  background-color: #425b76;
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  top: 0px;
+  z-index: 1;
 }
 
 .login-container {
-  max-width: 450px;
-  max-height: 590px;
-  margin: 20px 0px;
-  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+  display: flex;
+  flex-direction: row;
   background-color: #fff;
-  position: relative;
+  max-width: 450px;
   z-index: 2;
+  position: relative;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  height: auto;
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
   border-radius: 4px;
-}
-
-header {
-  margin: 20px 0px 0px;
-}
-
-.login-container div:not(.option-container){
-  margin: 20px 0px;
+  padding: 30px 20px;
 }
 
 h1 {
@@ -56,7 +53,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .option-container a {
@@ -69,4 +66,12 @@ h1 {
 
 .link {
   color: #0225D6;
+}
+
+.checkbox {
+  font-size: 14px;
+}
+
+button[type=submit] {
+  margin-bottom: 10px;
 }

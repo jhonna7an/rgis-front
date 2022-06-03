@@ -20,4 +20,9 @@ export class DistrictService {
     this.partialUrl = `${this.url}/api/district`;
     return this.http.get<District[]>(this.partialUrl);
   }
+
+  public getDistrictsByCountry(countryId: number): Observable<District[]>{
+    this.partialUrl = `${this.url}/api/district/country/${countryId}`;
+    return this.http.get<District[]>(this.partialUrl);
+  }
 }

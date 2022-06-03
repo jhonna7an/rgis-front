@@ -2,25 +2,29 @@
     border-radius: 0px !important;
 }
 
-/* .menu-detail {
-    padding-right: 20px;
-    padding-left: 20px;
-} */
-
 .menu-detail ul {
     list-style: none;
     padding-inline-start: 0px;
 }
 
-.menu-detail ul li {
+/* .menu-detail ul li {
     display: flex;
     justify-content: space-between;
     cursor: pointer;
-}
+} */
 
 .filter-label {
-    background-color: transparent;
-    border: none;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 3px 20px;
+}
+
+.filter-label span {
+  color: #7a7a7a;
 }
 
 .filter-label+span,
@@ -28,12 +32,16 @@
     color: #8c8c8c;
 }
 
-.item {
+/* .item {
   padding: 3px 20px;
-}
+} */
 
 .item:hover,
 .item:hover button {
-  background-color: #673ab7;
+  background-color: #e44d4a;
+  color: #fff;
+}
+
+.filter-label:hover span {
   color: #fff;
 }

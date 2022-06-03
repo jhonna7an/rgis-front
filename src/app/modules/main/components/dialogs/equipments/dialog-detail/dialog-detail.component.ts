@@ -23,6 +23,7 @@ import { EEquipmentState } from 'src/app/modules/main/models/EEquipmentState';
 })
 export class DialogDetailComponent extends BaseComponent implements OnInit {
 
+  public color: string = '#d60d2b';
   public detailData: DetailData;
   public equipmentCurrent: Equipment;
 

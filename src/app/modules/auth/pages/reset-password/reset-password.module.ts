@@ -6,11 +6,13 @@ import { MaterialModule } from 'src/app/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from '../../auth.module';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { ActionResultComponent } from './components/action-result/action-result.component';
 
 
 @NgModule({
   declarations: [
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    ActionResultComponent
   ],
   imports: [
     CommonModule,

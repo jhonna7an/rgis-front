@@ -51,6 +51,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.authService.setLoading(false);
     this.isBranchOfficeDisabled = true;
     this.result = new RegisterResult();
     this.registerModel = new Register();
@@ -59,6 +60,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
 
     this.districts$ = this.districtService.getDistricts();
     this.loading$ = this.authService.getLoading();
+
 
     this.secondFormGroup.controls['password'].valueChanges.subscribe(() => {
       this.secondFormGroup.controls['confirm_password'].updateValueAndValidity();
@@ -120,9 +122,9 @@ export class RegisterComponent extends BaseComponent implements OnInit {
       .register(this.registerModel)
       .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
-        this.result.success(this.registerModel.mail);
+        this.result.success(this.registerModel.email);
       }, error => {
-        this.result.failed();
+        this.result.failed(error.error);
       })
       .add(() => {
         this.authService.setLoading(false);

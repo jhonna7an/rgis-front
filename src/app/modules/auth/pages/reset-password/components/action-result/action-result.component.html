@@ -6,14 +6,8 @@
   </span>
 
   <div class="message-container">
-      <span *ngIf="!result?.isResultOk">
+      <span>
         {{result?.message}}
-      </span>
-
-
-      <span *ngIf="result?.isResultOk">
-        <br>
-        Enviamos un link de confirmación de cuenta a: <strong>{{result?.mail}}</strong>
       </span>
   </div>
 

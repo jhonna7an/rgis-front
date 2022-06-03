@@ -17,6 +17,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
     imports: [
@@ -38,7 +39,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatSelectModule,
         MatDatepickerModule,
         MatSnackBarModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatRippleModule
     ],
     exports: [
         MatButtonModule,
@@ -59,7 +61,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatSelectModule,
         MatDatepickerModule,
         MatSnackBarModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatRippleModule
     ]
 })
 export class MaterialModule{}

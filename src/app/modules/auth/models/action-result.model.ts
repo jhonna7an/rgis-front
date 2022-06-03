@@ -16,10 +16,10 @@ export class ActionResult {
     this.class = 'success';
   }
 
-  public failed(message: string): void {
-    this.message = message;
-    this.icon = 'cancel';
+  public failed(error: any): void {
+    this.message = error.message;
+    this.icon = error.status === 500 ? 'cancel' : 'error';
     this.isResultOk = false;
-    this.class = 'failed';
+    this.class = error.status === 500 ? 'failed' : 'warning';
   }
 }

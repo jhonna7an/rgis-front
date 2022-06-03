@@ -2,6 +2,7 @@ export interface UserToken {
   id: number;
   badgeId: string;
   profileFile: string;
+  countryId: number;
   token: Token;
 }
 

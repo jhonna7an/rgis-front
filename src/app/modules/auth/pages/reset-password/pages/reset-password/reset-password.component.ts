@@ -3,9 +3,10 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
-import { ResetPassword } from '../../models/reset-password.model';
-import { ActionResult } from '../../../../models/action-result.model';
+import { ActionResult } from '../../models/action-result.model';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { ResetUser } from '../../models/reset-user.model';
 
 @Component({
   selector: 'app-reset-password',
@@ -16,12 +17,16 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
 
   public resetPasswordForm: FormGroup;
   public actionResult: ActionResult;
-  public actionResolved: boolean = false;
+  public actionResolved: boolean = true;
   public hide: boolean = true;
 
   public loading$: Observable<boolean>;
+  public loadingMessage: string;
+
+  private _resetUser: ResetUser;
 
   constructor(
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private authService: AuthService
   ) {
@@ -30,9 +35,19 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.actionResult = new ActionResult();
-    this.initForm();
 
     this.loading$ = this.authService.getLoading();
+    this.loadingMessage = 'Procesando la solicitud, por favor espere...';
+
+    this.route.queryParams
+      .subscribe(params => {
+        const token = params.t;
+        const badgeId = params.b
+
+        this.validToken(token, badgeId);
+      });
+
+    this.initForm();
   }
 
   public initForm(): void {
@@ -46,25 +61,38 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
     return this.resetPasswordForm.controls[value];
   }
 
-  public resetPassword(): void {
-    this.authService.setLoading(true);
-
-    const resetPassword = new ResetPassword(
-      this.resetPasswordForm.controls['password'].value,
-      this.resetPasswordForm.controls['confirm_password'].value,
-    );
-
+  public validToken(token: string, badgeId: string): void {
     this.authService
-      .resetPassword(resetPassword)
+      .validTokenReset(token, badgeId)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: any) => {
-        this.actionResult.success("Se guardaron los cambios correctamente", '');
+      .subscribe((response: ResetUser) => {
+        this._resetUser = response;
       }, error => {
-        this.actionResult.failed("Ocurrió un error al intentar procesar la solicitud");
+        this.actionResult.failed(error);
       })
       .add(() =>{
-        this.authService.setLoading(true);
-        this.actionResolved = true;
+        this.authService.setLoading(false);
+        this.actionResolved = false;
+      });
+  }
+
+  public resetPassword(): void {
+    this.authService.setLoading(true);
+    this.actionResolved = true;
+    this.loadingMessage = 'Guardando los cambios, por favor espere...';
+    this._resetUser.password = this.resetPasswordForm.controls['password'].value;
+    this._resetUser.id = 10;
+
+    this.authService
+      .resetPassword(this._resetUser)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.actionResult.success("Se guardaron los cambios correctamente");
+      }, error => {
+        this.actionResult.failed(error);
+      })
+      .add(() => {
+        this.authService.setLoading(false);
       });
   }
 

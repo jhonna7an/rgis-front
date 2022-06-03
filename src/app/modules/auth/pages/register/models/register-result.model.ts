@@ -17,8 +17,8 @@ export class RegisterResult {
   }
 
 
-  public failed(): void {
-    this.message = 'Se produjo un error al intentar procesar la solicitud.';
+  public failed(message: string): void {
+    this.message = message;
     this.icon = 'cancel';
     this.isResultOk = false;
     this.class = 'failed';

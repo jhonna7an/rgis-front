@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseURL: 'https://localhost:44371',
+  // baseURL: 'https://localhost:44371',
+  baseURL: 'https://localhost:5001',
   identity_server: 'https://localhost:44380',
   client_id: 'rgis_front',
   client_secret: 'SuperSecretPassword',

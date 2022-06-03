@@ -6,6 +6,10 @@
   </span>
 
   <div class="message-container">
+      <span>
+        {{result?.message}}
+      </span>
+
       <span *ngIf="!result?.isResultOk">
         {{result?.message}}
       </span>

@@ -4,19 +4,21 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { MaterialModule } from 'src/app/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordRoutingModule } from './forgot-password.routing';
-import { SendMailResultComponent } from './components/send-mail-result/send-mail-result.component';
+import { ActionResultComponent } from './components/action-result/action-result.component';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 
 @NgModule({
   declarations: [
     ForgotPasswordComponent,
-    SendMailResultComponent
+    ActionResultComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    ForgotPasswordRoutingModule
+    ForgotPasswordRoutingModule,
+    SharedModule
   ]
 })
 export class ForgotPasswordModule { }

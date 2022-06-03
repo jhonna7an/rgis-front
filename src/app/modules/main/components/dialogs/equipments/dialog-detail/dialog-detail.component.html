@@ -51,6 +51,7 @@
         <ng-container *ngIf="isDetailTab && !isEditModule && !detailData.isMainHistoricTab">
             <button mat-raised-button
                     color="primary"
+                    class="primary-btn2"
                     [disabled]="isEditBtnDisabled"
                     (click)="editDialog()">
                     <!-- class="{{(data.historicInfo.isHistoricTab) ? 'hidden-custom' : ''}}"> -->
@@ -94,6 +95,7 @@
         </ng-container>
 
         <button mat-stroked-button
+                class="cancel-btn"
                 (click)="close()">
             Cancelar
         </button>

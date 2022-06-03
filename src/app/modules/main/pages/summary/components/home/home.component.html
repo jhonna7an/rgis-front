@@ -1,0 +1,154 @@
+<div class="d-flex container">
+    <div class="body">
+        <app-header></app-header>
+
+        <div class="body-content">
+            <ng-container *ngIf="this.isLoading$ | async; else data">
+                <div class="loading">
+                    <app-loading [isLoading]="true" [message]="'Cargando la información...'"></app-loading>
+                </div>
+            </ng-container>
+
+            <ng-template #data>
+                <ng-container *ngIf="dashboard; else empty">
+                    <div class="dashboard-container">
+                        <div class="detail-container">
+                            <div class="card-container">
+                                <div class="card detail total animated fadeInUp">
+                                    <span class="card-title">
+                                        Total equipos
+                                    </span>
+
+                                    <span class="card-content">
+                                        {{this.dashboard.total}}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card-container">
+                                <div class="card detail animated fadeInUp">
+                                    <table mat-table [dataSource]="this.dashboard.detail.items" class="mat-elevation-z8">
+
+                                        <ng-container matColumnDef="name">
+                                            <th mat-header-cell *matHeaderCellDef> {{name}} </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="count">
+                                            <th mat-header-cell *matHeaderCellDef> Total </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="titles"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: titles;"></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <div class="card-container">
+                                <div id="chart-types" *ngIf="showByDistrict" class="card chart animated fadeInUp">
+                                </div>
+                            </div>
+
+                            <div class="card-container">
+                                <div id="chart-state" *ngIf="showByDistrict" class="card chart animated fadeInUp">
+                                </div>
+                            </div>
+
+                            <div class="card-container">
+                                <div id="chart-location" *ngIf="showByDistrict" class="card chart animated fadeInUp">
+                                </div>
+                            </div>
+
+                            <div class="card-container">
+                                <div id="chart-districts" *ngIf="showByCountry" class="card chart animated fadeInUp">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-template #empty>
+                    <div  class="body-content-empty">
+                        <span class="material-icons-round">
+                            search
+                        </span>
+                        <span>
+                            Seleccione un Distrito
+                        </span>
+                    </div>
+                </ng-template>
+            </ng-template>
+
+
+            <!-- Country Detail -->
+            <!-- <div *ngIf="countryDetail && !summaryData" class="detail-country">
+                <div>
+                    <table class="table" id="country-detail">
+                        <thead>
+                            <tr>
+                                <th scope="col" *ngFor="let title of countryDetail.equipments">
+                                    {{title}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let content of countryDetail.data">
+                                <td scope="row">{{content.district}}</td>
+                                <td>{{content.audit}}</td>
+                                <td>{{content.laser}}</td>
+                                <td>{{content.portatil}}</td>
+                                <td>{{content.printer}}</td>
+                                <td>{{content.charguer}}</td>
+                                <td>{{content.ap}}</td>
+                                <td>{{content.tablet}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> -->
+
+            <!-- Summary by District -->
+            <!-- <div *ngIf="isDistrictDetail && !isCountryDetail" class="detail-district">
+                <div>
+                    <mat-accordion class="example-headers-align" multi *ngFor="let data of summaryData">
+                        <div>
+                            <mat-expansion-panel [expanded]="xpandStatus" class="no-shadow">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title class="title">
+                                        {{data.title}}
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <div class="expansion-body">
+                                    <table class="table summary-data">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Modelo</th>
+                                                <th scope="col">Equipos Activo</th>
+                                                <th scope="col">Equipos Avería</th>
+                                                <th scope="col">Equipos Hold</th>
+                                                <th scope="col">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let rowData of data.items">
+                                                <td scope="row">{{rowData.model}}</td>
+                                                <td>{{rowData.activo}}</td>
+                                                <td>{{rowData.averia}}</td>
+                                                <td>{{rowData.hold}}</td>
+                                                <td>{{rowData.totalItem}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                    </mat-accordion>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

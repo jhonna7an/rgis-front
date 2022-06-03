@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActionResult } from '../../models/action-result.model';
 
-@Component({
+ @Component({
   selector: 'app-action-result',
   templateUrl: './action-result.component.html',
   styleUrls: ['./action-result.component.css']

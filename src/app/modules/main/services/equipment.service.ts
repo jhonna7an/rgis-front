@@ -31,12 +31,18 @@ export class EquipmentService {
     this.url = `${environment.baseURL}`;
   }
 
-  public get(districtId?: number): Observable<Equipment[]>{
+  public get(): Observable<Equipment[]>{
     this.partialUrl = `${this.url}/api/v1/Equipment`;
-    if (districtId) {
-      this.partialUrl += `?districtId=${districtId}`;
-    }
+    return this.http.get<Equipment[]>(this.partialUrl);
+  }
 
+  public getByDistrict(districtId: number): Observable<Equipment[]>{
+    this.partialUrl = `${this.url}/api/v1/Equipment?districtId=${districtId}`;
+    return this.http.get<Equipment[]>(this.partialUrl);
+  }
+
+  public getByCountry(countryId: number): Observable<Equipment[]>{
+    this.partialUrl = `${this.url}/api/v1/Equipment?countryId=${countryId}`;
     return this.http.get<Equipment[]>(this.partialUrl);
   }
 

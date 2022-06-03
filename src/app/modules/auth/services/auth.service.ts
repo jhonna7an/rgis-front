@@ -4,8 +4,7 @@ import { environment } from 'src/environments/environment';
 import { ManagerService } from '../../shared/services/manager.service';
 import { Login } from '../pages/login/models/login.model';
 import { Register } from '../pages/register/models/register.model';
-import { ForgotPassword } from '../pages/forgot-password/models/forgot-password.model';
-import { ResetPassword } from '../pages/reset-password/models/reset-password.model';
+import { ResetUser } from '../pages/reset-password/models/reset-user.model';
 
 import { UserToken } from '../pages/login/models/user-token.model';
 import { Router } from '@angular/router';
@@ -20,7 +19,7 @@ export class AuthService {
   private url: string;
   private partialUrl: string;
 
-  private loading$ = new BehaviorSubject<boolean>(false);
+  private loading$ = new BehaviorSubject<boolean>(true);
 
   constructor(
     private http: ManagerService,
@@ -48,18 +47,23 @@ export class AuthService {
     return this.http.post<UserToken>(this.partialUrl, login);
   }
 
-  public forgotPassword(forgotPassword: ForgotPassword): Observable<any> {
-    this.partialUrl = `${this.url}/api/auth/forgot-password`;
-    return this.http.post<any>(this.partialUrl, forgotPassword);
+  public forgotPassword(badgeId: string): Observable<any> {
+    this.partialUrl = `${this.url}/api/auth/forgot-password?badgeId=${badgeId}`;
+    return this.http.get<any>(this.partialUrl);
   }
 
-  public resetPassword(resetPassword: ResetPassword): Observable<any> {
+  public validTokenReset(token: string, badgeId: string): Observable<ResetUser> {
+    this.partialUrl = `${this.url}/api/auth/valid-token-reset?t=${token}&b=${badgeId}`;
+    return this.http.get<ResetUser>(this.partialUrl);
+  }
+
+  public resetPassword(resetUser: ResetUser): Observable<ResetUser> {
     this.partialUrl = `${this.url}/api/auth/reset-password`;
-    return this.http.post<any>(this.partialUrl, resetPassword);
+    return this.http.put<ResetUser>(this.partialUrl, resetUser);
   }
 
-  public confirmAccount(activationCode: string): Observable<any> {
-    this.partialUrl = `${this.url}/api/auth/confirm-account?activationCode=${activationCode}`;
+  public confirmAccount(code: string, email: string, badgeId: string): Observable<any> {
+    this.partialUrl = `${this.url}/api/auth/confirm-account?code=${code}&m=${email}&b=${badgeId}`;
     return this.http.get<any>(this.partialUrl);
   }
 
@@ -75,7 +79,8 @@ export class AuthService {
     sessionStorage.setItem("user", JSON.stringify({
       id: response.id,
       badgeId: response.badgeId,
-      profileFile: response.profileFile
+      profileFile: response.profileFile,
+      countryId: response.countryId
     }));
   }
 
