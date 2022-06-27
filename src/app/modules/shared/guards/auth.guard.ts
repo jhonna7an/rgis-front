@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ApplicationService } from 'src/app/services/application.service';
 
-import { AuthService } from '../../auth/services/auth.service';
-import { ToastService } from '../services/toast.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import { ToastService } from '../services/toast.service';
 export class AuthGuard implements CanActivate {
 
   constructor(
-    private authService: AuthService,
+    private applicationService: ApplicationService,
     private router: Router,
     private toastService: ToastService
   ) { }
@@ -20,11 +20,11 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-      return new Promise((resolve, reject) =>{
-        const isLoggedIn: boolean = this.authService.isLoggedIn();
-        const hasExpired: boolean = this.authService.hasExpired();
+      return new Promise((resolve, reject) => {
+        const isLoggedIn: boolean = this.applicationService.isLoggedIn();
+         const hasExpired: boolean = this.applicationService.hasExpired();
 
-        if (isLoggedIn && !hasExpired){
+        if (isLoggedIn && !hasExpired) {
           return resolve(true);
         }
         else {
@@ -34,5 +34,4 @@ export class AuthGuard implements CanActivate {
         }
       });
   }
-
 }

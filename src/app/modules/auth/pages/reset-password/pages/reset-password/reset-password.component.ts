@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
 import { ActionResult } from '../../models/action-result.model';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ResetUser } from '../../models/reset-user.model';
 
 @Component({
@@ -17,18 +17,21 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
 
   public resetPasswordForm: FormGroup;
   public actionResult: ActionResult;
-  public actionResolved: boolean = true;
-  public hide: boolean = true;
+  public password_hide: boolean = true;
+  public confirm_hide: boolean = true;
 
   public loading$: Observable<boolean>;
   public loadingMessage: string;
+
+  public hasResolved: boolean = false;
 
   private _resetUser: ResetUser;
 
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     super();
   }
@@ -52,8 +55,14 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
 
   public initForm(): void {
     this.resetPasswordForm = this.formBuilder.group({
-      password: ['', Validators.required],
-      confirm_password: ['', [Validators.required, this.matchValues('password')]]
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8)
+      ]],
+      confirm_password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        this.matchValues('password')]]
     });
   }
 
@@ -68,20 +77,21 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
       .subscribe((response: ResetUser) => {
         this._resetUser = response;
       }, error => {
+        console.log(error);
         this.actionResult.failed(error);
+        console.log(this.actionResult);
+
+        this.hasResolved = true;
       })
       .add(() =>{
         this.authService.setLoading(false);
-        this.actionResolved = false;
       });
   }
 
   public resetPassword(): void {
     this.authService.setLoading(true);
-    this.actionResolved = true;
     this.loadingMessage = 'Guardando los cambios, por favor espere...';
     this._resetUser.password = this.resetPasswordForm.controls['password'].value;
-    this._resetUser.id = 10;
 
     this.authService
       .resetPassword(this._resetUser)
@@ -93,6 +103,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
       })
       .add(() => {
         this.authService.setLoading(false);
+        this.hasResolved = true;
       });
   }
 
@@ -106,5 +117,11 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
         ? null
         : { isMatching: false };
     };
+  }
+
+  public goLogin(): void {
+    setTimeout(() => {
+      this.router.navigate(['/auth/login']);
+    }, 800);
   }
 }

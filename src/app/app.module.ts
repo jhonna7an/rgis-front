@@ -1,7 +1,6 @@
 import { SpinnerInterceptor } from './modules/shared/interceptors/spinner.interceptor';
-import { SpinnerComponent } from './modules/shared/components/spinner/spinner.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { CoreModule } from './modules/core/core.module';
 
 import { MaterialModule } from '../app/material.module';
@@ -11,6 +10,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './modules/shared/shared.module';
 import { CommonModule } from '@angular/common';
+
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+import { ApplicationService } from './services/application.service';
+import { ToastService } from './services/toast.service';
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -30,7 +35,10 @@ import { CommonModule } from '@angular/common';
       MaterialModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: "es" },
+    ApplicationService,
+    ToastService
   ],
   bootstrap: [AppComponent]
 })

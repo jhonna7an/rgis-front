@@ -1,5 +1,5 @@
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
-import { ToastService } from './../../../../../../shared/services/toast.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommentService } from './../../../../../services/comment.service';
 import { Component, ElementRef, Input, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';

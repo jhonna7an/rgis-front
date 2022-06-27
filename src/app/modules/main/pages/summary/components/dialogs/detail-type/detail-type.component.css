@@ -1,0 +1,5 @@
+.card-container {
+  display: flex;
+  flex-basis: 50%;
+  position: relative;
+}

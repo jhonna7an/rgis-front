@@ -17,6 +17,10 @@
    font-size: 20px;
  }
 
+ .message-container span {
+  color: #5f6368;
+ }
+
  mat-icon {
   font-size: 100px;
   height: 100px;

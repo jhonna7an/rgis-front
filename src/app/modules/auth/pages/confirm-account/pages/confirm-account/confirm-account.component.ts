@@ -41,11 +41,12 @@ export class ConfirmAccountComponent extends BaseComponent implements OnInit {
       .confirmAccount(code, mail, badgeId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.actionResult.success("Se confirmó su cuenta correctamente", '');
+        this.actionResult.success("Se confirmó su cuenta correctamente", 'gpp_good');
       }, error => {
         console.log(error);
-
-        this.actionResult.failed(error);
+        const icon = error.status === 500 ? 'gpp_bad' : 'gpp_maybe';
+        const class_name = error.status === 500 ? 'failed' : 'warning';
+        this.actionResult.failed(error, icon, class_name);
       })
       .add(() => {
         this.authService.setLoading(false);

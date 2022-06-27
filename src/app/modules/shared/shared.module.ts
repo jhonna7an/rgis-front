@@ -1,5 +1,4 @@
 import { SidenavService } from './services/sidenav.service';
-import { ToastService } from './services/toast.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedRoutingModule } from './shared.routing';
@@ -45,7 +44,6 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
   ],
   providers: [
     ManagerService,
-    ToastService,
     SpinnerService,
     SidenavService,
     DistrictService,

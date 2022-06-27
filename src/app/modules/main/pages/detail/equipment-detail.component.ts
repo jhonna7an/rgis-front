@@ -1,4 +1,4 @@
-import { ToastService } from './../../../shared/services/toast.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { Component, OnInit } from '@angular/core';
 import { EquipmentOther } from '../../models/equipments/equipment';
 import { EquipmentService } from '../../services/equipment.service';

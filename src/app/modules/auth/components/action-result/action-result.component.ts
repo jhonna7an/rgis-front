@@ -23,7 +23,6 @@ export class ActionResultComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.result);
   }
 
 }

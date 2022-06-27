@@ -223,4 +223,12 @@ table {
 .card-container {
   display: flex;
   flex-basis: 50%;
+  position: relative;
+}
+
+.chart-menu {
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  z-index: 100;
 }

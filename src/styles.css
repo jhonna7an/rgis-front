@@ -266,3 +266,68 @@ button:focus {
   font-weight: 500 !important;
   box-shadow: none !important;
 }
+
+
+
+/* Menu */
+.mat-menu-panel {
+  min-height: 50px !important;
+}
+
+
+
+/* Summary Detail Chart */
+#detail-container .chart-dialog-container .card-container,
+#filter-container .chart-dialog-container .card-container {
+  display: flex;
+  flex-basis: 50%;
+  position: relative;
+}
+
+#detail-container .chart-dialog-container .card-container .chart,
+#filter-container .chart-dialog-container .card-container .chart {
+  position: relative;
+  overflow: hidden;
+  width: 350px;
+  height: 320px;
+  margin-top: 20px;
+  flex-basis: 100%;
+}
+
+#detail-container .chart-dialog-container .card-container .card,
+#filter-container .chart-dialog-container .card-container .card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 375px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+  border: none;
+}
+
+#detail-container .chart-dialog-container .card-container:nth-child(odd) {
+  max-width: 410px;
+  margin-right: 20px;
+}
+
+#filter-container .chart-dialog-container .card-container:nth-child(even) {
+  margin-left: 20px;
+}
+
+#detail-container .total-dialog-container .detail,
+#filter-container .total-dialog-container .detail {
+  font-size: 18px;
+  color: #333;
+  border-bottom: 1px solid #7a7a7a;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+#detail-container .total-dialog-container .detail span,
+#filter-container .total-dialog-container .detail span {
+  margin-right: 20px;
+}

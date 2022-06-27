@@ -1,4 +1,4 @@
-import { ToastService } from './../../../shared/services/toast.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';

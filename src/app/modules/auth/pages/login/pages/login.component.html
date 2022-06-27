@@ -20,16 +20,30 @@
                             <mat-error class="error-message" *ngIf="getControl('badgeId').errors?.required">
                                 El <strong>BadgeId</strong> es requerido
                             </mat-error>
+                            <mat-error class="error-message" *ngIf="getControl('badgeId').errors?.pattern">
+                                El <strong>BadgeId</strong> solo puede contener carácteres numéricos
+                            </mat-error>
+                            <mat-error class="error-message" *ngIf="getControl('badgeId').errors?.minlength">
+                                El <strong>BadgeId</strong> debe contener almenos 8 dígitos
+                            </mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline">
                             <mat-label>Contraseña</mat-label>
                             <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" placeholder="Ingrese su contraseña">
-                            <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <span mat-icon-button
+                                  matSuffix
+                                  class="show-password"
+                                  (click)="hide = !hide"
+                                  [attr.aria-label]="'Hide password'"
+                                  [attr.aria-pressed]="hide">
                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                            </button>
+                            </span>
                             <mat-error class="error-message" *ngIf="getControl('password').errors?.required">
                                 La <strong>Contraseña</strong> es requerida
+                            </mat-error>
+                            <mat-error class="error-message" *ngIf="getControl('password').errors?.minlength">
+                                La <strong>Contraseña</strong> debe contener almenos 8 carácteres
                             </mat-error>
                         </mat-form-field>
 
@@ -45,6 +59,7 @@
                                 color="primary"
                                 class="col-12"
                                 (click)="login()"
+                                [class.spinner]="loading"
                                 [disabled]="!loginForm.valid">
                             Iniciar sesión
                         </button>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { ApplicationService } from 'src/app/services/application.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -11,15 +11,17 @@ export class ToolbarComponent implements OnInit {
   public badgeId: string;
   public notificationCount: number;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private applicationService: ApplicationService
+  ) { }
 
   ngOnInit(): void {
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const user = JSON.parse(this.applicationService.getByKey('user'));
     this.badgeId = user.badgeId;
     this.notificationCount = 3;
   }
 
   public logout(): void {
-    this.authService.logout();
+    this.applicationService.logout();
   }
 }

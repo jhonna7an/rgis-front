@@ -1,6 +1,5 @@
-import { EquipmentFault } from './../../../../models/equipments/equipment-fault.model';
 import { EquipmentFaultService } from './../../../../services/equipment-fault.service';
-import { ToastService } from './../../../../../shared/services/toast.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { EquipmentAbm } from './../../../../models/equipments/equipment';
 import { CommentService } from './../../../../services/comment.service';
 import { EquipmentService } from 'src/app/modules/main/services/equipment.service';

@@ -1,6 +1,7 @@
 export class SummaryDashboard {
   public total: number;
   public detail: EquipmentDetail;
+  public isHoldCount: number
 
   constructor(detail: EquipmentDetail) {
     this.detail = detail;

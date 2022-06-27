@@ -1,0 +1,141 @@
+.dialog-content {
+  height: 520px !important;
+  max-height: 520px !important;
+}
+
+.mat-drawer {
+  min-width: 150px !important;
+}
+
+.dialog-sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.dialog-sidebar button {
+  border-radius: unset;
+  text-align: initial;
+}
+
+.button-sidebar {
+  border-bottom: 1px solid #e8e8e8;
+  height: 45px;
+}
+
+.button-sidebar:first-child {
+  border-top: 1px solid #e8e8e8;
+}
+
+.dialog-sidebar button::before {
+  content: '';
+  width: 3px;
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  left: 0px;
+  -webkit-transition-property: 'top, bottom';
+  -o-transition-property: 'top, bottom';
+  transition-property: 'top, bottom';
+  -webkit-transition-duration: .3s;
+  -o-transition-duration: .3s;
+  transition-duration: .3s;
+  -webkit-transition-timing-function: ease-out;
+  -o-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+
+.dialog-sidebar button:hover::before {
+  content: '';
+  width: 3px;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  transition-property: 'top, bottom';
+  transition-duration: .3s;
+  transition-timing-function: ease-out;
+  border-left: 3px solid #d60d2b;
+}
+
+
+/* Content */
+.total-dialog-container {
+  margin-bottom: 20px;
+}
+
+.body-detail-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+#detail-container .card-container {
+  display: flex;
+  flex-basis: 50%;
+  position: relative;
+}
+
+.detail-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-container .chart {
+  position: relative;
+  overflow: hidden;
+  width: 350px;
+  height: 320px;
+  margin: 20px 0px 0px 20px;
+  flex-basis: 100%;
+}
+
+.card-container .card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 250px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+  border: none;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  font-size: 20px;
+  border-bottom: 1px solid #7a7a7a;
+  color: #333;
+}
+
+
+.empty-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+.message-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #6c757d;
+}
+
+.message-container p {
+  margin-left: 5px;
+}
+
+
+.mat-dialog-actions {
+  justify-content: end;
+}
+
+.chip-item {
+  margin: 0px 4px !important;
+  cursor: pointer;
+}

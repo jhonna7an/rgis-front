@@ -1,23 +1,24 @@
 .result-container {
   flex-direction: column;
   justify-content: center;
-  padding: 50px;
+  padding: 20px;
 }
- span {
+ span, header {
    text-align: center;
  }
 
  .message-container {
    display: flex;
    flex-direction: column;
-   margin: 30px;
+   margin: 10px;
  }
 
- .message-container span:first {
+ .message-container span {
    font-size: 20px;
+   color: #5f6368;
  }
 
- mat-icon {
+ header span {
   font-size: 100px;
   height: 100px;
   width: 100px;
@@ -32,7 +33,7 @@
  }
 
  .warning {
-   color: #ffc937
+   color: #ffc937;
  }
 
  .action {

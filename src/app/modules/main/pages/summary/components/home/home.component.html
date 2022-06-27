@@ -44,26 +44,98 @@
                                     </table>
                                 </div>
                             </div>
+
+                            <div class="card-container">
+                                <div class="card detail total animated fadeInUp">
+                                    <span class="card-title">
+                                        Equipos en Hold
+                                    </span>
+
+                                    <span class="card-content">
+                                        {{this.dashboard.isHoldCount}}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="chart-container">
+                        <div class="chart-container" *ngIf="showByDistrict">
                             <div class="card-container">
-                                <div id="chart-types" *ngIf="showByDistrict" class="card chart animated fadeInUp">
+                                <button mat-icon-button
+                                        [matMenuTriggerFor]="menu"
+                                        class="chart-menu animated fadeInUp">
+                                   <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu" xPosition="before">
+                                    <button mat-menu-item (click)="openDetail('chart_type')">
+                                        <span>Detalle</span>
+                                    </button>
+                                </mat-menu>
+
+                                <div id="chart-types" class="card chart animated fadeInUp">
                                 </div>
                             </div>
 
-                            <div class="card-container">
-                                <div id="chart-state" *ngIf="showByDistrict" class="card chart animated fadeInUp">
+                            <div class="card-container" *ngIf="showByDistrict">
+                                <button mat-icon-button
+                                        [matMenuTriggerFor]="menu"
+                                        class="chart-menu animated fadeInUp">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu" xPosition="before">
+                                    <button mat-menu-item (click)="openDetail('chart_type')">
+                                        <span>Detalle</span>
+                                    </button>
+                                </mat-menu>
+
+                                <div id="chart-location" class="card chart animated fadeInUp">
                                 </div>
                             </div>
 
-                            <div class="card-container">
-                                <div id="chart-location" *ngIf="showByDistrict" class="card chart animated fadeInUp">
+                            <div class="card-container" *ngIf="showByDistrict">
+                                <button mat-icon-button
+                                        [matMenuTriggerFor]="menu"
+                                        class="chart-menu animated fadeInUp">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu" xPosition="before">
+                                    <button mat-menu-item (click)="openDetail('chart_type')">
+                                        <span>Detalle</span>
+                                    </button>
+                                </mat-menu>
+
+                                <div id="chart-state" class="card chart animated fadeInUp">
                                 </div>
                             </div>
 
-                            <div class="card-container">
-                                <div id="chart-districts" *ngIf="showByCountry" class="card chart animated fadeInUp">
+                            <div class="card-container" *ngIf="showByDistrict">
+                                <button mat-icon-button
+                                        [matMenuTriggerFor]="menu"
+                                        class="chart-menu animated fadeInUp">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu" xPosition="before">
+                                    <button mat-menu-item (click)="openInServicesDetail()">
+                                        <span>Detalle</span>
+                                    </button>
+                                </mat-menu>
+
+                                <div id="chart-inServices" class="card chart animated fadeInUp">
+                                </div>
+                            </div>
+
+                            <div class="card-container" *ngIf="showByCountry">
+                                <button mat-icon-button
+                                        [matMenuTriggerFor]="menu"
+                                        class="chart-menu animated fadeInUp">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu" xPosition="before">
+                                    <button mat-menu-item (click)="openDetail('chart_type')">
+                                        <span>Detalle</span>
+                                    </button>
+                                </mat-menu>
+
+                                <div id="chart-districts" class="card chart animated fadeInUp">
                                 </div>
                             </div>
                         </div>

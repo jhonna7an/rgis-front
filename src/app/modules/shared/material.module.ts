@@ -18,6 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRippleModule } from '@angular/material/core';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import { MatRippleModule } from '@angular/material/core';
         MatDatepickerModule,
         MatSnackBarModule,
         MatProgressSpinnerModule,
-        MatRippleModule
+        MatRippleModule,
+        MatChipsModule
     ],
     exports: [
         MatButtonModule,
@@ -62,7 +64,8 @@ import { MatRippleModule } from '@angular/material/core';
         MatDatepickerModule,
         MatSnackBarModule,
         MatProgressSpinnerModule,
-        MatRippleModule
+        MatRippleModule,
+        MatChipsModule
     ]
 })
 export class MaterialModule{}

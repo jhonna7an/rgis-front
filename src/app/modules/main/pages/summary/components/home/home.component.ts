@@ -12,7 +12,13 @@ import { SummaryDetail } from '../../models/summary-detail.model';
 import { EquipmentDetail, SummaryDashboard, SummaryItem } from '../../models/summary-dashboard.model';
 
 import * as echarts from 'echarts';
+import { MatDialog } from '@angular/material/dialog';
 
+import { DialogBaseComponent } from '../../models/dialog-base-component.model';
+import { DetailTypeComponent } from '../dialogs/detail-type/detail-type.component';
+import { DetailChartComponent } from '../dialogs/detail-chart/detail-chart.component';
+import { DetailInServicesChartComponent } from '../dialogs/detail-in-services-chart/detail-in-services-chart.component';
+import { MatCardTitle } from '@angular/material/card';
 
 @Component({
   selector: 'app-home',
@@ -36,18 +42,15 @@ export class HomeComponent extends BaseComponent implements OnInit {
   public showByDistrict: boolean = false;
   public showByCountry: boolean = false;
 
-  // CURRENT FILTER
   public summaryData: SummaryTable[];
-
-  // COUNTRY DETAIL
-  // public equipmentTypes: EquipmentType[];
+  public equipments: Equipment[];
 
   public xpandStatus: boolean;
-  public bodyloading: boolean;
   public isLoading$: Observable<boolean>;
 
   constructor(
-    private summarySubject: SummarySubject
+    private summarySubject: SummarySubject,
+    public dialog: MatDialog
   ) {
     super();
   }
@@ -64,7 +67,8 @@ export class HomeComponent extends BaseComponent implements OnInit {
             setTimeout(() => {
               this.handleChartByPie('type', '#chart-types', 'Equipo', response.equipments);
               this.handleChartByPie('state', '#chart-state', 'Estado', response.equipments);
-              this.handleChartByPie('location', '#chart-location', 'Ubicación', response.equipments);
+              this.handleChartByPie('branchOffice', '#chart-location', 'Ubicación', response.equipments);
+              this.handleDateInChart('inServices', '#chart-inServices', 'Ingresos', response.equipments);
             }, 100);
             this.isDistrictDetail = true;
           } else {
@@ -74,6 +78,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
             }, 100);
           }
 
+          this.equipments = response.equipments;
           this.showByCountry = response.isByCountry;
           this.showByDistrict = response.isByDistrict;
         }
@@ -101,6 +106,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
     const detail: EquipmentDetail = new EquipmentDetail(this.titles, items);
     this.dashboard = new SummaryDashboard(detail);
     this.dashboard.total = equipments.length;
+    this.dashboard.isHoldCount = equipments.filter(x => x.isHold).length;
   }
 
   private getGroupingByKey(key: string, equipments: Equipment[]): any {
@@ -109,62 +115,26 @@ export class HomeComponent extends BaseComponent implements OnInit {
     }), {});
   }
 
-  private handleChartByPie(key: string, selector: string, title: string, equipments: Equipment[]): void {
+  private handleChartByPie(key: string, selector: string, title: string, equipments: Equipment[], groupingByKey?: any, settingChart?: any): void {
     const response = [];
-    const grouping = this.getGroupingByKey(key, equipments);
+    const grouping = groupingByKey ? groupingByKey(key, equipments) : this.getGroupingByKey(key, equipments);
 
     for (const item in grouping) {
       response.push({ name: item, value: grouping[item].length });
     }
 
-    console.log(response);
-
-
-    this.settingChart(response, selector, title);
+    settingChart ? settingChart(response, selector, title) : this.settingChart(response, selector, title);
   }
 
+  private handleDateInChart(key: string, selector: string, title: string, equipments: Equipment[]): any {
+    const response = [];
+    const dateGrouping = this.getGroupingByKey(key, equipments);
 
-
-
-
-  private setDetail(equipments: Equipment[]): void {
-    this.summaryData = new Array<SummaryTable>();
-
-    const typeGrouping = equipments.reduce((result: any, equipment: Equipment) => ({
-      ...result, [equipment.type]: [ ...(result[equipment.type] || []), equipment ],
-    }), {});
-
-    for (const name in typeGrouping){
-      console.log(typeGrouping[name].length);
-
-      console.log(typeGrouping[name][0]);
-      let total = 0;
-      const summaryTable: SummaryTable = new SummaryTable(`${name} - Área N° ${typeGrouping[name][0].type} Inventario de Equipos`, `Total ${name}`);
-
-      const modelGrouping = typeGrouping[name].reduce((result: any, equipment: Equipment) => ({
-        ...result, [equipment.model]: [ ...(result[equipment.model] || []), equipment ],
-      }), {});
-
-      for (const model in modelGrouping){
-        const models: Equipment[] = modelGrouping[model].filter(x => x.model.model === model);
-        const operative = models.filter(model => model.stateId == EEquipmentState.Operative).length;
-        const fault = models.filter(model => model.stateId == EEquipmentState.Averia).length;
-        const hold = models.filter(model => model.stateId == EEquipmentState.Hold).length;
-        total += models.length;
-
-        const row = new SummaryTableItem(model, operative, fault, hold, models.length);
-        summaryTable.items.push(row);
-      }
-
-      const operativeTotal = typeGrouping[name].filter(x => x.state.id === EEquipmentState.Operative).length;
-      const faultTotal = typeGrouping[name].filter(x => x.state.id === EEquipmentState.Averia).length;
-      const holdTotal = typeGrouping[name].filter(x => x.state.id === EEquipmentState.Hold).length;
-
-      const totals = new SummaryTableItem(`Total ${name}`, operativeTotal, faultTotal, holdTotal, total);
-      summaryTable.items.push(totals);
-      summaryTable.total = total;
-      this.summaryData.push(summaryTable);
+    for (const item in dateGrouping) {
+      response.push({name: new Date(item).toLocaleDateString(), value: dateGrouping[item].length})
     }
+
+    this.settingLineChart(response.map(x => x.name), response.map(x => x.value), selector, title);
   }
 
   private settingChart(data: any, selector: string, title: string): void {
@@ -176,24 +146,23 @@ export class HomeComponent extends BaseComponent implements OnInit {
         text: title,
         left: 'center',
         textStyle: {
-          color: '#999',
-          fontWeight: 'normal',
-          fontSize: 14
+          color: '#7a7a7a',
+          fontWeight: '500',
+          fontSize: 18
         }
       },
       with: '100%',
       tooltip: {
         trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
+        formatter: "{b} : {c} ({d}%)"
       },
       series: [
         {
-          name: 'Access From',
           type: 'pie',
-          width: '100%',
           radius: '80%',
           top: '10%',
           left: 'center',
+          width: '100%',
           itemStyle: {
             borderRadius: 5,
             borderColor: '#fff',
@@ -238,6 +207,76 @@ export class HomeComponent extends BaseComponent implements OnInit {
               shadowColor: 'rgba(0, 0, 0, 0.5)'
             }
           }
+        }
+      ]
+    };
+
+    myChart.setOption(option);
+    window.onresize = function() {
+      myChart.resize();
+    };
+  }
+
+  public openDetail(key: string): void {
+    this.dialog.open(DetailChartComponent, {
+      width: '1050px',
+      minHeight: '500px',
+      data: {
+        key,
+        equipments: this.equipments,
+        groupingByKey: this.getGroupingByKey,
+        settingChart: this.settingChart,
+        handleChart: this.handleChartByPie
+      }
+    });
+  }
+
+  public openInServicesDetail(): void {
+    this.dialog.open(DetailInServicesChartComponent, {
+      width: '1050px',
+      minHeight: '600px',
+      data: {
+        equipments: this.equipments,
+        groupingByKey: this.getGroupingByKey,
+        settingChart: this.settingChart,
+        handleChart: this.handleChartByPie
+      }
+    });
+  }
+
+  private settingLineChart(xAxis: any, data: any, selector: string, title: string): void {
+    const dom: HTMLElement = document.querySelector(selector);
+    const myChart = echarts.init(dom);
+
+    const option = {
+      title: {
+        text: title,
+        left: 'center',
+        width: '100%',
+        textStyle: {
+          color: '#7a7a7a',
+          fontWeight: '500',
+          fontSize: 18
+        }
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          animation: false
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: xAxis
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: data,
+          type: 'line',
+          smooth: true
         }
       ]
     };

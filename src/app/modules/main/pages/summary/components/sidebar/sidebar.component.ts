@@ -48,7 +48,7 @@ export class SidebarComponent extends BaseComponent implements OnInit {
 
     this.loading$ = this.summarySubject.getLoading();
 
-    const user: UserToken = JSON.parse(sessionStorage.getItem("user"));
+    const user: UserToken = JSON.parse(localStorage.getItem("user"));
 
     if (user) {
       this.getCountry(user.countryId);

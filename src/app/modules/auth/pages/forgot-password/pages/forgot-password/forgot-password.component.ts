@@ -36,7 +36,8 @@ export class ForgotPasswordComponent extends BaseComponent implements OnInit {
     this.forgotPasswordForm = this.formBuilder.group({
       badgeId: ['', [
         Validators.required,
-        Validators.pattern("^[0-9]*$")
+        Validators.pattern("^[0-9]*$"),
+        Validators.minLength(8)
       ]]
     });
   }

@@ -18,6 +18,10 @@ const routes: Routes = [
     component: CreateEquipmentComponent
   },
   {
+    path: 'fault',
+    loadChildren: () => import('./pages/fault/fault.module').then(m => m.FaultModule)
+  },
+  {
     path: '**',
     redirectTo: '/not-found'
   },

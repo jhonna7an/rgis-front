@@ -8,18 +8,17 @@ export class ActionResult {
   constructor(){
   }
 
-  public success(message: string, mail: string): void {
+  public success(message: string, icon: string): void {
     this.message = message;
-    this.icon = 'check_circle';
+    this.icon = icon;
     this.isResultOk = true;
-    this.mail = mail;
     this.class = 'success';
   }
 
-  public failed(error: any): void {
+  public failed(error: any, icon: string, class_name: string): void {
     this.message = error.message;
-    this.icon = error.status === 500 ? 'cancel' : 'error';
+    this.icon = icon;
     this.isResultOk = false;
-    this.class = error.status === 500 ? 'failed' : 'warning';
+    this.class = class_name;
   }
 }

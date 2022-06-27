@@ -9,13 +9,19 @@ import { HomeComponent } from './components/home/home.component';
 import { SummaryComponent } from './pages/summary/summary.component';
 import { SummarySubject } from './subjects/summary.subject';
 import { HeaderComponent } from './components/header/header.component';
+import { DetailTypeComponent } from './components/dialogs/detail-type/detail-type.component';
+import { DetailChartComponent } from './components/dialogs/detail-chart/detail-chart.component';
+import { DetailInServicesChartComponent } from './components/dialogs/detail-in-services-chart/detail-in-services-chart.component';
 
 @NgModule({
   declarations: [
     SidebarComponent,
     HomeComponent,
     SummaryComponent,
-    HeaderComponent
+    HeaderComponent,
+    DetailTypeComponent,
+    DetailChartComponent,
+    DetailInServicesChartComponent
   ],
   imports: [
     CommonModule,

@@ -12,6 +12,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { BranchOffice } from 'src/app/models/branch-office.model';
 import { DistrictService } from 'src/app/modules/shared/services/district.service';
 import { BranchOfficeService } from 'src/app/modules/shared/services/branch-office.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -44,7 +45,8 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private districtService: DistrictService,
     private branchOfficeService: BranchOfficeService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     super();
    }
@@ -69,19 +71,32 @@ export class RegisterComponent extends BaseComponent implements OnInit {
 
   public initFistForm(): void {
     this.firstFormGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      lastName: ['', Validators.required],
-      badgeId: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+      name: ['', Validators.required ],
+      lastName: ['', Validators.required ],
+      badgeId: ['', [
+        Validators.required,
+        Validators.pattern("^[0-9]*$"),
+        Validators.minLength(8)
+      ]],
       district: ['', Validators.required],
-      branchOffice: [{value: '', disabled: true}, Validators.required],
-      mail: ['', [Validators.required, Validators.email]]
+      branchOffice: [{value: '', disabled: true}, Validators.required ],
+      mail: ['', [
+        Validators.required,
+        Validators.email
+      ]]
     });
   }
 
   public initSecondForm(): void {
     this.secondFormGroup = this.formBuilder.group({
-      password: ['', Validators.required],
-      confirm_password: ['', [Validators.required, this.matchValues('password')]]
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8)
+      ]],
+      confirm_password: ['', [
+        Validators.required,
+        this.matchValues('password')
+      ]]
     });
   }
 
@@ -124,7 +139,11 @@ export class RegisterComponent extends BaseComponent implements OnInit {
       .subscribe(response => {
         this.result.success(this.registerModel.email);
       }, error => {
-        this.result.failed(error.error);
+        this.result.failed(error.message);
+        console.log(error);
+
+        console.log(this.result);
+
       })
       .add(() => {
         this.authService.setLoading(false);
@@ -143,5 +162,11 @@ export class RegisterComponent extends BaseComponent implements OnInit {
         ? null
         : { isMatching: false };
     };
-}
+  }
+
+  public goLogin(): void {
+    setTimeout(() => {
+      this.router.navigate(['/auth/login']);
+    }, 800);
+  }
 }

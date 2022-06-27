@@ -9,7 +9,7 @@ import { ResetUser } from '../pages/reset-password/models/reset-user.model';
 import { UserToken } from '../pages/login/models/user-token.model';
 import { Router } from '@angular/router';
 import jwt_decode from "jwt-decode";
-import { ToastService } from '../../shared/services/toast.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,7 @@ export class AuthService {
   private partialUrl: string;
 
   private loading$ = new BehaviorSubject<boolean>(true);
+  private isRememberMeChecked$ = new BehaviorSubject<boolean>(false);
 
   constructor(
     private http: ManagerService,
@@ -68,15 +69,15 @@ export class AuthService {
   }
 
   public setToken(token: string): void {
-    sessionStorage.setItem("access_token", token)
+    localStorage.setItem("access_token", token)
   }
 
   public getToken(): string {
-    return sessionStorage.getItem("access_token")
+    return localStorage.getItem("access_token")
   }
 
   public setUser(response: UserToken) : void {
-    sessionStorage.setItem("user", JSON.stringify({
+    localStorage.setItem("user", JSON.stringify({
       id: response.id,
       badgeId: response.badgeId,
       profileFile: response.profileFile,
@@ -89,8 +90,8 @@ export class AuthService {
   }
 
   public logout() {
-    sessionStorage.removeItem("access_token");
-    sessionStorage.removeItem('user');
+    localStorage.removeItem("access_token");
+    localStorage.removeItem('user');
     this.router.navigate(['/auth/login']);
   }
 
@@ -126,6 +127,14 @@ export class AuthService {
     const expiration = new Date(token.exp * 1000);
     const currentDate = new Date();
     return currentDate > expiration;
+  }
+
+  public setIsRememberMeChecked(value: boolean): void {
+    this.isRememberMeChecked$.next(value);
+  }
+
+  public getIsRememberMeChecked(): Observable<boolean> {
+    return this.isRememberMeChecked$.asObservable();
   }
 
   // public showSnakBar(message: string) {

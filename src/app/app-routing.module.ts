@@ -8,12 +8,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./modules/layout/layout.module').then(m => m.LayoutModule)
+    redirectTo: '/auth/login',
+    pathMatch: 'full'
   },
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
+    loadChildren: () => import('./modules/layout/layout.module').then(m => m.LayoutModule)
   },
   {
     path: '**',

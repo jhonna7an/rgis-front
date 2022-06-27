@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { ToastModel } from '../components/toast/toast-model';
+
+import { ToastModel } from '../models/application/ToastModel.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { ToastModel } from '../components/toast/toast-model';
 export class ToastService {
 
   private toast: ToastModel;
-  public toastModel$ = new Subject<ToastModel>();
+  private toastModel$ = new Subject<ToastModel>();
 
   constructor(){
     this.toast = new ToastModel();
@@ -22,5 +23,9 @@ export class ToastService {
   public showError(message: string): void {
     this.toast.error(message);
     this.toastModel$.next(this.toast);
+  }
+
+  public getToast(): Observable<ToastModel> {
+    return this.toastModel$.asObservable();
   }
 }

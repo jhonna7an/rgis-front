@@ -1,29 +1,19 @@
 <div class="result-container d-flex">
-  <span>
-      <mat-icon fontSet="material-icons-round" class="{{result?.class}}">
-          {{result?.icon}}
-      </mat-icon>
-  </span>
+    <header>
+        <span class="material-icons-round" class="{{result?.class}} header">
+            {{result?.icon}}
+        </span>
+    </header>
 
-  <div class="message-container">
-      <span>
-        {{result?.message}}
-      </span>
+    <div class="message-container">
+        <span>
+            {{result?.message}}
+        </span>
+    </div>
 
-      <span *ngIf="!result?.isResultOk">
-        {{result?.message}}
-      </span>
-
-
-      <span *ngIf="result?.isResultOk">
-        <br>
-        Enviamos un link de confirmación de cuenta a: <strong>{{result?.mail}}</strong>
-      </span>
-  </div>
-
-  <div class="action">
-      <button mat-raised-button color="primary" routerLink="../../login">
-          Volver al inicio de sesión
-      </button>
-  </div>
+    <div class="action">
+        <button mat-raised-button color="primary" routerLink="../../login">
+            Volver al inicio de sesión
+        </button>
+    </div>
 </div>

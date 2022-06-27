@@ -1,0 +1,70 @@
+<div mat-dialog-content class="dialog-content">
+  <div class="h-100">
+      <mat-drawer-container class="drawer-container h-100" autosize>
+          <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
+              <div class="dialog-sidebar">
+                  <button *ngFor="let item of inServices"
+                          mat-button
+                          (click)="openDetail(item)"
+                          class="button-sidebar">
+                    <span>{{item?.name | date: 'longDate'}}</span>
+                  </button>
+              </div>
+          </mat-drawer>
+
+          <div class="example-sidenav-content h-100">
+              <ng-container *ngIf="!isEmpty; else empty">
+                  <div class="body-detail-container">
+                      <div class="total-dialog-container">
+                          <div class="detail animated fadeInUp">
+                              <span class="card-title">
+                                  {{title}}
+                              </span>
+                          </div>
+                      </div>
+
+                      <div class="animated fadeInUp">
+                          <div>
+                              <mat-chip-list class="example-chip"
+                                             cdkDropList
+                                             cdkDropListOrientation="horizontal">
+                                  <mat-chip class="chip-item"
+                                            cdkDrag
+                                            *ngFor="let item of filters"
+                                            (click)="showByType(item)">
+                                      {{item}}
+                                  </mat-chip>
+                              </mat-chip-list>
+                          </div>
+
+                          <div class="d-flex">
+                              <div id="detail-container" class="d-flex h-100 detail-container">
+
+                              </div>
+
+                              <div id="filter-container" class="d-flex h-100 detail-container">
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </ng-container>
+
+              <ng-template #empty>
+                  <div class="empty-container">
+                      <div class="message-container">
+                          <mat-icon class="material-icons-outlined">
+                              info
+                          </mat-icon>
+                          <p>Seleccione una opción para ver más detalle</p>
+                      </div>
+                  </div>
+              </ng-template>
+          </div>
+      </mat-drawer-container>
+  </div>
+</div>
+
+<div mat-dialog-actions class="mat-dialog-actions">
+ <button mat-button mat-dialog-close class="cancel-btn">Cerrar</button>
+</div>
