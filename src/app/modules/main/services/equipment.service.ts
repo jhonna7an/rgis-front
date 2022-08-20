@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { EquipmentAbm, Equipment } from '../models/equipments/equipment';
+import { EquipmentCreate } from '../pages/create/models/equipment-create.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +52,7 @@ export class EquipmentService {
     return this.http.put<boolean>(this.partialUrl, equipment);
   }
 
-  public create(equipment: EquipmentAbm): Observable<boolean> {
+  public create(equipment: EquipmentCreate): Observable<boolean> {
     this.partialUrl = `${this.url}/api/v1/Equipment`;
     return this.http.post<boolean>(this.partialUrl, equipment);
   }

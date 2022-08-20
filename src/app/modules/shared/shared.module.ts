@@ -19,6 +19,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
   imports: [
     CommonModule,
     MaterialModule,
-    SharedRoutingModule
+    SharedRoutingModule,
+    FormsModule
   ],
   exports: [
     SpinnerComponent,

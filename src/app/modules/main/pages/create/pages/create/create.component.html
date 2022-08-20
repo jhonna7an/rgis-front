@@ -1,0 +1,118 @@
+<div class="d-flex section">
+  <div class="container custom-shadow md-col-12">
+    <div class="container-header">
+      <h2>Crear equipo</h2>
+    </div>
+
+    <div class="d-flex container-body">
+      <div class="col-md-6">
+        <form [formGroup]="createForm" autocomplete="off" novalidate (ngSubmit)="saveCreate()">
+
+          <div class="container-input col-10">
+            <label>Equipo</label>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="type" (selectionChange)="onChangeType($event.value)" placeholder="Seleccione el equipo">
+                <mat-option *ngFor="let type of types$ | async" [value]="type.id">
+                  {{type.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error class="error-message" *ngIf="getControl('type').errors?.required">
+                El <strong>Equipo</strong> es requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="container-input col-10">
+            <label>Marca</label>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="brand" (selectionChange)="onChangeBrand($event.value)" placeholder="Seleccione la marca">
+                <mat-option *ngFor="let brand of brands" [value]="brand.id">
+                  {{brand.brand}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error class="error-message" *ngIf="getControl('brand').errors?.required">
+                La <strong>Marca</strong> es requerida
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="container-input col-10">
+            <label>Modelo</label>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="model" placeholder="Seleccione el modelo">
+                <mat-option *ngFor="let model of models" [value]="model.id">
+                  {{model.model}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error class="error-message" *ngIf="getControl('model').errors?.required">
+                El <strong>Modelo</strong> es requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="container-input col-10">
+            <label>Serial</label>
+            <mat-form-field appearance="outline">
+              <input type="text" matInput formControlName="serial" placeholder="Ingrese el serial">
+              <mat-error class="error-message" *ngIf="getControl('serial').errors?.required">
+                El <strong>Serial</strong> es requerido
+              </mat-error>
+              <mat-error class="error-message" *ngIf="getControl('serial').errors?.pattern">
+                El <strong>Serial</strong> solo puede contener carácteres numéricos
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="container-input col-10">
+            <label>Serial Factory</label>
+            <mat-form-field appearance="outline">
+              <input type="text" matInput formControlName="serialFactory" placeholder="Ingrese el serial factory">
+            </mat-form-field>
+          </div>
+
+          <div class="container-input col-10">
+            <label>Fecha de Ingreso</label>
+            <mat-form-field appearance="outline">
+              <input matInput [matDatepicker]="inService" formControlName="inService" placeholder="Ingrese la fecha de ingreso">
+              <mat-datepicker-toggle matSuffix [for]="inService"></mat-datepicker-toggle>
+              <mat-datepicker #inService></mat-datepicker>
+              <mat-error class="error-message" *ngIf="getControl('inService').errors?.required">
+                La <strong>Fecha de ingreso</strong> es requerida
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="container-input col-10">
+            <label>Distrito</label>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="district" placeholder="Seleccione un distrito">
+                <mat-option *ngFor="let district of districts$ | async" [value]="district.id">
+                    {{district.districtName}}
+                </mat-option>
+              </mat-select>
+              <mat-error class="error-message" *ngIf="getControl('district').errors?.required">
+                El <strong>Distrito</strong> es requerida
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="actions">
+              <button mat-flat-button
+                      color="primary"
+                      [disabled]="!createForm.valid || loading">
+                      Guardar
+              </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <app-upload-file [isMultiFile]="false"></app-upload-file>
+      </div>
+
+    </div>
+
+  </div>
+</div>

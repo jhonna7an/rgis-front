@@ -1,7 +1,17 @@
+h2 {
+  margin-bottom: 0px;
+  color: var(--text-primary);
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-secondary);
+  padding-bottom: 1rem;
+  font-family: 'Poppins';
+  font-size: 25px;
+  width: 100%;
+}
+
 /* BODY HEADER*/
 .body {
   width: 100%;
-  background-color: #FAFAFA;
   padding: 20px;
 }
 
@@ -10,8 +20,8 @@
   align-items: center;
   min-height: 50px;
   font-size: 20px;
-  border-bottom: 1px solid #7a7a7a;
-  color: #333;
+  /* border-bottom: 1px solid var(--text-secondary); */
+  color: var(--text-primary);
 }
 
 .body-header h3 {

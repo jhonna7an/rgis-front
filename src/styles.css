@@ -1,4 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
+/* :root {
+  --background-primary: #fff;
+  --background-secondary: #ecf0f3;
+
+  --text-primary: #333;
+  --text-secondary: #687782;
+
+  --hover-primary: #f9fafb;
+  --hover-shadow: rgb(174 190 205 / 45%);
+
+  --shadow-primary: rgb(174 190 205 / 30%);
+} */
+
+
+
+body {
+
+  background-color: var(--background-secondary);
+
+  --background-primary: #fff;
+  --background-secondary: #fbfdfe;
+  --background-third: #ecf0f3;
+  --background-fourth: #f9fafb;
+
+  --text-primary: #333;
+  --text-secondary: #687782;
+  --text-third: #8e9ba4;
+  --text-danger: #f44336;
+
+  --hover-primary: #f9fafb;
+  --hover-shadow: rgb(174 190 205 / 45%);
+
+  --shadow-primary: rgb(174 190 205 / 30%);
+
+  --border-primary: #ecf0f3;
+  --border-secondary: #e5eaec;
+  --border-third: var(--background-primary);
+
+  --main-theme: #d60d2b;
+
+  --scroll-thumb: #dfdfe8;
+  --scroll-btn: #c1c1d3;
+
+  --logo-background: url('src/assets/logos/rgis-logo-black.png');
+}
+
+body[data-theme='dark'] {
+
+  --background-primary: #212e36;
+  --background-secondary: #192229;
+  --background-third: #121a21;
+  --background-fourth: #28353e;
+
+  --text-primary: #ecf0f3;
+  --text-secondary: #b7c1c8;
+
+  --hover-primary: #192229;
+  --hover-shadow: rgb(0 0 0 / 45%);
+
+  --shadow-primary: rgb(0 0 0 / 30%);
+
+  --border-primary: #273b49;
+  --border-secondary: #212e36;
+  --border-third: var(--background-primary);
+
+  --scroll-thumb: #566169;
+  --scroll-btn: #3f474d;
+
+  --logo-background: url('src/assets/logos/rgis-logo-white.png');
+}
+
 * {
   font-family: 'Poppins', sans-serif;
 }
@@ -18,6 +89,41 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+::placeholder {
+  color: var(--text-secondary) !important;
+  font-weight: 300;
+  opacity: 1;
+}
+
+/* SCROLLS */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scroll-btn);
+}
+
+.custom-shadow::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  border-radius: 100%;
+  background: rgba(146,161,176,.15);
+  filter: blur(5px);
+  transform: translateY(calc(100% - 0.5rem));
+  z-index: -1;
+}
+
 p {
   margin-bottom: 0px !important;
 }
@@ -31,16 +137,6 @@ a {
   text-decoration: none !important;
 }
 
-
-/* .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 150px;
-    color: #fff;
-    padding: 20px;
-} */
-
 .mat-expansion-panel-content>.mat-expansion-panel-body {
     padding: 0px;
 }
@@ -48,15 +144,6 @@ a {
 .mat-expansion-panel-body {
     display: flex;
 }
-
-
-/* .mat-expansion-panel-body {
-    border-radius: 4px;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.08) !important;
-    border: solid 1px #edeff2;
-    padding: 20px;
-    margin: 20px;
-} */
 
 button:focus {
     outline: none;
@@ -70,20 +157,6 @@ button:focus {
   width: 100%;
 }
 
-/* .mat-form-field-wrapper {
-    height: 50px;
-    margin: 0px !important;
-}
-
-.mat-form-field-wrapper .mat-form-field-flex {
-    height: 50px;
-}
-
-.mat-form-field-wrapper .mat-form-field-subscript-wrapper {
-    margin-top: 20px;
-} */
-
-
 /* TABS */
 
 .mat-tab-label {
@@ -94,27 +167,6 @@ button:focus {
 
 
 /* focus style */
-
-/* .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
-.mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus,
-.mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
-.mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus {
-    color: #E5004D;
-} */
-
-
-/* ink bar style */
-
-/* .mat-tab-group.mat-primary .mat-ink-bar,
-.mat-tab-nav-bar.mat-primary .mat-ink-bar {
-    background: #E5004D;
-    height: 3px;
-} */
-
-
-/* .cdk-overlay-pane {
-    margin-top: 3% !important;
-} */
 .mat-snack-bar-container {
   padding: 0px !important;
   border-radius: 5px;
@@ -232,19 +284,6 @@ button:focus {
 
 }
 
-/* MAT INPUT BORDER COLOR */
-
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick,
-.mat-form-field.mat-focused .mat-form-field-label {
-  /* color: #01608A; */
-  color: #0225D6;
-  /* color: #425b76; */
-}
-
-.mat-form-field.mat-form-field-invalid .mat-form-field-label {
-  color: #f44336;
-}
-
 /* BACKDROP */
 .cdk-overlay-backdrop {
   backdrop-filter: blur(2px);
@@ -270,13 +309,38 @@ button:focus {
 
 
 /* Menu */
+.mat-menu-content {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.mat-menu-content a {
+  font-family: 'Poppins', sans-serif;
+}
+.mat-menu-content a:hover {
+  background-color: var(--color-fourth) !important;
+}
+.mat-menu-item {
+  height: 32px !important;
+  line-height: 40px !important;
+}
 .mat-menu-panel {
   min-height: 50px !important;
 }
+.mat-menu-panel {
+  padding: 1rem;
+  background-color: var(--background-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+.mat-menu-content a {
+  display: flex;
+  align-items: center;
+}
 
 
+/* --------- Summary Detail Chart ---------- */
 
-/* Summary Detail Chart */
 #detail-container .chart-dialog-container .card-container,
 #filter-container .chart-dialog-container .card-container {
   display: flex;
@@ -301,7 +365,7 @@ button:focus {
   align-items: center;
   min-width: 375px;
   padding: 20px;
-  background-color: #fff;
+  background-color: var(--background-secondary);
   border-radius: 4px;
   box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
   border: none;
@@ -319,7 +383,8 @@ button:focus {
 #detail-container .total-dialog-container .detail,
 #filter-container .total-dialog-container .detail {
   font-size: 18px;
-  color: #333;
+  /* color: #333; */
+  color: var(--text-primary);
   border-bottom: 1px solid #7a7a7a;
   height: 40px;
   width: 100%;
@@ -330,4 +395,260 @@ button:focus {
 #detail-container .total-dialog-container .detail span,
 #filter-container .total-dialog-container .detail span {
   margin-right: 20px;
+}
+
+/* ---------------------------- ANGULAR MATERIAL  ------------------------------------------ */
+
+/* MAT DRAWER */
+.mat-drawer,
+.mat-drawer-container {
+  background-color: transparent !important;
+}
+
+
+.mat-drawer-side,
+.mat-drawer-inner-container,
+.mat-drawer-content {
+  background-color: var(--background-primary) !important;
+}
+
+/* MAT EXPANSION PANEL */
+
+.mat-expansion-panel {
+  background-color: var(--background-primary) !important;
+ }
+
+ .mat-expansion-panel-header-title {
+   color: var(--text-primary) !important;
+ }
+
+ .mat-expansion-indicator::after {
+   color: var(--text-secondary) !important;
+ }
+
+.mat-expansion-panel {
+  background-color: var(--background-secondary) !important;
+}
+
+.mat-expansion-panel-header-title {
+  color: var(--text-secondary) !important;
+}
+
+nav.menu .sidebar-content .mat-accordion .mat-expansion-panel {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+
+/* MAT FORM */
+
+.mat-form-field-outline-start,
+.mat-form-field-outline-gap,
+.mat-form-field-outline-end {
+  background-color: var(--background-fourth) !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: var(--border-primary) !important;
+}
+
+.mat-form-field-infix {
+  padding: 0.4rem 0 0.7rem 0 !important;
+}
+
+.mat-select-arrow,
+.mat-icon-button {
+  color: var(--text-secondary) !important;
+}
+
+.mat-select-value,
+.mat-input-element {
+  color: var(--text-primary) !important;
+}
+
+.mat-select-placeholder {
+  color: var(--text-secondary) !important;
+  font-weight: 300;
+}
+
+.mat-form-field-underline {
+  background-color: var(--border-secondary) !important;
+}
+
+.mat-form-field-label {
+  color: var(--text-third) !important;
+}
+
+.mat-form-field.mat-focused {
+  color: var(--color-primary) !important;
+}
+
+.mat-select-panel {
+  background-color: var(--background-primary) !important;
+}
+
+.mat-option {
+  color: var(--text-primary) !important;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: var(--main-theme) !important;
+}
+
+.mat-form-field.mat-form-field-invalid .mat-form-field-label {
+  color: var(--text-danger) !important;
+}
+
+.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+  color: var(--text-danger) !important;
+}
+
+.mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
+  color: var(--text-danger) !important;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: var(--main-theme) !important;
+}
+
+.mat-button-disabled {
+  background-color: rgb(0 0 0 / 20%) !important;
+  color: rgb(108 117 125 / 80%) !important;
+}
+
+
+/* MAT TABLE */
+
+.mat-table,
+.mat-paginator {
+  background: var(--background-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+.mat-header-cell {
+  color: var(--text-primary) !important;
+  font-weight: 500 !important;
+}
+
+td.mat-cell {
+  color: var(--text-secondary);
+}
+
+.mat-header-cell,
+.mat-cell {
+  border-bottom: 1px solid var(--border-primary) !important;
+}
+
+.mat-paginator-navigation-first.mat-icon-button,
+.mat-paginator-navigation-previous.mat-icon-button,
+.mat-paginator-navigation-next.mat-icon-button,
+.mat-paginator-navigation-last.mat-icon-button {
+  color: var(--text-primary) !important;
+}
+
+.mat-paginator-page-size-select div .mat-select div .mat-select-arrow,
+.mat-paginator-page-size-select div .mat-select div .mat-select-value-text {
+  color: var(--text-primary) !important;
+}
+
+
+/* MAT DATEPICKER */
+
+.mat-datepicker-content {
+  background-color: var(--background-primary) !important;
+}
+
+.mat-calendar-table-header tr th,
+.mat-calendar-body-label,
+.mat-calendar-previous-button,
+.mat-calendar-next-button,
+.mat-calendar-period-button {
+  color: var(--text-primary) !important;
+}
+
+.mat-calendar-arrow {
+  border-top-color: var(--text-primary) !important;
+}
+
+.mat-calendar-body-cell-content {
+  color: var(--text-secondary) !important;
+}
+
+.mat-calendar-body-today.mat-calendar-body-selected {
+  box-shadow: inset 0 0 0 1px var(--background-secondary) !important;
+}
+
+app-timepicker form div span {
+  color: var(--text-secondary) !important;
+}
+
+span i {
+  color: var(--text-secondary) !important;
+}
+
+.mat-expansion-indicator::after {
+  color: var(--text-secondary) !important;
+}
+
+
+/* MAT DIALOG */
+
+/* .mat-dialog-container {
+  background-color: var(--background-primary) !important;
+} */
+.mat-dialog-container {
+  background-color: var(--background-secondary) !important;
+}
+
+.card,
+.card-header,
+.mat-tab-group {
+  background-color: var(--background-secondary) !important;
+}
+
+.mat-tab-label-content {
+  color: var(--text-primary);
+}
+
+.loading {
+  background-color: var(--background-secondary) !important;
+  border-radius: 4px;
+}
+
+.loading-content {
+  color: var(--text-primary) !important;
+}
+
+.segment-key {
+  color: var(--color-json-key) !important;
+}
+
+app-sidebar .menu mat-accordion mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+
+/* MAT TOOLTIP */
+.mat-tooltip {
+background-color: var(--background-primary) !important;
+color: var(--text-secondary) !important;
+}
+
+/* MAT TAB */
+.mat-dialog-content {
+overflow-x: hidden !important;
+}
+
+/* MAT SNACKBAR */
+.mat-snack-bar-container {
+/* padding: 0px !important; */
+background-color: var(--background-secondary) !important;
+}
+
+.mat-pseudo-checkbox.mat-pseudo-checkbox-checked, .mat-pseudo-checkbox.mat-pseudo-checkbox-indeterminate {
+background-color: #00b0eb !important;
+}
+
+.mat-pseudo-checkbox {
+border-color: #00b0eb !important;
 }

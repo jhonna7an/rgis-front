@@ -1,9 +1,9 @@
 .container-upload {
   width: 80%;
-  padding: 25px;
-  border: solid 1px #ddd;
+  padding: 30px;
+  border: solid 1px var(--border-primary);
   border-radius: 5px;
-  margin-top: 20px;
+  background-color: var(--background-primary);
 }
 
 .dropzone {
@@ -11,24 +11,25 @@
   height: 250px;
   padding: 2rem;
   text-align: center;
-  border: dashed 1.5px #aaa;
+  border: dashed 1.5px var(--border-primary);
   position: relative;
   margin: 0 auto;
   cursor: pointer !important;
   border-radius: 5px;
+  background-color: var(--background-fourth);
 }
 
 .dropzone:hover,
 .dropzone.hovering {
-  color: #525f7f;
-  border: dashed 1.5px #525f7f;
+  color: var(--text-secondary);
+  border: dashed 1.5px var(--text-secondary);
 }
 
 .dropzone:hover h3,
-.dropzone:hover svg g path,
+.dropzone:hover span,
 .dropzone.hovering h3,
-.dropzone.hovering svg g path {
-  color: #525f7f;
+.dropzone.hovering span {
+  color: var(--text-secondary) !important;
   fill: #525f7f;
 }
 
@@ -45,17 +46,18 @@
 
 .dropzone label {
   color: white;
-  width: 50%;
+  width: 60%;
   height: 20%;
   border-radius: 21.5px;
   background-color: #db202f;
   padding: 8px 16px;
   cursor: pointer !important;
+  margin-top: 8px;
 }
 
 .dropzone h3 {
   font-size: 20px;
-  color: #aaa;
+  color: var(--text-third);
   margin-bottom: 5px;
 }
 

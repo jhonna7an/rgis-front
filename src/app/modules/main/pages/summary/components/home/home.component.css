@@ -19,10 +19,11 @@
 .detail {
   min-width: 200px;
   padding: 20px;
-  background-color: #fff;
+  background-color: var(--background-primary) !important;
   border-radius: 4px;
-  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+  /* box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%); */
   margin-top: 20px;
+  border: 1px solid var(--border-primary) !important;
 }
 
 .mat-elevation-z8 {
@@ -44,6 +45,8 @@ tr {
   height: 320px;
   margin: 20px 0px 0px 20px;
   flex-basis: 100%;
+  background-color: var(--background-primary) !important;
+  border: 1px solid var(--border-primary) !important;
 }
 
 .card {
@@ -54,16 +57,23 @@ tr {
   padding: 20px;
   background-color: #fff;
   border-radius: 4px;
-  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+  /* box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%); */
   border: none;
+}
+
+.card-title {
+  color: var(--text-primary);
 }
 
 .card-content {
   font-size: 50px;
-  color: #414141;
+  color: var(--text-primary);
   padding: 25px;
 }
 
+.card-container button mat-icon {
+  color: var(--text-primary) !important;
+}
 
 
 .body-content-empty {
@@ -115,37 +125,16 @@ tr {
   margin-bottom: 20px;
 }
 
-.table thead th {
-  vertical-align: bottom;
-  border-bottom: none;
-  padding: 0px 20px !important;
-}
-
-.table td,
-.table th {
-  padding: .75rem;
-  border-top: none;
-  padding: 10px 20px !important;
-}
-
-table thead tr th {
-  color: #cd3840;
-  text-align: center;
-  font-weight: 500;
-}
-
-table tbody tr td {
-  color: #6d7278;
-  text-align: center;
-}
-
-.title {
-  color: #6D7278;
-  font-size: 16px;
-}
-
 table {
-  margin-bottom: 0px !important;
+  background-color: var(--background-primary) !important;
+}
+
+th {
+  color: var(--text-secondary) !important;
+}
+
+td {
+  color: var(--text-primary) !important;
 }
 
 
@@ -231,4 +220,18 @@ table {
   top: 30px;
   right: 10px;
   z-index: 100;
+}
+
+/* CHART MENU */
+button.mat-menu-option {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  padding: 0px 8px;
+  display: flex;
+  align-items: center;
+}
+
+button.mat-menu-option:hover {
+  background-color: var(--hover-primary);
+  border-radius: 0.25rem;
 }

@@ -1,9 +1,13 @@
 <div>
     <div class="sidebar">
-        <mat-card (click)="getByCountry()">
+
+      <button class="country-btn">
+        Equipos Argentina
+      </button>
+        <!-- <mat-card (click)="getByCountry()">
             <span class="country">Equipos {{country?.name}}</span>
             <span class="indicator-custom"></span>
-        </mat-card>
+        </mat-card> -->
 
         <div class="sidebar-menu">
             <div class="district">
@@ -29,53 +33,6 @@
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
-
-            <!-- <ng-container *ngIf="showDetail">
-                <div *ngIf="loading$ | async" class="loading">
-                    <app-loading [isLoading]="true" [message]="'Cargando...'"></app-loading>
-                </div>
-
-                <div *ngIf="!(loading$ | async)" class="detail animated fadeInUp">
-                    <h3>Detalle</h3>
-
-                    <mat-accordion class="submenu-location">
-                        <mat-expansion-panel [expanded]="xpandStatus">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title class="location">
-                                    Ubicación
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-
-                            <div class="submenu-container">
-                                <ul>
-                                    <li *ngFor="let location of locations">
-                                        <span>{{location.label}}</span>
-                                        <span>({{location.quantity}})</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-
-                    <mat-accordion class="submenu-state">
-                        <mat-expansion-panel [expanded]="xpandStatus">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Estado
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="submenu-container">
-                                <ul>
-                                    <li *ngFor="let state of states">
-                                        <span>{{state.label}}</span>
-                                        <span>({{state.quantity}})</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                </div>
-            </ng-container> -->
         </div>
     </div>
 </div>

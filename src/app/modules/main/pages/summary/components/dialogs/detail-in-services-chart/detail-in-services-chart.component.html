@@ -3,12 +3,21 @@
       <mat-drawer-container class="drawer-container h-100" autosize>
           <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
               <div class="dialog-sidebar">
-                  <button *ngFor="let item of inServices"
-                          mat-button
-                          (click)="openDetail(item)"
-                          class="button-sidebar">
-                    <span>{{item?.name | date: 'longDate'}}</span>
-                  </button>
+                  <div class="filter-title">
+                      <span class="material-icons-round">
+                          filter_alt
+                      </span>
+                      <span>Filtros</span>
+                  </div>
+
+                  <div class="filter-menus">
+                      <button *ngFor="let item of inServices"
+                              mat-button
+                              (click)="openDetail(item)"
+                              class="button-sidebar">
+                        <span>{{item?.name | date: 'longDate'}}</span>
+                      </button>
+                  </div>
               </div>
           </mat-drawer>
 
@@ -25,14 +34,15 @@
 
                       <div class="animated fadeInUp">
                           <div>
-                              <mat-chip-list class="example-chip"
+                              <mat-chip-list class="example-chip animated fadeInUp"
                                              cdkDropList
                                              cdkDropListOrientation="horizontal">
                                   <mat-chip class="chip-item"
                                             cdkDrag
-                                            *ngFor="let item of filters"
+                                            *ngFor="let item of badgeDetails"
                                             (click)="showByType(item)">
-                                      {{item}}
+                                      <span>{{item.name}}</span>
+                                      <span class="chip-number">{{item.count}}</span>
                                   </mat-chip>
                               </mat-chip-list>
                           </div>
@@ -42,9 +52,52 @@
 
                               </div>
 
-                              <div id="filter-container" class="d-flex h-100 detail-container">
+                              <!-- <div id="filter-container" class="d-flex h-100 detail-container">
 
-                              </div>
+                              </div> -->
+
+                              <ng-container *ngIf="showDetailTable">
+                                  <div class="table-detail animated fadeInUp">
+                                      <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+
+                                          <ng-container matColumnDef="brand">
+                                              <th mat-header-cell *matHeaderCellDef> Marca </th>
+                                              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                          </ng-container>
+
+                                          <ng-container matColumnDef="count">
+                                              <th mat-header-cell *matHeaderCellDef> Total </th>
+                                              <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+                                          </ng-container>
+
+                                          <ng-container matColumnDef="expand">
+                                              <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                                              <td mat-cell *matCellDef="let element">
+                                                  <button mat-icon-button aria-label="expand row" (click)="filterByModel(element, $event)">
+                                                      <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                                                      <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                                                  </button>
+                                              </td>
+                                          </ng-container>
+
+                                          <ng-container matColumnDef="expandedDetail">
+                                              <td mat-cell *matCellDef="let element" [attr.colspan]="detailTableTitles.length">
+                                                  <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                                       Detalle
+                                                  </div>
+                                              </td>
+                                          </ng-container>
+
+                                          <tr mat-header-row *matHeaderRowDef="detailTableTitles"></tr>
+                                          <tr mat-row *matRowDef="let element; columns: detailTableTitles;"
+                                              class="example-element-row"
+                                              [class.example-expanded-row]="expandedElement === element"
+                                              (click)="expandedElement = expandedElement === element ? null : element">
+                                          </tr>
+                                          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                                      </table>
+                                  </div>
+                              </ng-container>
                           </div>
                       </div>
                   </div>

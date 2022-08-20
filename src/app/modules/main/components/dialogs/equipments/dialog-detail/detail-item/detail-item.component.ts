@@ -168,7 +168,7 @@ export class DetailItemComponent extends BaseComponent implements OnInit {
   }
 
   private GetDistricts(): void {
-    this.districtService.Get()
+    this.districtService.get()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: District[]) => {
         this.districts = response;

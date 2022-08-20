@@ -1,0 +1,38 @@
+.section {
+  padding: 30px 0px;
+  background-color: var(--background-secondary);
+  position: relative;
+  z-index: 0;
+}
+
+.container {
+  padding: 1.5rem;
+  background-color: var(--background-primary);
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-primary);
+  position: relative;
+  z-index: unset;
+}
+
+.container-body {
+  padding-top: 1.5rem;
+}
+
+h2 {
+  margin-bottom: 0px;
+  color: var(--text-primary);
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-primary);
+  padding-bottom: 1rem;
+  font-family: 'Poppins';
+  font-size: 25px;
+}
+
+label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.actions {
+  padding: 0px 15px;
+}

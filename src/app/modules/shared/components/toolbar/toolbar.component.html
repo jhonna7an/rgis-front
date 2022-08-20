@@ -1,78 +1,103 @@
-<mat-toolbar color="primary">
-    <div class="col-md-1">
-        <a class="navbar-brand" href="#" routerLink="/home">
-            <img src="../../../../../assets/logos/rgis-logo-black.png" height="30" alt="" loading="lazy">
-        </a>
-    </div>
-
-    <div class="nav-options-container col-md-11 menu-item">
-        <div class="col-md-10">
-            <button mat-button
-                    [matMenuTriggerFor]="menu"
-                    class="menu-btn">
-                Gestión de Equipos
-                <span class="material-icons-outlined">
-                    arrow_drop_down
-                </span>
-            </button>
-            <mat-menu #menu="matMenu">
-                <a mat-menu-item
-                  href="javascript:void(0)"
-                  routerLink="equipment/summary"
-                  class="mat-menu-option">
-                    Resumen de Equipos
-                </a>
-                <a mat-menu-item
-                  href="javascript:void(0)"
-                  routerLink="equipment/detail"
-                  class="mat-menu-option">
-                    Detalle de Equipos
-                </a>
-                <a mat-menu-item
-                  href="javascript:void(0)"
-                  routerLink="equipment/create"
-                  class="mat-menu-option">
-                    Nuevo Equipo
-                </a>
-                <a mat-menu-item
-                  href="javascript:void(0)"
-                  routerLink="equipment/fault"
-                  class="mat-menu-option">
-                    Resumen de Averías
-                </a>
-            </mat-menu>
+<mat-toolbar>
+    <div class="toolbar">
+        <div class="logo w-10">
+            <a class="navbar-brand" href="#" routerLink="/home">
+                <!-- <img src="../../../../../assets/logos/rgis-logo-black.png" height="30" alt="" loading="lazy"> -->
+            </a>
         </div>
-        <div class="options-right col-md-2">
-            <div>
-                <button mat-icon-button
-                        [matMenuTriggerFor]="notification">
-                    <mat-icon matBadge="30" matBadgeColor="warn">notifications</mat-icon>
-                </button>
-                <mat-menu #notification="matMenu">
-                    <button mat-menu-item class="mat-menu-option">
-                        <span>Exportar</span>
-                    </button>
-                </mat-menu>
-            </div>
-            <div class="nav-item dropdown">
+        <div class="nav-options-container menu-item w-90">
+            <div class="h-100">
                 <button mat-button
-                        [matMenuTriggerFor]="profile">
-                    <mat-icon>account_circle</mat-icon>
-                    <span class="badge-custom">{{badgeId}}</span>
+                        [matMenuTriggerFor]="menu"
+                        class="menu-btn">
+                    Gestión de Equipos
                     <span class="material-icons-outlined">
                         arrow_drop_down
                     </span>
                 </button>
-                <mat-menu #profile="matMenu">
-                    <button mat-menu-item class="mat-menu-option"
-                            routerLink="user/profile">
-                        <span>Mi perfil</span>
-                    </button>
-                    <hr>
-                    <button type="button" mat-menu-item class="mat-menu-option">
-                        <span (click)="logout()">Cerrar sesión</span>
-                    </button>
+                <mat-menu #menu="matMenu" class="menus-container">
+                    <a mat-menu-item
+                       href="javascript:void(0)"
+                       routerLink="equipment/summary"
+                       class="mat-menu-option">
+                        Resumen de Equipos
+                    </a>
+                    <a mat-menu-item
+                       href="javascript:void(0)"
+                       routerLink="equipment/detail"
+                       class="mat-menu-option">
+                        Detalle de Equipos
+                    </a>
+                    <a mat-menu-item
+                       href="javascript:void(0)"
+                       routerLink="equipment/create"
+                       class="mat-menu-option">
+                        Nuevo Equipo
+                    </a>
+                    <a mat-menu-item
+                       href="javascript:void(0)"
+                       routerLink="equipment/fault"
+                       class="mat-menu-option">
+                        Resumen de Averías
+                    </a>
                 </mat-menu>
+            </div>
+
+            <div class="options-right h-100">
+                <div>
+                    <label for="night-light-checkbox" class="night-light-label">
+                        <input type="checkbox"
+                               id="night-light-checkbox"
+                               (click)="onChangeTheme($event)"
+                               [(ngModel)]="hasDarkTheme">
+                        <span class="night-light-ball"></span>
+                        <i class="fas fa-sun sun"></i>
+                        <i class="fas fa-moon moon"></i>
+                    </label>
+                </div>
+
+                <div>
+                    <button mat-icon-button
+                            [matMenuTriggerFor]="notification">
+                        <mat-icon matBadge="30" matBadgeColor="warn">notifications</mat-icon>
+                    </button>
+                    <mat-menu #notification="matMenu">
+                        <button mat-menu-item class="mat-menu-option">
+                            <span>Exportar</span>
+                        </button>
+                    </mat-menu>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <button mat-button
+                            [matMenuTriggerFor]="profile">
+                        <mat-icon>account_circle</mat-icon>
+                        <span class="badge-custom">{{badgeId}}</span>
+                        <span class="material-icons-outlined">
+                            arrow_drop_down
+                        </span>
+                    </button>
+                    <mat-menu #profile="matMenu">
+                        <a mat-menu-item
+                           class="mat-menu-option"
+                           routerLink="user/profile">
+                            <span class="material-icons-round">
+                                person_outline
+                            </span>
+                            Mi perfil
+                        </a>
+                        <span class="divider">
+                            <hr>
+                        </span>
+                        <a mat-menu-item
+                           class="mat-menu-option exit">
+                            <span class="material-icons-round">
+                                logout
+                            </span>
+                            <span (click)="logout()">Cerrar sesión</span>
+                        </a>
+                    </mat-menu>
+                </div>
             </div>
         </div>
     </div>

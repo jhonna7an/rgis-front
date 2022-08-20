@@ -16,7 +16,7 @@ export class DistrictService {
     this.url = `${environment.baseURL}`;
   }
 
-  public Get(): Observable<District[]>{
+  public get(): Observable<District[]>{
     this.partialUrl = `${this.url}/api/District`;
     return this.http.get<District[]>(this.partialUrl);
   }

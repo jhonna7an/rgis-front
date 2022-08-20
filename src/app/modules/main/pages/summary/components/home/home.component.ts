@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, ConnectableObservable, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { District } from 'src/app/models/district.model';
 import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
 import { Equipment } from 'src/app/modules/main/models/equipments/equipment';
 import { SummarySubject } from '../../subjects/summary.subject';
 
-import { SummaryTable, SummaryTableItem } from '../../models/summarytable';
-import { EEquipmentState } from 'src/app/modules/main/models/EEquipmentState';
+import { SummaryTable } from '../../models/summarytable';
 import { SummaryDetail } from '../../models/summary-detail.model';
 
 import { EquipmentDetail, SummaryDashboard, SummaryItem } from '../../models/summary-dashboard.model';
@@ -14,11 +13,8 @@ import { EquipmentDetail, SummaryDashboard, SummaryItem } from '../../models/sum
 import * as echarts from 'echarts';
 import { MatDialog } from '@angular/material/dialog';
 
-import { DialogBaseComponent } from '../../models/dialog-base-component.model';
-import { DetailTypeComponent } from '../dialogs/detail-type/detail-type.component';
 import { DetailChartComponent } from '../dialogs/detail-chart/detail-chart.component';
 import { DetailInServicesChartComponent } from '../dialogs/detail-in-services-chart/detail-in-services-chart.component';
-import { MatCardTitle } from '@angular/material/card';
 
 @Component({
   selector: 'app-home',
@@ -107,6 +103,8 @@ export class HomeComponent extends BaseComponent implements OnInit {
     this.dashboard = new SummaryDashboard(detail);
     this.dashboard.total = equipments.length;
     this.dashboard.isHoldCount = equipments.filter(x => x.isHold).length;
+
+    console.log(this.dashboard);
   }
 
   private getGroupingByKey(key: string, equipments: Equipment[]): any {
@@ -140,6 +138,9 @@ export class HomeComponent extends BaseComponent implements OnInit {
   private settingChart(data: any, selector: string, title: string): void {
     const dom: HTMLElement = document.querySelector(selector);
     const myChart = echarts.init(dom);
+
+    console.log(getComputedStyle(document.documentElement).getPropertyValue('--background-primary'));
+
 
     const option = {
       title: {
@@ -234,7 +235,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
   public openInServicesDetail(): void {
     this.dialog.open(DetailInServicesChartComponent, {
       width: '1050px',
-      minHeight: '600px',
+      minHeight: '570px',
       data: {
         equipments: this.equipments,
         groupingByKey: this.getGroupingByKey,

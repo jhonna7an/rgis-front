@@ -3,7 +3,6 @@
   margin: 0px;
   width: 100%;
   max-width: 100%;
-  background-color: #FAFAFA;
   min-height: 414px;
 }
 
@@ -25,7 +24,6 @@
 
 .sidebar {
   z-index: 100;
-  background-color: #FAFAFA;
 }
 
 .sidebar mat-card {
@@ -37,6 +35,7 @@
   padding: 16px 24px;
   justify-content: center;
   margin: 20px 0px;
+  background-color: var(--background-primary);
 }
 
 .sidebar mat-card:hover {
@@ -45,6 +44,7 @@
 
 .sidebar mat-card .country {
   flex: 1;
+  color: var(--text-primary);
 }
 
 .indicator-custom::after {
@@ -75,10 +75,10 @@
   border-radius: 0px 0px 4px 4px !important;
 }
 
-.sidebar-menu div.detail mat-accordion mat-expansion-panel mat-expansion-panel-header,
+/* .sidebar-menu div.detail mat-accordion mat-expansion-panel mat-expansion-panel-header,
 .sidebar-menu div.district mat-accordion mat-expansion-panel mat-expansion-panel-header {
   border-bottom: 1px solid #edeff2;
-}
+} */
 
 .sidebar .title h3 {
   margin-bottom: 0px;
@@ -88,6 +88,7 @@
   list-style: none;
   margin-bottom: 0px;
   padding: 5px 0px;
+  margin-left: 4px;
 }
 
 .sidebar mat-expansion-panel ul li {
@@ -96,7 +97,7 @@
 
 .sidebar mat-expansion-panel ul li a,
 .submenu-container ul li {
-  color: #6d7278;
+  color: var(--text-secondary);
   display: flex;
 }
 
@@ -105,7 +106,7 @@
 }
 
 .sidebar mat-expansion-panel ul li:hover {
-  background-color: rgba(0, 0, 0, .04);
+  background-color: var(--hover-primary);
   cursor: pointer;
 }
 
@@ -188,4 +189,26 @@ div.detail mat-accordion mat-expansion-panel .submenu-container ul li {
   justify-content: center;
   align-items: center;
   min-height: 200px;
+}
+
+
+
+
+
+
+
+
+.country-btn {
+  width: 100%;
+  height: 41px;
+  color: var(--main-theme);
+  border: 1px solid var(--main-theme);
+  border-radius: 0.25rem;
+  background-color: transparent;
+  margin-bottom: 20px;
+}
+
+.country-btn:hover {
+  background-color: var(--main-theme);
+  color: #fff;
 }

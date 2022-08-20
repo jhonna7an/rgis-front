@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
 
 import { EquipmentDetailComponent } from './pages/detail/equipment-detail.component';
-import { CreateEquipmentComponent } from './pages/create/create-equipment.component';
 
 const routes: Routes = [
   {
@@ -15,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'create',
-    component: CreateEquipmentComponent
+    loadChildren: () => import('./pages/create/create.module').then(m => m.CreateModule)
   },
   {
     path: 'fault',

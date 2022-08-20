@@ -16,7 +16,7 @@ export class ModelService {
     this.url = `${environment.baseURL}`;
   }
 
-  public Get(brandId: number, typeId: number): Observable<EquipmentModel[]>{
+  public get(brandId: number, typeId: number): Observable<EquipmentModel[]>{
     this.partialUrl = `${this.url}/api/Model?brandId=${brandId}&nameId=${typeId}`;
     return this.http.get<EquipmentModel[]>(this.partialUrl);
   }

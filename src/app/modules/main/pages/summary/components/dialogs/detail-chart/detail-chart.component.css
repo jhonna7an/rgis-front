@@ -6,6 +6,10 @@
   min-width: 150px !important;
 }
 
+/* .drawer-sidenav {
+  background-color: #d60d2b !important;
+} */
+
 .dialog-sidebar {
   display: flex;
   flex-direction: column;
@@ -17,12 +21,13 @@
 }
 
 .button-sidebar {
-  border-bottom: 1px solid #e8e8e8;
   height: 45px;
+  color: var(--text-secondary);
+  font-weight: 100;
 }
 
-.button-sidebar:first-child {
-  border-top: 1px solid #e8e8e8;
+.dialog-sidebar button:hover {
+  background-color: var(--hover-primary);
 }
 
 .dialog-sidebar button::before {
@@ -103,7 +108,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
 }
 
 .message-container {

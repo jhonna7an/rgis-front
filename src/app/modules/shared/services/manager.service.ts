@@ -44,7 +44,7 @@ export class ManagerService {
       );
   }
 
-  errorHandler(error: HttpErrorResponse) {
+  private errorHandler(error: HttpErrorResponse) {
     let message = error.error;
 
     if (error.status === 401 || error.status === 403) {
@@ -77,20 +77,4 @@ export class ManagerService {
       return of(result as T);
     };
   }
-
-  // public showMessage(status: number, title: string, message: string): void {
-  //   const modal = this.dialog.open(ErrorComponent, {
-  //     data: { title: `${status} ${title}`, message: message, statusCode: status }
-  //   });
-
-  //   modal.afterClosed().subscribe((response: boolean) => {
-  //     if (status === 401) {
-  //       localStorage.removeItem("sessionId");
-  //       localStorage.removeItem("userId");
-  //       localStorage.removeItem("usuario");
-  //       this.router.navigate(['login']);
-  //     }
-  //   });
-
-  // }
 }

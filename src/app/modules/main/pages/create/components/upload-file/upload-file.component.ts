@@ -1,13 +1,13 @@
-import { ToastService } from 'src/app/services/toast.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import * as XLSX from 'xlsx';
-import { EquipmentAbm } from '../../models/equipments/equipment';
-import { EquipmentService } from '../../services/equipment.service';
-import { PreviewComponent } from './preview/preview.component';
-import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
 import { takeUntil } from 'rxjs/operators';
+import { BaseComponent } from 'src/app/modules/core/components/base/base.component';
+import { EquipmentAbm } from 'src/app/modules/main/models/equipments/equipment';
+import { EquipmentService } from 'src/app/modules/main/services/equipment.service';
+import { ToastService } from 'src/app/services/toast.service';
+import * as XLSX from 'xlsx';
+import { PreviewComponent } from '../preview/preview.component';
 
 @Component({
   selector: 'app-upload-file',
@@ -35,7 +35,7 @@ export class UploadFileComponent extends BaseComponent implements OnInit {
   constructor(
     private equipmentService: EquipmentService,
     private toastService: ToastService,
-    private dialog:MatDialog
+    private dialog: MatDialog
   ) {
     super();
   }

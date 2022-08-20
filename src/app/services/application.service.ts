@@ -4,11 +4,15 @@ import { UserToken } from '../modules/auth/pages/login/models/user-token.model';
 import { ToastService } from 'src/app/services/toast.service';
 
 import jwt_decode from "jwt-decode";
+import { BehaviorSubject, Observable } from 'rxjs';
+import { UserPreference } from '../modules/layout/models/user-preference.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApplicationService {
+
+  private userPreference$ = new BehaviorSubject<UserPreference>(null);
 
   constructor(
     private router: Router,
@@ -70,5 +74,13 @@ export class ApplicationService {
       this.toastService.showError('El token es inválido');
       throw error;
     }
+  }
+
+  public setUserPreference(value: UserPreference): void {
+    this.userPreference$.next(value);
+  }
+
+  public getUserPreference(): Observable<UserPreference> {
+    return this.userPreference$.asObservable();
   }
 }
